@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Infrastructure Colors */
+    --color-background: #0a0a0a; /* Deep space black - command center atmosphere */
+    --color-foreground: #ffffff; /* Pure white - maximum readability */
+    --color-card: #2a2a2a; /* Surface elevation - subtle content cards */
+    --color-card-foreground: #f0f0f0; /* Soft white - comfortable reading */
+    --color-popover: #1a1a1a; /* Professional foundation - dropdown backgrounds */
+    --color-popover-foreground: #ffffff; /* Pure white - clear communication */
+    --color-muted: #2a2a2a; /* Subtle content elevation */
+    --color-muted-foreground: #b0b0b0; /* Supporting information - elegant hierarchy */
+    --color-border: rgba(255, 255, 255, 0.1); /* Minimal separation - clean boundaries */
+    --color-input: #2a2a2a; /* Form field backgrounds */
+    --color-ring: #00d4ff; /* Electric blue - focus indicators */
+
+    /* Brand Identity Colors */
+    --color-primary: #0099cc; /* DevOps reliability - trustworthy innovation */
+    --color-primary-foreground: #ffffff; /* Pure white - high contrast */
+    --color-secondary: #1a1a1a; /* Professional foundation - enterprise stability */
+    --color-secondary-foreground: #ffffff; /* Pure white - clear text */
+    --color-accent: #00d4ff; /* Interactive moments - technical precision */
+    --color-accent-foreground: #0a0a0a; /* Deep black - strong contrast */
+
+    /* Status & Feedback Colors */
+    --color-success: #00ff88; /* Achievement metrics - positive performance */
+    --color-success-foreground: #0a0a0a; /* Deep black - readable contrast */
+    --color-warning: #ffaa00; /* Strategic emphasis - attention without alarm */
+    --color-warning-foreground: #0a0a0a; /* Deep black - clear visibility */
+    --color-error: #ff4444; /* Clear feedback - helpful problem identification */
+    --color-error-foreground: #ffffff; /* Pure white - urgent readability */
+    --color-destructive: #ff4444; /* Error states - clear problem indication */
+    --color-destructive-foreground: #ffffff; /* Pure white - high contrast */
+
+    /* Typography & Spacing */
+    --radius: 0.5rem;
+    --font-family-primary: 'Inter', sans-serif;
+    --font-family-mono: 'JetBrains Mono', monospace;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-primary;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+::-webkit-scrollbar-thumb:hover  {
+    
+  }
+}
+
+@layer components {
+  /* Glassmorphism effect for cards */
+  .glass-card {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    @apply rounded-2xl;
+  }
+
+  /* Neon glow effects */
+  .neon-glow {
+    filter: drop-shadow(0 0 10px #00d4ff);
+  }
+
+  /* 3D transform utilities */
+  .transform-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  /* Cyber grid pattern */
+  .cyber-grid {
+    background-image: 
+      linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Premium shadows */
+  .shadow-premium {
+    box-shadow: 0 4px 20px rgba(0, 153, 204, 0.1);
+  }
+
+  .shadow-premium-lg {
+    box-shadow: 0 8px 40px rgba(0, 153, 204, 0.15);
+  }
+
+  /* Animated gradient backgrounds */
+  .gradient-animated {
+    background: linear-gradient(45deg, #0099cc, #00d4ff, #0099cc);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Pulse animation for CTAs */
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { 
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    50% { 
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+    }
+  }
+
+  /* Hover magnetic effect */
+  .magnetic-hover {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .magnetic-hover:hover {
+    transform: scale(1.05) translateY(-2px);
+    filter: brightness(1.1);
+  }
+
+  /* Neural network connection lines */
+  .neural-lines {
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+    background-size: 100px 100px;
+    animation: neuralPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes neuralPulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+  }
+}
+
+@layer utilities {
+  /* Font family utilities */
+  .font-primary {
+    font-family: var(--font-family-primary);
+  }
+
+  .font-mono {
+    font-family: var(--font-family-mono);
+  }
+
+  /* Text gradient utilities */
+  .text-gradient {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Grid utilities for golden ratio */
+  .grid-golden {
+    display: grid;
+    gap: clamp(1rem, 4vw, 3rem);
+  }
+
+  /* Viewport utilities */
+  .min-h-screen-safe {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Focus utilities for accessibility */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
+  }
+}
