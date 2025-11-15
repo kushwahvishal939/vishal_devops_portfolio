@@ -148,7 +148,7 @@ const ExpertiseSection = ({ className = '' }: ExpertiseSectionProps) => {
             <span className="text-lg font-medium text-foreground">
               Ready to see these skills in action?
             </span>
-            <button onClick={() => window.location.href = "/portfolio"} className="px-6 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-premium magnetic-hover">
+            <button onClick={() => window.location.href = "/portfolio"}className="px-6 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-premium magnetic-hover">
               View Portfolio
             </button>
           </div>
