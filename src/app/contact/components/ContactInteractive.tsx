@@ -79,7 +79,7 @@ const ContactInteractive = ({ className = '' }: ContactInteractiveProps) => {
                     </div>
                     <div>
                       <div className="font-medium">Phone</div>
-                      <div className="text-sm text-muted-foreground">+91 98765 43210</div>
+                      <div className="text-sm text-muted-foreground">+918357862782</div>
                     </div>
                   </a>
 
