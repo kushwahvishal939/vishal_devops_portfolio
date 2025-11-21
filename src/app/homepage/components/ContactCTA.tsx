@@ -34,7 +34,7 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
       name: 'Phone',
       value: '+91 8357862782',
       icon: 'PhoneIcon',
-      href: 'tel:+919876543210',
+      href: 'tel:+918357862782',
       description: 'Call me directly'
     }
   ];
