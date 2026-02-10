@@ -38,7 +38,7 @@ const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
         'Reduced cloud spend by 45% with autoscaling and right-sizing',
         'Improved deployment cadence with progressive delivery',
       ],
-      technologies: ['Kubernetes', 'AWS', 'Terraform', 'ArgoCD', 'Helm'],
+      technologies: ['Kubernetes', 'AWS', 'Terraform', 'Azure', 'Helm'],
       icon: 'BuildingOfficeIcon',
     },
     {
