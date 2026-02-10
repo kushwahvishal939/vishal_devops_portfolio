@@ -21,7 +21,7 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
-  const categories = Array.from(new Set(tools.map(tool => tool.category)));
+  const categories = Array.from(new Set(tools.map((tool) => tool.category)));
 
   return (
     <div className="space-y-8">
@@ -38,10 +38,10 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
             <div className="w-2 h-2 bg-accent rounded-full"></div>
             <span>{category}</span>
           </h4>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {tools
-              .filter(tool => tool.category === category)
+              .filter((tool) => tool.category === category)
               .map((tool, index) => (
                 <div
                   key={index}
@@ -50,11 +50,13 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
                   onMouseLeave={() => setHoveredTool(null)}
                   onClick={() => setSelectedTool(tool)}
                 >
-                  <div className={`
+                  <div
+                    className={`
                     glass-card p-4 text-center transition-all duration-300 transform-3d
                     ${hoveredTool === tool.name ? 'scale-110 shadow-premium neon-glow' : 'hover:scale-105'}
                     ${selectedTool?.name === tool.name ? 'ring-2 ring-accent' : ''}
-                  `}>
+                  `}
+                  >
                     <div className="text-3xl mb-2 transform transition-transform duration-300 group-hover:rotate-12">
                       {tool.icon}
                     </div>
@@ -62,7 +64,7 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
                       {tool.name}
                     </h5>
                     <div className="mt-2 w-full bg-muted rounded-full h-1">
-                      <div 
+                      <div
                         className="h-full bg-gradient-to-r from-accent to-primary rounded-full transition-all duration-1000"
                         style={{ width: `${tool.proficiency}%` }}
                       />
@@ -119,7 +121,9 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">Key Features & Capabilities</h4>
+                  <h4 className="font-semibold text-foreground mb-3">
+                    Key Features & Capabilities
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {selectedTool.features.map((feature, index) => (
                       <div key={index} className="flex items-center space-x-2">
@@ -132,7 +136,9 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-muted/20 rounded-lg">
-                    <div className="text-2xl font-bold text-accent">{selectedTool.proficiency}%</div>
+                    <div className="text-2xl font-bold text-accent">
+                      {selectedTool.proficiency}%
+                    </div>
                     <div className="text-sm text-muted-foreground">Proficiency</div>
                   </div>
                   <div className="text-center p-4 bg-muted/20 rounded-lg">

@@ -16,16 +16,16 @@ const HomepageInteractive = ({ className = '' }: HomepageInteractiveProps) => {
     <div className={`min-h-screen bg-background ${className}`}>
       {/* Hero Command Center */}
       <HeroSection />
-      
+
       {/* Skills Laboratory Preview */}
       <SkillsPreview />
-      
+
       {/* Experience Timeline Portal */}
       <ExperienceTimeline />
-      
+
       {/* Project Showcase Arena */}
       <FeaturedProjects />
-      
+
       {/* Contact & Collaboration Zone */}
       <ContactCTA />
     </div>

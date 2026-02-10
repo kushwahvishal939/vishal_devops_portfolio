@@ -17,12 +17,14 @@ export default function SkillCategory({ title, skills, icon, color }: SkillCateg
   return (
     <div className="glass-card p-6 hover:shadow-premium-lg transition-smooth">
       <div className="flex items-center space-x-3 mb-6">
-        <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center`}>
+        <div
+          className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center`}
+        >
           <span className="text-2xl">{icon}</span>
         </div>
         <h3 className="text-xl font-bold text-foreground">{title}</h3>
       </div>
-      
+
       <div className="space-y-4">
         {skills.map((skill, index) => (
           <div key={index} className="group">
@@ -38,18 +40,16 @@ export default function SkillCategory({ title, skills, icon, color }: SkillCateg
                   </p>
                 </div>
               </div>
-              <span className="text-sm font-mono text-accent">
-                {skill.proficiency}%
-              </span>
+              <span className="text-sm font-mono text-accent">{skill.proficiency}%</span>
             </div>
-            
+
             <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-              <div 
+              <div
                 className={`h-full bg-gradient-to-r ${color} rounded-full transition-all duration-1000 ease-out group-hover:shadow-neon`}
                 style={{ width: `${skill.proficiency}%` }}
               />
             </div>
-            
+
             <p className="text-sm text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-smooth">
               {skill.description}
             </p>

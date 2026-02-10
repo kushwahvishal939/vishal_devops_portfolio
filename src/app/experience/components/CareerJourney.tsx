@@ -34,15 +34,17 @@ const CareerJourney = ({ milestones }: CareerJourneyProps) => {
           {milestones.map((milestone, index) => (
             <div key={index} className="relative flex items-start space-x-6">
               {/* Milestone Node */}
-              <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center border-4 border-background ${
-                milestone.highlight 
-                  ? 'bg-gradient-to-br from-accent to-primary shadow-neon' 
-                  : 'bg-muted'
-              }`}>
-                <Icon 
-                  name={milestone.icon as any} 
-                  size={20} 
-                  className={milestone.highlight ? 'text-white' : 'text-muted-foreground'} 
+              <div
+                className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center border-4 border-background ${
+                  milestone.highlight
+                    ? 'bg-gradient-to-br from-accent to-primary shadow-neon'
+                    : 'bg-muted'
+                }`}
+              >
+                <Icon
+                  name={milestone.icon as any}
+                  size={20}
+                  className={milestone.highlight ? 'text-white' : 'text-muted-foreground'}
                 />
                 {milestone.highlight && (
                   <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-full animate-ping opacity-30"></div>
@@ -52,10 +54,13 @@ const CareerJourney = ({ milestones }: CareerJourneyProps) => {
               {/* Milestone Content */}
               <div className="flex-1 pb-8">
                 <div className="flex items-center space-x-3 mb-2">
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                    milestone.highlight 
-                      ? 'bg-accent/20 text-accent' :'bg-muted/50 text-muted-foreground'
-                  }`}>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-bold ${
+                      milestone.highlight
+                        ? 'bg-accent/20 text-accent'
+                        : 'bg-muted/50 text-muted-foreground'
+                    }`}
+                  >
                     {milestone.year}
                   </span>
                   {milestone.highlight && (
@@ -64,14 +69,14 @@ const CareerJourney = ({ milestones }: CareerJourneyProps) => {
                     </span>
                   )}
                 </div>
-                <h4 className={`text-lg font-semibold mb-2 ${
-                  milestone.highlight ? 'text-gradient' : 'text-foreground'
-                }`}>
+                <h4
+                  className={`text-lg font-semibold mb-2 ${
+                    milestone.highlight ? 'text-gradient' : 'text-foreground'
+                  }`}
+                >
                   {milestone.title}
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
-                  {milestone.description}
-                </p>
+                <p className="text-muted-foreground leading-relaxed">{milestone.description}</p>
               </div>
             </div>
           ))}

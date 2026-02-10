@@ -4,7 +4,8 @@ import HomepageInteractive from './components/HomepageInteractive';
 
 export const metadata: Metadata = {
   title: 'Vishal DevOps Portfolio',
-  description: 'Vishal Kushwah\'s premium DevOps portfolio showcasing cloud infrastructure expertise, cost optimization achievements, and innovative automation solutions with interactive 3D visualizations.',
+  description:
+    "Vishal Kushwah's premium DevOps portfolio showcasing cloud infrastructure expertise, cost optimization achievements, and innovative automation solutions with interactive 3D visualizations.",
 };
 
 export default function Homepage() {

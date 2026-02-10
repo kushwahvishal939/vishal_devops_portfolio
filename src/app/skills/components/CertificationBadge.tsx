@@ -55,12 +55,14 @@ export default function CertificationBadge({ certification }: CertificationBadge
             <p className="text-xs text-muted-foreground">{certification.issuer}</p>
           </div>
         </div>
-        
-        <div className={`px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getStatusColor(certification.status)}`}>
+
+        <div
+          className={`px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getStatusColor(certification.status)}`}
+        >
           {getStatusText(certification.status)}
         </div>
       </div>
-      
+
       <div className="space-y-2 text-xs text-muted-foreground">
         <div className="flex items-center justify-between">
           <span>Issued:</span>
@@ -71,7 +73,7 @@ export default function CertificationBadge({ certification }: CertificationBadge
           <span className="font-mono text-accent">{certification.credentialId}</span>
         </div>
       </div>
-      
+
       <a
         href={certification.verificationUrl}
         target="_blank"

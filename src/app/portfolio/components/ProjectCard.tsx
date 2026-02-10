@@ -63,7 +63,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
-        
+
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-accent/20 text-accent text-xs font-semibold rounded-full backdrop-blur-sm border border-accent/30">
@@ -93,9 +93,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-accent transition-colors">
             {project.title}
           </h3>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            {project.description}
-          </p>
+          <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
         </div>
 
         {/* Technologies */}
@@ -128,7 +126,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           )}
           {project.metrics.performanceImprovement && (
             <div className="text-center p-3 bg-accent/10 rounded-lg border border-accent/20">
-              <div className="text-lg font-bold text-accent">{project.metrics.performanceImprovement}</div>
+              <div className="text-lg font-bold text-accent">
+                {project.metrics.performanceImprovement}
+              </div>
               <div className="text-xs text-muted-foreground">Performance</div>
             </div>
           )}
@@ -139,12 +139,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           onClick={toggleExpanded}
           className="w-full flex items-center justify-center space-x-2 py-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors focus-ring"
         >
-          <span className="text-sm font-medium">
-            {isExpanded ? 'Show Less' : 'View Details'}
-          </span>
-          <Icon 
-            name={isExpanded ? "ChevronUpIcon" : "ChevronDownIcon"} 
-            size={16} 
+          <span className="text-sm font-medium">{isExpanded ? 'Show Less' : 'View Details'}</span>
+          <Icon
+            name={isExpanded ? 'ChevronUpIcon' : 'ChevronDownIcon'}
+            size={16}
             className="transition-transform duration-300"
           />
         </button>
@@ -158,14 +156,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {[
               { key: 'overview', label: 'Overview', icon: 'DocumentTextIcon' },
               { key: 'architecture', label: 'Architecture', icon: 'CubeIcon' },
-              { key: 'metrics', label: 'Impact', icon: 'ChartBarIcon' }
+              { key: 'metrics', label: 'Impact', icon: 'ChartBarIcon' },
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as any)}
                 className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 text-sm font-medium transition-colors ${
                   activeTab === tab.key
-                    ? 'text-accent border-b-2 border-accent bg-accent/5' :'text-muted-foreground hover:text-foreground hover:bg-muted/30'
+                    ? 'text-accent border-b-2 border-accent bg-accent/5'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
                 }`}
               >
                 <Icon name={tab.icon as any} size={16} />
@@ -192,8 +191,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     </h4>
                     <ul className="space-y-2">
                       {project.challenges.map((challenge, index) => (
-                        <li key={index} className="flex items-start space-x-2 text-sm text-muted-foreground">
-                          <Icon name="MinusIcon" size={12} className="text-warning mt-1 flex-shrink-0" />
+                        <li
+                          key={index}
+                          className="flex items-start space-x-2 text-sm text-muted-foreground"
+                        >
+                          <Icon
+                            name="MinusIcon"
+                            size={12}
+                            className="text-warning mt-1 flex-shrink-0"
+                          />
                           <span>{challenge}</span>
                         </li>
                       ))}
@@ -207,8 +213,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     </h4>
                     <ul className="space-y-2">
                       {project.solutions.map((solution, index) => (
-                        <li key={index} className="flex items-start space-x-2 text-sm text-muted-foreground">
-                          <Icon name="CheckIcon" size={12} className="text-success mt-1 flex-shrink-0" />
+                        <li
+                          key={index}
+                          className="flex items-start space-x-2 text-sm text-muted-foreground"
+                        >
+                          <Icon
+                            name="CheckIcon"
+                            size={12}
+                            className="text-success mt-1 flex-shrink-0"
+                          />
                           <span>{solution}</span>
                         </li>
                       ))}
@@ -250,7 +263,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 ) : (
                   <div className="flex items-center justify-center h-64 bg-muted/30 rounded-lg border-2 border-dashed border-border">
                     <div className="text-center">
-                      <Icon name="CubeIcon" size={48} className="text-muted-foreground mx-auto mb-2" />
+                      <Icon
+                        name="CubeIcon"
+                        size={48}
+                        className="text-muted-foreground mx-auto mb-2"
+                      />
                       <p className="text-muted-foreground">Architecture diagram coming soon</p>
                     </div>
                   </div>
@@ -274,11 +291,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 {project.testimonial && (
                   <div className="p-4 bg-accent/5 border border-accent/20 rounded-lg">
                     <div className="flex items-start space-x-3">
-                      <Icon name="ChatBubbleLeftEllipsisIcon" size={20} className="text-accent mt-1" />
+                      <Icon
+                        name="ChatBubbleLeftEllipsisIcon"
+                        size={20}
+                        className="text-accent mt-1"
+                      />
                       <div>
-                        <p className="text-muted-foreground italic mb-3">"{project.testimonial.text}"</p>
+                        <p className="text-muted-foreground italic mb-3">
+                          "{project.testimonial.text}"
+                        </p>
                         <div className="text-sm">
-                          <div className="font-semibold text-foreground">{project.testimonial.author}</div>
+                          <div className="font-semibold text-foreground">
+                            {project.testimonial.author}
+                          </div>
                           <div className="text-muted-foreground">
                             {project.testimonial.position} at {project.testimonial.company}
                           </div>

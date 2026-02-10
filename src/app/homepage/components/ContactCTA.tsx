@@ -9,36 +9,37 @@ interface ContactCTAProps {
 }
 
 const ContactCTA = ({ className = '' }: ContactCTAProps) => {
-
   const contactMethods = [
     {
       name: 'Email',
       value: 'kushwahvishal939@gmail.com',
       icon: 'EnvelopeIcon',
       href: 'mailto:kushwahvishal939@gmail.com',
-      description: 'Drop me a line'
+      description: 'Drop me a line',
     },
     {
       name: 'LinkedIn',
       value: 'linkedin.com/in/vishalkushwah939',
       icon: 'UserIcon',
       href: 'https://www.linkedin.com/in/vishalkushwah939',
-      description: 'Let\'s connect'
+      description: "Let's connect",
     },
     {
       name: 'Phone',
       value: '+91 8357862782',
       icon: 'PhoneIcon',
       href: 'tel:+918357862782',
-      description: 'Call me directly'
-    }
+      description: 'Call me directly',
+    },
   ];
 
   return (
-    <section className={`py-20 bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden ${className}`}>
+    <section
+      className={`py-20 bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden ${className}`}
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 cyber-grid opacity-10"></div>
-      
+
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Main CTA Content */}
         <div className="mb-12">
@@ -46,7 +47,8 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
             Ready to Transform Your Infrastructure?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Let's discuss how I can help optimize your cloud infrastructure, reduce costs, and accelerate your DevOps journey with proven expertise.
+            Let's discuss how I can help optimize your cloud infrastructure, reduce costs, and
+            accelerate your DevOps journey with proven expertise.
           </p>
 
           {/* Primary CTA Buttons */}
@@ -86,14 +88,10 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
               </div>
 
               {/* Method Name */}
-              <h3 className="font-semibold text-foreground mb-2">
-                {method.name}
-              </h3>
+              <h3 className="font-semibold text-foreground mb-2">{method.name}</h3>
 
               {/* Description */}
-              <p className="text-sm text-muted-foreground mb-3">
-                {method.description}
-              </p>
+              <p className="text-sm text-muted-foreground mb-3">{method.description}</p>
 
               {/* Contact Value */}
               <p className="text-accent font-medium text-sm group-hover:text-accent transition-smooth">

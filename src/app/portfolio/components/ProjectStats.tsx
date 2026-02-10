@@ -19,33 +19,33 @@ const ProjectStats = ({
   totalProjects,
   completedProjects,
   totalCostSavings,
-  averagePerformanceGain
+  averagePerformanceGain,
 }: ProjectStatsProps) => {
   const stats: Stat[] = [
     {
       label: 'Total Projects',
       value: totalProjects.toString(),
       icon: 'FolderIcon',
-      color: 'text-accent'
+      color: 'text-accent',
     },
     {
       label: 'Completed',
       value: completedProjects.toString(),
       icon: 'CheckCircleIcon',
-      color: 'text-success'
+      color: 'text-success',
     },
     {
       label: 'Cost Savings',
       value: totalCostSavings,
       icon: 'CurrencyRupeeIcon',
-      color: 'text-warning'
+      color: 'text-warning',
     },
     {
       label: 'Avg Performance',
       value: averagePerformanceGain,
       icon: 'ChartBarIcon',
-      color: 'text-primary'
-    }
+      color: 'text-primary',
+    },
   ];
 
   return (

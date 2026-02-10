@@ -21,54 +21,54 @@ interface TestimonialsSectionProps {
 
 const TestimonialsSection = ({ className = '' }: TestimonialsSectionProps) => {
   const testimonials: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Sarah Chen',
-    role: 'CTO',
-    company: 'TechFlow Solutions',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_129b1ff05-1762273604073.png",
-    alt: 'Professional Asian woman with shoulder-length black hair in navy blazer smiling confidently',
-    rating: 5,
-    testimonial: `Vishal transformed our entire deployment process. What used to take 4 hours now takes 15 minutes. His expertise in Kubernetes and CI/CD automation saved us both time and money. The infrastructure he built has been rock-solid for 8 months now.`,
-    projectType: 'CI/CD Pipeline & Kubernetes Migration',
-    results: '75% faster deployments, ₹2.5L monthly savings'
-  },
-  {
-    id: '2',
-    name: 'Michael Rodriguez',
-    role: 'Engineering Manager',
-    company: 'CloudScale Inc',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_146fb5593-1762274292741.png",
-    alt: 'Hispanic man with short dark hair and beard in white dress shirt smiling professionally',
-    rating: 5,
-    testimonial: `Working with Vishal was a game-changer for our startup. He migrated our entire infrastructure to AWS, set up monitoring, and implemented cost optimization strategies. His proactive approach and deep knowledge made the complex simple.`,
-    projectType: 'AWS Cloud Migration & Cost Optimization',
-    results: '60% cost reduction, 99.9% uptime achieved'
-  },
-  {
-    id: '3',
-    name: 'Emily Watson',
-    role: 'DevOps Lead',
-    company: 'InnovateTech',
-    image: "https://images.unsplash.com/photo-1636393913936-187da0a372e3",
-    alt: 'Caucasian woman with blonde hair in professional gray suit jacket with confident expression',
-    rating: 5,
-    testimonial: `Vishal's monitoring and alerting setup caught critical issues before they became outages. His Terraform modules are clean, well-documented, and reusable. He's the kind of DevOps engineer every team needs.`,
-    projectType: 'Infrastructure as Code & Monitoring',
-    results: 'Zero unplanned downtime, 50% faster incident response'
-  }];
-
+    {
+      id: '1',
+      name: 'Sarah Chen',
+      role: 'CTO',
+      company: 'TechFlow Solutions',
+      image: 'https://img.rocket.new/generatedImages/rocket_gen_img_129b1ff05-1762273604073.png',
+      alt: 'Professional Asian woman with shoulder-length black hair in navy blazer smiling confidently',
+      rating: 5,
+      testimonial: `Vishal transformed our entire deployment process. What used to take 4 hours now takes 15 minutes. His expertise in Kubernetes and CI/CD automation saved us both time and money. The infrastructure he built has been rock-solid for 8 months now.`,
+      projectType: 'CI/CD Pipeline & Kubernetes Migration',
+      results: '75% faster deployments, ₹2.5L monthly savings',
+    },
+    {
+      id: '2',
+      name: 'Michael Rodriguez',
+      role: 'Engineering Manager',
+      company: 'CloudScale Inc',
+      image: 'https://img.rocket.new/generatedImages/rocket_gen_img_146fb5593-1762274292741.png',
+      alt: 'Hispanic man with short dark hair and beard in white dress shirt smiling professionally',
+      rating: 5,
+      testimonial: `Working with Vishal was a game-changer for our startup. He migrated our entire infrastructure to AWS, set up monitoring, and implemented cost optimization strategies. His proactive approach and deep knowledge made the complex simple.`,
+      projectType: 'AWS Cloud Migration & Cost Optimization',
+      results: '60% cost reduction, 99.9% uptime achieved',
+    },
+    {
+      id: '3',
+      name: 'Emily Watson',
+      role: 'DevOps Lead',
+      company: 'InnovateTech',
+      image: 'https://images.unsplash.com/photo-1636393913936-187da0a372e3',
+      alt: 'Caucasian woman with blonde hair in professional gray suit jacket with confident expression',
+      rating: 5,
+      testimonial: `Vishal's monitoring and alerting setup caught critical issues before they became outages. His Terraform modules are clean, well-documented, and reusable. He's the kind of DevOps engineer every team needs.`,
+      projectType: 'Infrastructure as Code & Monitoring',
+      results: 'Zero unplanned downtime, 50% faster incident response',
+    },
+  ];
 
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) =>
-    <Icon
-      key={index}
-      name="StarIcon"
-      size={16}
-      variant={index < rating ? 'solid' : 'outline'}
-      className={index < rating ? 'text-warning' : 'text-muted-foreground'} />
-
-    );
+    return Array.from({ length: 5 }, (_, index) => (
+      <Icon
+        key={index}
+        name="StarIcon"
+        size={16}
+        variant={index < rating ? 'solid' : 'outline'}
+        className={index < rating ? 'text-warning' : 'text-muted-foreground'}
+      />
+    ));
   };
 
   return (
@@ -85,17 +85,21 @@ const TestimonialsSection = ({ className = '' }: TestimonialsSectionProps) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) =>
-          <div key={testimonial.id} className="glass-card p-6 hover:shadow-premium-lg transition-all duration-300">
+          {testimonials.map((testimonial) => (
+            <div
+              key={testimonial.id}
+              className="glass-card p-6 hover:shadow-premium-lg transition-all duration-300"
+            >
               {/* Header */}
               <div className="flex items-center space-x-4 mb-6">
                 <div className="relative">
                   <AppImage
-                  src={testimonial.image}
-                  alt={testimonial.alt}
-                  width={60}
-                  height={60}
-                  className="rounded-full object-cover" />
+                    src={testimonial.image}
+                    alt={testimonial.alt}
+                    width={60}
+                    height={60}
+                    className="rounded-full object-cover"
+                  />
 
                   <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-success rounded-full border-2 border-background flex items-center justify-center">
                     <Icon name="CheckIcon" size={12} className="text-background" />
@@ -111,9 +115,7 @@ const TestimonialsSection = ({ className = '' }: TestimonialsSectionProps) => {
               {/* Rating */}
               <div className="flex items-center space-x-1 mb-4">
                 {renderStars(testimonial.rating)}
-                <span className="text-sm text-muted-foreground ml-2">
-                  {testimonial.rating}.0
-                </span>
+                <span className="text-sm text-muted-foreground ml-2">{testimonial.rating}.0</span>
               </div>
 
               {/* Testimonial */}
@@ -139,14 +141,14 @@ const TestimonialsSection = ({ className = '' }: TestimonialsSectionProps) => {
                 </div>
               </div>
             </div>
-          )}
+          ))}
         </div>
 
         {/* Trust Indicators */}
         <div className="mt-16 text-center">
           <div className="glass-card p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold mb-6">Trusted by Teams Worldwide</h3>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center">
                 <div className="text-3xl font-bold text-accent mb-2">50+</div>
@@ -168,8 +170,8 @@ const TestimonialsSection = ({ className = '' }: TestimonialsSectionProps) => {
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default TestimonialsSection;

@@ -42,7 +42,11 @@ interface ExperienceTimelineProps {
   onToggleExpand: (id: number) => void;
 }
 
-const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: ExperienceTimelineProps) => {
+const ExperienceTimeline = ({
+  experiences,
+  expandedItems,
+  onToggleExpand,
+}: ExperienceTimelineProps) => {
   const isExpanded = (id: number) => expandedItems.includes(id);
 
   // Order: current first, then most recent by start/end date
@@ -125,7 +129,7 @@ const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: Expe
                     {isExpanded(experience.id) ? 'Show Less' : 'View Details'}
                   </span>
                   <Icon
-                    name={isExpanded(experience.id) ? "ChevronUpIcon" : "ChevronDownIcon"}
+                    name={isExpanded(experience.id) ? 'ChevronUpIcon' : 'ChevronDownIcon'}
                     size={16}
                     className={`transition-transform duration-300 ${
                       isExpanded(experience.id) ? 'rotate-180' : ''
@@ -135,9 +139,7 @@ const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: Expe
               </div>
 
               {/* Description */}
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {experience.description}
-              </p>
+              <p className="text-muted-foreground mb-6 leading-relaxed">{experience.description}</p>
 
               {/* Key Achievements Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -222,10 +224,14 @@ const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: Expe
                           className="bg-background/30 rounded-lg p-4 border border-border"
                         >
                           <h5 className="font-semibold text-foreground mb-2">{project.name}</h5>
-                          <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
-                          
+                          <p className="text-sm text-muted-foreground mb-3">
+                            {project.description}
+                          </p>
+
                           <div className="mb-3">
-                            <p className="text-xs font-medium text-muted-foreground mb-2">Technologies:</p>
+                            <p className="text-xs font-medium text-muted-foreground mb-2">
+                              Technologies:
+                            </p>
                             <div className="flex flex-wrap gap-1">
                               {project.technologies.map((tech, techIdx) => (
                                 <span
@@ -239,14 +245,20 @@ const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: Expe
                           </div>
 
                           <div>
-                            <p className="text-xs font-medium text-muted-foreground mb-2">Outcomes:</p>
+                            <p className="text-xs font-medium text-muted-foreground mb-2">
+                              Outcomes:
+                            </p>
                             <ul className="space-y-1">
                               {project.outcomes.map((outcome, outcomeIdx) => (
                                 <li
                                   key={outcomeIdx}
                                   className="text-sm text-muted-foreground flex items-start space-x-2"
                                 >
-                                  <Icon name="CheckIcon" size={14} className="text-success mt-0.5 flex-shrink-0" />
+                                  <Icon
+                                    name="CheckIcon"
+                                    size={14}
+                                    className="text-success mt-0.5 flex-shrink-0"
+                                  />
                                   <span>{outcome}</span>
                                 </li>
                               ))}

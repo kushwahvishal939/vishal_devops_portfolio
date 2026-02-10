@@ -29,7 +29,7 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     projectType: '',
     budget: '',
     timeline: '',
-    message: ''
+    message: '',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -44,16 +44,10 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     'Monitoring & Observability',
     'Cost Optimization',
     'Security Implementation',
-    'Other'
+    'Other',
   ];
 
-  const budgetRanges = [
-    '$50 - $100',
-    '$100 - $200',
-    '$300 - $500',
-    '$1000 - $5000',
-    '$10000+'
-  ];
+  const budgetRanges = ['$50 - $100', '$100 - $200', '$300 - $500', '$1000 - $5000', '$10000+'];
 
   const timelineOptions = [
     'ASAP (Rush Job)',
@@ -61,7 +55,7 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     '1 month',
     '2-3 months',
     '3-6 months',
-    '6+ months'
+    '6+ months',
   ];
 
   const validateForm = (): boolean => {
@@ -91,19 +85,21 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -112,7 +108,7 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
 
     // Simulate form submission
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       setIsSubmitted(true);
       setFormData({
         name: '',
@@ -121,7 +117,7 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
         projectType: '',
         budget: '',
         timeline: '',
-        message: ''
+        message: '',
       });
     } catch (error) {
       console.error('Form submission error:', error);
@@ -138,7 +134,8 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
         </div>
         <h3 className="text-2xl font-bold mb-4">Message Sent Successfully!</h3>
         <p className="text-muted-foreground mb-6">
-          Thank you for reaching out! I'll review your project details and get back to you within 24 hours.
+          Thank you for reaching out! I'll review your project details and get back to you within 24
+          hours.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
@@ -240,7 +237,9 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
         >
           <option value="">Select a project type</option>
           {projectTypes.map((type) => (
-            <option key={type} value={type}>{type}</option>
+            <option key={type} value={type}>
+              {type}
+            </option>
           ))}
         </select>
         {errors.projectType && (
@@ -266,7 +265,9 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
           >
             <option value="">Select budget range</option>
             {budgetRanges.map((range) => (
-              <option key={range} value={range}>{range}</option>
+              <option key={range} value={range}>
+                {range}
+              </option>
             ))}
           </select>
         </div>
@@ -284,7 +285,9 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
           >
             <option value="">Select timeline</option>
             {timelineOptions.map((option) => (
-              <option key={option} value={option}>{option}</option>
+              <option key={option} value={option}>
+                {option}
+              </option>
             ))}
           </select>
         </div>
@@ -337,8 +340,8 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
       </button>
 
       <p className="text-xs text-muted-foreground text-center">
-        By submitting this form, you agree to receive project-related communications. 
-        Your information is secure and will never be shared.
+        By submitting this form, you agree to receive project-related communications. Your
+        information is secure and will never be shared.
       </p>
     </form>
   );

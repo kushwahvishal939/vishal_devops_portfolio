@@ -25,7 +25,7 @@ const ProjectFilter = ({
   activeCategory,
   activeTechnology,
   onCategoryChange,
-  onTechnologyChange
+  onTechnologyChange,
 }: ProjectFilterProps) => {
   return (
     <div className="space-y-6">
@@ -48,10 +48,13 @@ const ProjectFilter = ({
             >
               <Icon name={category.icon as any} size={16} />
               <span>{category.label}</span>
-              <span className={`px-1.5 py-0.5 rounded-full text-xs ${
-                activeCategory === category.id
-                  ? 'bg-background/20 text-background' :'bg-accent/20 text-accent'
-              }`}>
+              <span
+                className={`px-1.5 py-0.5 rounded-full text-xs ${
+                  activeCategory === category.id
+                    ? 'bg-background/20 text-background'
+                    : 'bg-accent/20 text-accent'
+                }`}
+              >
                 {category.count}
               </span>
             </button>
@@ -72,7 +75,8 @@ const ProjectFilter = ({
               onClick={() => onTechnologyChange(tech.id)}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                 activeTechnology === tech.id
-                  ? 'bg-accent/20 text-accent border border-accent/30' :'bg-muted/20 text-muted-foreground hover:bg-muted/40 hover:text-foreground border border-transparent'
+                  ? 'bg-accent/20 text-accent border border-accent/30'
+                  : 'bg-muted/20 text-muted-foreground hover:bg-muted/40 hover:text-foreground border border-transparent'
               }`}
             >
               <Icon name={tech.icon as any} size={12} />

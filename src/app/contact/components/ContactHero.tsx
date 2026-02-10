@@ -29,9 +29,9 @@ const ContactHero = ({ className = '' }: ContactHeroProps) => {
 
           {/* Description */}
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Ready to transform your infrastructure? Whether you need DevOps consulting, 
-            cloud migration, or automation solutions, I'm here to help you achieve 
-            zero-downtime deployments and cost optimization.
+            Ready to transform your infrastructure? Whether you need DevOps consulting, cloud
+            migration, or automation solutions, I'm here to help you achieve zero-downtime
+            deployments and cost optimization.
           </p>
 
           {/* Quick Stats */}

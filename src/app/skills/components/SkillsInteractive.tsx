@@ -11,101 +11,104 @@ export default function SkillsInteractive() {
 
   const skillCategories = [
     {
-      title: "Cloud Platforms",
-      icon: "☁️",
-      color: "from-blue-500 to-cyan-500",
+      title: 'Cloud Platforms',
+      icon: '☁️',
+      color: 'from-blue-500 to-cyan-500',
       skills: [
         {
-          name: "Amazon Web Services",
+          name: 'Amazon Web Services',
           proficiency: 92,
-          icon: "🟠",
-          description: "Expert in EC2, S3, Lambda, RDS, CloudFormation, and cost optimization strategies",
-          yearsExperience: 2
+          icon: '🟠',
+          description:
+            'Expert in EC2, S3, Lambda, RDS, CloudFormation, and cost optimization strategies',
+          yearsExperience: 2,
         },
         {
-          name: "Microsoft Azure",
+          name: 'Microsoft Azure',
           proficiency: 88,
-          icon: "🔵",
-          description: "Certified in DevOps solutions, ARM templates, and Azure Kubernetes Service",
-          yearsExperience: 1
+          icon: '🔵',
+          description: 'Certified in DevOps solutions, ARM templates, and Azure Kubernetes Service',
+          yearsExperience: 1,
         },
         {
-          name: "Google Cloud Platform",
+          name: 'Google Cloud Platform',
           proficiency: 85,
-          icon: "🔴",
-          description: "Proficient in GKE, Cloud Functions, BigQuery, and infrastructure automation",
-          yearsExperience: 1
-        }
-      ]
+          icon: '🔴',
+          description:
+            'Proficient in GKE, Cloud Functions, BigQuery, and infrastructure automation',
+          yearsExperience: 1,
+        },
+      ],
     },
     {
-      title: "Container Orchestration",
-      icon: "🐳",
-      color: "from-purple-500 to-pink-500",
+      title: 'Container Orchestration',
+      icon: '🐳',
+      color: 'from-purple-500 to-pink-500',
       skills: [
         {
-          name: "Kubernetes",
+          name: 'Kubernetes',
           proficiency: 90,
-          icon: "⚙️",
-          description: "Advanced cluster management, RBAC, networking, and custom resource definitions",
-          yearsExperience: 2
+          icon: '⚙️',
+          description:
+            'Advanced cluster management, RBAC, networking, and custom resource definitions',
+          yearsExperience: 2,
         },
         {
-          name: "Docker",
+          name: 'Docker',
           proficiency: 95,
-          icon: "🐋",
-          description: "Container optimization, multi-stage builds, and security best practices",
-          yearsExperience: 2
+          icon: '🐋',
+          description: 'Container optimization, multi-stage builds, and security best practices',
+          yearsExperience: 2,
         },
         {
-          name: "Helm",
+          name: 'Helm',
           proficiency: 87,
-          icon: "⛵",
-          description: "Chart development, templating, and application lifecycle management",
-          yearsExperience: 2
-        }
-      ]
+          icon: '⛵',
+          description: 'Chart development, templating, and application lifecycle management',
+          yearsExperience: 2,
+        },
+      ],
     },
     {
-      title: "CI/CD & Automation",
-      icon: "🔄",
-      color: "from-green-500 to-teal-500",
+      title: 'CI/CD & Automation',
+      icon: '🔄',
+      color: 'from-green-500 to-teal-500',
       skills: [
         {
-          name: "Jenkins",
+          name: 'Jenkins',
           proficiency: 93,
-          icon: "🔧",
-          description: "Pipeline as code, plugin development, and distributed build systems",
-          yearsExperience: 2
+          icon: '🔧',
+          description: 'Pipeline as code, plugin development, and distributed build systems',
+          yearsExperience: 2,
         },
         {
-          name: "GitHub Actions",
+          name: 'GitHub Actions',
           proficiency: 89,
-          icon: "🐙",
-          description: "Workflow automation, custom actions, and security scanning integration",
-          yearsExperience: 2
+          icon: '🐙',
+          description: 'Workflow automation, custom actions, and security scanning integration',
+          yearsExperience: 2,
         },
         {
-          name: "GitLab CI/CD",
+          name: 'GitLab CI/CD',
           proficiency: 86,
-          icon: "🦊",
-          description: "Multi-stage pipelines, auto-scaling runners, and deployment strategies",
-          yearsExperience: 2
-        }
-      ]
+          icon: '🦊',
+          description: 'Multi-stage pipelines, auto-scaling runners, and deployment strategies',
+          yearsExperience: 2,
+        },
+      ],
     },
     {
-      title: "Infrastructure as Code",
-      icon: "📜",
-      color: "from-orange-500 to-red-500",
+      title: 'Infrastructure as Code',
+      icon: '📜',
+      color: 'from-orange-500 to-red-500',
       skills: [
         {
-          name: "Terraform",
+          name: 'Terraform',
           proficiency: 91,
-          icon: "🏗️",
-          description: "Multi-cloud provisioning, state management, and module development",
-          yearsExperience: 1
-        }
+          icon: '🏗️',
+          description: 'Multi-cloud provisioning, state management, and module development',
+          yearsExperience: 1,
+        },
         // {
         //   name: "Ansible",
         //   proficiency: 88,
@@ -120,94 +123,114 @@ export default function SkillsInteractive() {
         //   description: "AWS resource provisioning, nested stacks, and custom resources",
         //   yearsExperience: 3
         // }
-      ]
-    }
+      ],
+    },
   ];
 
   const certifications = [
     {
-      name: "Microsoft Certified: AZ-400",
-      issuer: "Microsoft",
-      date: "July 2023",
-      credentialId: "AZ-400-VK2024",
-      verificationUrl: "https://www.credly.com/badges/7ea892bf-806d-423e-bf1f-149d2b10d2a6/linked_in_profile",
-      badgeIcon: "🏆",
-      status: "active" as const
+      name: 'Microsoft Certified: AZ-400',
+      issuer: 'Microsoft',
+      date: 'July 2023',
+      credentialId: 'AZ-400-VK2024',
+      verificationUrl:
+        'https://www.credly.com/badges/7ea892bf-806d-423e-bf1f-149d2b10d2a6/linked_in_profile',
+      badgeIcon: '🏆',
+      status: 'active' as const,
     },
     {
-      name: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
-      date: "Aug 2024",
-      credentialId: "SAA-C03-VK2024",
-      verificationUrl: "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
-      badgeIcon: "🎯",
-      status: "active" as const
+      name: 'AWS Certified Solutions Architect',
+      issuer: 'Amazon Web Services',
+      date: 'Aug 2024',
+      credentialId: 'SAA-C03-VK2024',
+      verificationUrl:
+        'https://aws.amazon.com/certification/certified-solutions-architect-associate/',
+      badgeIcon: '🎯',
+      status: 'active' as const,
     },
     {
-      name: "Google Cloud: Gemini for DevOps Engineer",
-      issuer: "Google Cloud",
-      date: "Sept 2025",
-      credentialId: "GCP-PDE-VK2024",
-      verificationUrl: "https://www.skills.google/public_profiles/2f0f4e69-4786-4ea0-af6c-89de4ea6d88b/badges/18053972?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share",
-      badgeIcon: "⭐",
-      status: "active" as const
+      name: 'Google Cloud: Gemini for DevOps Engineer',
+      issuer: 'Google Cloud',
+      date: 'Sept 2025',
+      credentialId: 'GCP-PDE-VK2024',
+      verificationUrl:
+        'https://www.skills.google/public_profiles/2f0f4e69-4786-4ea0-af6c-89de4ea6d88b/badges/18053972?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share',
+      badgeIcon: '⭐',
+      status: 'active' as const,
     },
     {
-      name: "Cisco Network Automation Essentials",
-      issuer: "CISCO",
-      date: "Oct 2025",
-      credentialId: "CKA-VK2024",
-      verificationUrl: "https://www.credly.com/badges/894eb797-6766-40fb-b680-44467bf68b54/linked_in_profile",
-      badgeIcon: "🚀",
-      status: "active" as const
-    }
+      name: 'Cisco Network Automation Essentials',
+      issuer: 'CISCO',
+      date: 'Oct 2025',
+      credentialId: 'CKA-VK2024',
+      verificationUrl:
+        'https://www.credly.com/badges/894eb797-6766-40fb-b680-44467bf68b54/linked_in_profile',
+      badgeIcon: '🚀',
+      status: 'active' as const,
+    },
   ];
 
   const tools = [
     {
-      name: "Docker",
-      category: "Containerization",
-      icon: "🐋",
-      description: "Container platform for building, shipping, and running applications",
-      features: ["Multi-stage builds", "Image optimization", "Security scanning", "Registry management"],
+      name: 'Docker',
+      category: 'Containerization',
+      icon: '🐋',
+      description: 'Container platform for building, shipping, and running applications',
+      features: [
+        'Multi-stage builds',
+        'Image optimization',
+        'Security scanning',
+        'Registry management',
+      ],
       proficiency: 95,
-      projects: 15
+      projects: 15,
     },
     {
-      name: "Kubernetes",
-      category: "Orchestration",
-      icon: "⚙️",
-      description: "Container orchestration platform for automated deployment and scaling",
-      features: ["Cluster management", "Service mesh", "Auto-scaling", "Rolling updates"],
+      name: 'Kubernetes',
+      category: 'Orchestration',
+      icon: '⚙️',
+      description: 'Container orchestration platform for automated deployment and scaling',
+      features: ['Cluster management', 'Service mesh', 'Auto-scaling', 'Rolling updates'],
       proficiency: 90,
-      projects: 15
+      projects: 15,
     },
     {
-      name: "Jenkins",
-      category: "CI/CD",
-      icon: "🔧",
-      description: "Automation server for continuous integration and deployment",
-      features: ["Pipeline as code", "Plugin ecosystem", "Distributed builds", "Blue Ocean UI"],
+      name: 'Jenkins',
+      category: 'CI/CD',
+      icon: '🔧',
+      description: 'Automation server for continuous integration and deployment',
+      features: ['Pipeline as code', 'Plugin ecosystem', 'Distributed builds', 'Blue Ocean UI'],
       proficiency: 93,
-      projects: 20
+      projects: 20,
     },
     {
-      name: "Terraform",
-      category: "Infrastructure",
-      icon: "🏗️",
-      description: "Infrastructure as code tool for building and managing cloud resources",
-      features: ["Multi-cloud support", "State management", "Module system", "Plan validation"],
+      name: 'Terraform',
+      category: 'Infrastructure',
+      icon: '🏗️',
+      description: 'Infrastructure as code tool for building and managing cloud resources',
+      features: ['Multi-cloud support', 'State management', 'Module system', 'Plan validation'],
       proficiency: 91,
-      projects: 12
+      projects: 12,
     },
     {
-      name: "AWS",
-      category: "Cloud Platform",
-      icon: "🟠",
-      description: "Comprehensive cloud computing platform with 200+ services",
-      features: ["EC2 & Lambda", "S3 & RDS", "CloudFormation", "Cost optimization", "EKS", "ECS & ECS Fargate", "Application Load Balancer", "CloudWatch", "Route53", ""],
+      name: 'AWS',
+      category: 'Cloud Platform',
+      icon: '🟠',
+      description: 'Comprehensive cloud computing platform with 200+ services',
+      features: [
+        'EC2 & Lambda',
+        'S3 & RDS',
+        'CloudFormation',
+        'Cost optimization',
+        'EKS',
+        'ECS & ECS Fargate',
+        'Application Load Balancer',
+        'CloudWatch',
+        'Route53',
+        '',
+      ],
       proficiency: 92,
-      projects: 20
+      projects: 20,
     },
     // {
     //   name: "Ansible",
@@ -219,61 +242,61 @@ export default function SkillsInteractive() {
     //   projects: 20
     // },
     {
-      name: "Prometheus",
-      category: "Monitoring",
-      icon: "📊",
-      description: "Open-source monitoring and alerting toolkit for cloud-native environments",
-      features: ["Time-series database", "PromQL queries", "Alertmanager", "Service discovery"],
+      name: 'Prometheus',
+      category: 'Monitoring',
+      icon: '📊',
+      description: 'Open-source monitoring and alerting toolkit for cloud-native environments',
+      features: ['Time-series database', 'PromQL queries', 'Alertmanager', 'Service discovery'],
       proficiency: 86,
-      projects: 12
+      projects: 12,
     },
     {
-      name: "Grafana",
-      category: "Visualization",
-      icon: "📈",
-      description: "Analytics and monitoring platform with beautiful dashboards",
-      features: ["Custom dashboards", "Data source integration", "Alerting", "Team collaboration"],
+      name: 'Grafana',
+      category: 'Visualization',
+      icon: '📈',
+      description: 'Analytics and monitoring platform with beautiful dashboards',
+      features: ['Custom dashboards', 'Data source integration', 'Alerting', 'Team collaboration'],
       proficiency: 89,
-      projects: 18
-    }
+      projects: 18,
+    },
   ];
 
   const metrics = [
     {
-      label: "Technologies Mastered",
-      value: "50+",
-      icon: "🛠️",
-      color: "from-blue-500 to-cyan-500",
-      description: "DevOps tools and platforms"
+      label: 'Technologies Mastered',
+      value: '50+',
+      icon: '🛠️',
+      color: 'from-blue-500 to-cyan-500',
+      description: 'DevOps tools and platforms',
     },
     {
-      label: "Certifications Earned",
-      value: "8",
-      icon: "🏆",
-      color: "from-purple-500 to-pink-500",
-      description: "Industry-recognized credentials"
+      label: 'Certifications Earned',
+      value: '8',
+      icon: '🏆',
+      color: 'from-purple-500 to-pink-500',
+      description: 'Industry-recognized credentials',
     },
     {
-      label: "Years Experience",
-      value: "2+",
-      icon: "⏱️",
-      color: "from-green-500 to-teal-500",
-      description: "Professional DevOps expertise"
+      label: 'Years Experience',
+      value: '2+',
+      icon: '⏱️',
+      color: 'from-green-500 to-teal-500',
+      description: 'Professional DevOps expertise',
     },
     {
-      label: "Projects Delivered",
-      value: "50+",
-      icon: "🚀",
-      color: "from-orange-500 to-red-500",
-      description: "Successful implementations"
-    }
+      label: 'Projects Delivered',
+      value: '50+',
+      icon: '🚀',
+      color: 'from-orange-500 to-red-500',
+      description: 'Successful implementations',
+    },
   ];
 
   const tabs = [
     { id: 'skills', label: 'Core Skills', icon: '🎯' },
     { id: 'tools', label: 'Tool Playground', icon: '🛠️' },
     { id: 'certifications', label: 'Certifications', icon: '🏆' },
-    { id: 'metrics', label: 'Metrics', icon: '📊' }
+    { id: 'metrics', label: 'Metrics', icon: '📊' },
   ];
 
   return (
@@ -284,12 +307,10 @@ export default function SkillsInteractive() {
           <span className="animate-pulse">🔥</span>
           <span>Skills Laboratory</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient">
-          DevOps Mastery
-        </h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient">DevOps Mastery</h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Interactive showcase of technical capabilities with real-time demonstrations, 
-          proficiency meters, and hands-on tool playground experiences
+          Interactive showcase of technical capabilities with real-time demonstrations, proficiency
+          meters, and hands-on tool playground experiences
         </p>
       </div>
 
@@ -327,16 +348,15 @@ export default function SkillsInteractive() {
           </div>
         )}
 
-        {activeTab === 'tools' && (
-          <ToolPlayground tools={tools} />
-        )}
+        {activeTab === 'tools' && <ToolPlayground tools={tools} />}
 
         {activeTab === 'certifications' && (
           <div>
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-gradient mb-4">Professional Certifications</h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Industry-recognized credentials validating expertise across cloud platforms and DevOps practices
+                Industry-recognized credentials validating expertise across cloud platforms and
+                DevOps practices
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

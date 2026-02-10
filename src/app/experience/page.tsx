@@ -4,14 +4,15 @@ import ExperienceInteractive from './components/ExperienceInteractive';
 
 export const metadata: Metadata = {
   title: 'Experience - VishTech DevOps Portfolio',
-  description: 'Explore Vishal Kushwah\'s professional DevOps journey with quantified achievements including 55% cost reduction, 40% deployment improvements, and 99.9% uptime records across enterprise-scale projects.',
+  description:
+    "Explore Vishal Kushwah's professional DevOps journey with quantified achievements including 55% cost reduction, 40% deployment improvements, and 99.9% uptime records across enterprise-scale projects.",
 };
 
 export default function ExperiencePage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="pt-20">
         {/* Hero Section */}
         <section className="relative py-20 lg:py-32 overflow-hidden">
@@ -19,23 +20,24 @@ export default function ExperiencePage() {
           <div className="absolute inset-0 cyber-grid opacity-30"></div>
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-          
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               <div className="inline-flex items-center space-x-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
                 <span>Professional Journey</span>
               </div>
-              
+
               <h1 className="text-5xl lg:text-7xl font-bold text-gradient mb-6">
                 Experience Timeline
               </h1>
-              
+
               <p className="text-xl lg:text-2xl text-muted-foreground mb-8 leading-relaxed">
-                From maintaining systems to <span className="text-accent font-semibold">revolutionizing infrastructure</span> — 
+                From maintaining systems to{' '}
+                <span className="text-accent font-semibold">revolutionizing infrastructure</span> —
                 a journey of measurable impact and continuous innovation in the DevOps ecosystem
               </p>
-              
+
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 bg-success rounded-full"></div>
@@ -74,8 +76,8 @@ export default function ExperiencePage() {
                 Ready to Transform Your Infrastructure?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Let's discuss how my proven DevOps expertise can revolutionize your systems, 
-                reduce costs, and achieve zero-downtime reliability for your organization.
+                Let's discuss how my proven DevOps expertise can revolutionize your systems, reduce
+                costs, and achieve zero-downtime reliability for your organization.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a

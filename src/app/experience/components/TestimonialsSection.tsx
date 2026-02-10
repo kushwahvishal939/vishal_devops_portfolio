@@ -21,11 +21,11 @@ interface TestimonialsSectionProps {
   onPrevious: () => void;
 }
 
-const TestimonialsSection = ({ 
-  testimonials, 
-  currentTestimonial, 
-  onNext, 
-  onPrevious 
+const TestimonialsSection = ({
+  testimonials,
+  currentTestimonial,
+  onNext,
+  onPrevious,
 }: TestimonialsSectionProps) => {
   const testimonial = testimonials[currentTestimonial];
 
@@ -49,13 +49,21 @@ const TestimonialsSection = ({
             onClick={onPrevious}
             className="w-10 h-10 bg-muted/50 hover:bg-accent/20 rounded-lg flex items-center justify-center transition-smooth focus-ring"
           >
-            <Icon name="ChevronLeftIcon" size={20} className="text-muted-foreground hover:text-accent" />
+            <Icon
+              name="ChevronLeftIcon"
+              size={20}
+              className="text-muted-foreground hover:text-accent"
+            />
           </button>
           <button
             onClick={onNext}
             className="w-10 h-10 bg-muted/50 hover:bg-accent/20 rounded-lg flex items-center justify-center transition-smooth focus-ring"
           >
-            <Icon name="ChevronRightIcon" size={20} className="text-muted-foreground hover:text-accent" />
+            <Icon
+              name="ChevronRightIcon"
+              size={20}
+              className="text-muted-foreground hover:text-accent"
+            />
           </button>
         </div>
       </div>
@@ -110,8 +118,9 @@ const TestimonialsSection = ({
             <button
               key={index}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentTestimonial 
-                  ? 'bg-accent w-8' :'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                index === currentTestimonial
+                  ? 'bg-accent w-8'
+                  : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
               }`}
               onClick={() => {
                 // This would be handled by parent component

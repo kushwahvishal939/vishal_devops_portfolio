@@ -66,10 +66,12 @@ const ContactInteractive = ({ className = '' }: ContactInteractiveProps) => {
                     </div>
                     <div>
                       <div className="font-medium">Email</div>
-                      <div className="text-sm text-muted-foreground">kushwahvishal939@gmail.com</div>
+                      <div className="text-sm text-muted-foreground">
+                        kushwahvishal939@gmail.com
+                      </div>
                     </div>
                   </a>
-                  
+
                   <a
                     href="tel:+919876543210"
                     className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/20 transition-colors"

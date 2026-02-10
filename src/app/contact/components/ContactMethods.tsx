@@ -27,7 +27,7 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
       action: 'Send Email',
       href: 'mailto:kushwahvishal939@gmail.com',
       availability: 'Always Available',
-      responseTime: '< 24 hours'
+      responseTime: '< 24 hours',
     },
     {
       id: 'linkedin',
@@ -37,7 +37,7 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
       action: 'Connect on LinkedIn',
       href: 'https://linkedin.com/in/kushwahvishal939',
       availability: 'Business Hours',
-      responseTime: '< 12 hours'
+      responseTime: '< 12 hours',
     },
     {
       id: 'phone',
@@ -47,7 +47,7 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
       action: 'Schedule Call',
       href: 'tel:+919876543210',
       availability: 'Mon-Fri 9AM-6PM IST',
-      responseTime: 'Immediate'
+      responseTime: 'Immediate',
     },
     {
       id: 'calendar',
@@ -57,8 +57,8 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
       action: 'Book Meeting',
       href: 'https://calendly.com/kushwahvishal939/30min',
       availability: 'Flexible Scheduling',
-      responseTime: 'Same Day'
-    }
+      responseTime: 'Same Day',
+    },
   ];
 
   return (
@@ -86,10 +86,10 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
               <div className="text-center">
                 {/* Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Icon 
-                    name={method.icon as any} 
-                    size={32} 
-                    className="text-accent group-hover:text-primary transition-colors duration-300" 
+                  <Icon
+                    name={method.icon as any}
+                    size={32}
+                    className="text-accent group-hover:text-primary transition-colors duration-300"
                   />
                 </div>
 
@@ -126,7 +126,7 @@ const ContactMethods = ({ className = '' }: ContactMethodsProps) => {
         <div className="mt-16 text-center">
           <div className="glass-card p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold mb-6">Location & Availability</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">

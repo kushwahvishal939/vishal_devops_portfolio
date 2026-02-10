@@ -4,14 +4,15 @@ import PortfolioInteractive from './components/PortfolioInteractive';
 
 export const metadata: Metadata = {
   title: 'Portfolio - VishTech DevOps Portfolio',
-  description: 'Explore Vishal Kushwah\'s comprehensive DevOps project portfolio featuring cloud migration, automation, cost optimization, and infrastructure solutions with measurable business impact.',
+  description:
+    "Explore Vishal Kushwah's comprehensive DevOps project portfolio featuring cloud migration, automation, cost optimization, and infrastructure solutions with measurable business impact.",
 };
 
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen-safe bg-background">
       <Header />
-      
+
       <main className="pt-20">
         {/* Hero Section */}
         <section className="relative py-16 lg:py-24 overflow-hidden">
@@ -19,21 +20,23 @@ export default function PortfolioPage() {
           <div className="absolute inset-0 cyber-grid opacity-20"></div>
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-          
+
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent text-sm font-medium mb-6">
                 <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
                 <span>Project Showcase Arena</span>
               </div>
-              
+
               <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
                 DevOps Project
                 <span className="block text-gradient">Portfolio</span>
               </h1>
-              
+
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
-                Explore real-world DevOps solutions that transformed infrastructure, optimized costs, and delivered measurable business impact. Each project demonstrates technical excellence and innovative problem-solving.
+                Explore real-world DevOps solutions that transformed infrastructure, optimized
+                costs, and delivered measurable business impact. Each project demonstrates technical
+                excellence and innovative problem-solving.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -68,7 +71,8 @@ export default function PortfolioPage() {
               Ready to Transform Your Infrastructure?
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Let's discuss how these proven DevOps strategies can optimize your systems, reduce costs, and improve reliability.
+              Let's discuss how these proven DevOps strategies can optimize your systems, reduce
+              costs, and improve reliability.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

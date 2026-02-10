@@ -4,7 +4,8 @@ import ContactInteractive from './components/ContactInteractive';
 
 export const metadata: Metadata = {
   title: 'Vishal DevOps Portfolio',
-  description: 'Get in touch with Vishal Kushwah for DevOps consulting, cloud migration, and infrastructure automation projects. Multiple communication channels available with 24-hour response time.',
+  description:
+    'Get in touch with Vishal Kushwah for DevOps consulting, cloud migration, and infrastructure automation projects. Multiple communication channels available with 24-hour response time.',
 };
 
 export default function ContactPage() {

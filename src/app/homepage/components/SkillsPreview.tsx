@@ -22,9 +22,19 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
     { name: 'Kubernetes', icon: 'CubeIcon', proficiency: 95, category: 'Container Orchestration' },
     { name: 'AWS', icon: 'CloudIcon', proficiency: 92, category: 'Cloud Platform' },
     { name: 'Docker', icon: 'ServerIcon', proficiency: 90, category: 'Containerization' },
-    { name: 'Terraform', icon: 'CommandLineIcon', proficiency: 88, category: 'Infrastructure as Code' },
+    {
+      name: 'Terraform',
+      icon: 'CommandLineIcon',
+      proficiency: 88,
+      category: 'Infrastructure as Code',
+    },
     { name: 'Jenkins', icon: 'CogIcon', proficiency: 85, category: 'CI/CD Pipeline' },
-    { name: 'Ansible', icon: 'WrenchScrewdriverIcon', proficiency: 87, category: 'Configuration Management' }
+    {
+      name: 'Ansible',
+      icon: 'WrenchScrewdriverIcon',
+      proficiency: 87,
+      category: 'Configuration Management',
+    },
   ];
 
   return (
@@ -32,9 +42,7 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">
-            DevOps Expertise
-          </h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">DevOps Expertise</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Mastering the tools that power modern cloud infrastructure and automation
           </p>
@@ -52,13 +60,16 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
             >
               {/* Skill Icon */}
               <div className="relative mb-4">
-                <div className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center transition-smooth ${
-                  hoveredSkill === skill.name 
-                    ? 'bg-gradient-to-br from-accent to-primary neon-glow' :'bg-accent/20'
-                }`}>
-                  <Icon 
-                    name={skill.icon as any} 
-                    size={32} 
+                <div
+                  className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center transition-smooth ${
+                    hoveredSkill === skill.name
+                      ? 'bg-gradient-to-br from-accent to-primary neon-glow'
+                      : 'bg-accent/20'
+                  }`}
+                >
+                  <Icon
+                    name={skill.icon as any}
+                    size={32}
                     className={`transition-smooth ${
                       hoveredSkill === skill.name ? 'text-background' : 'text-accent'
                     }`}
@@ -78,10 +89,10 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
 
               {/* Proficiency Bar */}
               <div className="w-full bg-muted rounded-full h-2 mb-2">
-                <div 
+                <div
                   className="bg-gradient-to-r from-accent to-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                  style={{ 
-                    width: hoveredSkill === skill.name ? `${skill.proficiency}%` : '0%' 
+                  style={{
+                    width: hoveredSkill === skill.name ? `${skill.proficiency}%` : '0%',
                   }}
                 ></div>
               </div>

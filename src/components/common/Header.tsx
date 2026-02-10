@@ -22,9 +22,7 @@ const Header = ({ className = '' }: HeaderProps) => {
     { name: 'Portfolio', href: '/portfolio', icon: 'FolderIcon' },
   ];
 
-  const moreItems = [
-    { name: 'Contact', href: '/contact', icon: 'EnvelopeIcon' },
-  ];
+  const moreItems = [{ name: 'Contact', href: '/contact', icon: 'EnvelopeIcon' }];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,18 +42,18 @@ const Header = ({ className = '' }: HeaderProps) => {
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-premium' 
+        isScrolled
+          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-premium'
           : 'bg-transparent'
       } ${className}`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link 
-            href="/homepage" 
+          <Link
+            href="/homepage"
             className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg"
           >
             <div className="relative">
@@ -78,13 +76,14 @@ const Header = ({ className = '' }: HeaderProps) => {
                 href={item.href}
                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-smooth focus-ring group ${
                   isActiveRoute(item.href)
-                    ? 'text-accent bg-accent/10' :'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    ? 'text-accent bg-accent/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
                 <div className="flex items-center space-x-2">
-                  <Icon 
-                    name={item.icon as any} 
-                    size={16} 
+                  <Icon
+                    name={item.icon as any}
+                    size={16}
                     className={`transition-smooth ${
                       isActiveRoute(item.href) ? 'text-accent' : 'group-hover:text-foreground'
                     }`}
@@ -107,7 +106,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <Icon name="EllipsisHorizontalIcon" size={16} />
                 <span>More</span>
               </button>
-              
+
               <div className="absolute top-full right-0 mt-2 w-48 bg-popover border border-border rounded-lg shadow-premium-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
                 <div className="py-2">
                   {moreItems.map((item) => (
@@ -116,7 +115,8 @@ const Header = ({ className = '' }: HeaderProps) => {
                       href={item.href}
                       className={`flex items-center space-x-3 px-4 py-2 text-sm transition-smooth ${
                         isActiveRoute(item.href)
-                          ? 'text-accent bg-accent/10' :'text-popover-foreground hover:bg-muted/50'
+                          ? 'text-accent bg-accent/10'
+                          : 'text-popover-foreground hover:bg-muted/50'
                       }`}
                     >
                       <Icon name={item.icon as any} size={16} />
@@ -145,19 +145,17 @@ const Header = ({ className = '' }: HeaderProps) => {
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
           >
-            <Icon 
-              name={isMobileMenuOpen ? "XMarkIcon" : "Bars3Icon"} 
-              size={24} 
-            />
+            <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden transition-all duration-300 ${
-        isMobileMenuOpen 
-          ? 'max-h-screen opacity-100' :'max-h-0 opacity-0 overflow-hidden'
-      }`}>
+      <div
+        className={`lg:hidden transition-all duration-300 ${
+          isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+        }`}
+      >
         <div className="bg-background/95 backdrop-blur-md border-t border-border">
           <nav className="px-4 py-4 space-y-2">
             {[...navigationItems, ...moreItems].map((item) => (
@@ -167,14 +165,15 @@ const Header = ({ className = '' }: HeaderProps) => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-smooth ${
                   isActiveRoute(item.href)
-                    ? 'text-accent bg-accent/10' :'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    ? 'text-accent bg-accent/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
                 <Icon name={item.icon as any} size={20} />
                 <span>{item.name}</span>
               </Link>
             ))}
-            
+
             <div className="pt-4 border-t border-border">
               <Link
                 href="/contact"
