@@ -70,8 +70,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        primary: ['Inter', 'sans-serif'], /* Technical clarity */
-        mono: ['JetBrains Mono', 'monospace'], /* Code authenticity */
+        primary: ['var(--font-inter)', 'Inter', 'sans-serif'], /* Technical clarity */
+        mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'monospace'], /* Code authenticity */
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
@@ -165,5 +165,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
+  ],
 }

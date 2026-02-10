@@ -21,6 +21,9 @@ interface ExperienceItem {
   company: string;
   position: string;
   duration: string;
+  startDate?: string;
+  endDate?: string | null;
+  isCurrent?: boolean;
   location: string;
   type: 'current' | 'previous';
   companyLogo: string;
@@ -42,13 +45,26 @@ interface ExperienceTimelineProps {
 const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: ExperienceTimelineProps) => {
   const isExpanded = (id: number) => expandedItems.includes(id);
 
+  // Order: current first, then most recent by start/end date
+  const sortedExperiences = [...experiences].sort((a, b) => {
+    if (a.isCurrent !== b.isCurrent) return a.isCurrent ? -1 : 1;
+
+    const aDate = a.startDate || a.endDate || '';
+    const bDate = b.startDate || b.endDate || '';
+
+    const aTime = aDate ? new Date(aDate).getTime() : 0;
+    const bTime = bDate ? new Date(bDate).getTime() : 0;
+
+    return bTime - aTime; // newer first
+  });
+
   return (
     <div className="relative">
       {/* Timeline Line */}
       <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-primary to-accent/30"></div>
 
       <div className="space-y-12">
-        {experiences.map((experience, index) => (
+        {sortedExperiences.map((experience, index) => (
           <div
             key={experience.id}
             className={`relative transition-all duration-700 transform ${
@@ -88,9 +104,13 @@ const ExperienceTimeline = ({ experiences, expandedItems, onToggleExpand }: Expe
                         <Icon name="MapPinIcon" size={16} />
                         <span>{experience.location}</span>
                       </span>
-                      {experience.type === 'current' && (
+                      {experience.type === 'current' ? (
                         <span className="px-2 py-1 bg-success/20 text-success rounded-full text-xs font-medium">
-                          Current Role
+                          Current Organization
+                        </span>
+                      ) : (
+                        <span className="px-2 py-1 bg-muted/30 text-muted-foreground rounded-full text-xs font-medium">
+                          Previous Experience
                         </span>
                       )}
                     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 
@@ -20,19 +20,32 @@ interface ExperienceTimelineProps {
 }
 
 const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const experiences: Experience[] = [
     {
       id: 1,
+      company: 'RDASH',
+      position: 'DevOps Engineer',
+      duration: 'Dec 22, 2025 - Present',
+      location: 'Gurgaon, India',
+      achievements: [
+        'Designed and implemented GitHub Actions CI/CD pipelines for automated build & deployment',
+        'Managed cloud infrastructure using Microsoft Azure',
+        'Built custom monitoring dashboards using Grafana for real-time system insights',
+        'Worked with databases: PostgreSQL & MySQL',
+        'Integrated Metabase for internal analytics and reporting',
+        'Configured OAuth Proxy for internal authentication & secure access',
+        'Improved deployment cadence with progressive delivery'
+      ],
+      technologies: ['Kubernetes', 'AWS', 'Azure', 'Terraform', 'GitHub Actions', 'Helm'],
+      icon: 'BuildingOfficeIcon'
+    },
+    {
+      id: 2,
       company: 'XGrowth LLC',
       position: 'DevOps Engineer',
-      duration: '2023 - Present',
+      duration: 'Oct 2023 - Dec 18, 2025',
       location: 'Noida, India',
       achievements: [
         'Reduced infrastructure costs by 57% through intelligent resource optimization',
@@ -40,7 +53,7 @@ const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
         'Implemented automated CI/CD pipelines reducing deployment time by 40%'
       ],
       technologies: ['Kubernetes', 'AWS', 'Terraform', 'Jenkins', 'Docker'],
-      icon: 'BuildingOfficeIcon'
+      icon: 'BriefcaseIcon'
     },
     // {
     //   id: 2,
@@ -71,39 +84,6 @@ const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
     //   icon: 'RocketLaunchIcon'
     // }
   ];
-
-  if (!isHydrated) {
-    return (
-      <section className={`py-20 bg-background ${className}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">
-              Professional Journey
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Building reliable infrastructure across innovative companies
-            </p>
-          </div>
-          <div className="space-y-8">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="glass-card p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                    <div className="w-6 h-6 bg-accent rounded"></div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-foreground">{exp.position}</h3>
-                    <p className="text-accent font-semibold">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground">{exp.duration} • {exp.location}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className={`py-20 bg-background ${className}`}>

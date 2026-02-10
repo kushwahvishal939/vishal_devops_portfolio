@@ -68,8 +68,8 @@ const PortfolioInteractive = () => {
     category: "cloud-migration",
     description: "Migrated legacy monolithic application to microservices architecture across AWS and Azure, achieving 55% cost reduction and 99.9% uptime.",
     longDescription: "Led a comprehensive cloud transformation initiative that involved migrating a legacy e-commerce platform from on-premises infrastructure to a hybrid multi-cloud setup. The project required careful planning, zero-downtime migration strategies, and implementation of advanced monitoring and automation systems.",
-    image: "https://images.unsplash.com/photo-1728305932524-4abdb62bf11d",
-    alt: "Digital cloud infrastructure visualization with interconnected nodes and data streams in blue and purple colors",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=70",
+    alt: "Abstract cloud architecture with connected servers representing multi-cloud migration",
     technologies: [
     { name: "AWS", icon: "CloudIcon", category: "Cloud Platform" },
     { name: "Azure", icon: "CloudIcon", category: "Cloud Platform" },
@@ -98,8 +98,8 @@ const PortfolioInteractive = () => {
 
     demoUrl: "https://demo.example.com",
     githubUrl: "https://github.com/example",
-    architectureImage: "https://images.unsplash.com/photo-1528005925324-090850173c4c",
-    architectureAlt: "Complex system architecture diagram showing microservices, databases, and cloud infrastructure components",
+    architectureImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1400&q=70",
+    architectureAlt: "Whiteboard-style microservices and cloud architecture drawing with connected services and databases",
     testimonial: {
       text: "Vishal's expertise in cloud migration saved us over ₹2.5L annually while improving our system reliability. His attention to detail and proactive approach made the entire process seamless.",
       author: "Rajesh Kumar",
@@ -113,8 +113,8 @@ const PortfolioInteractive = () => {
     category: "automation",
     description: "Built enterprise-grade CI/CD pipeline reducing deployment time from 4 hours to 15 minutes with automated testing and security scanning.",
     longDescription: "Designed and implemented a comprehensive DevOps automation suite that transformed the software delivery process for a fintech startup. The solution included automated testing, security scanning, infrastructure provisioning, and deployment orchestration across multiple environments.",
-    image: "https://images.unsplash.com/flagged/photo-1579274216947-86eaa4b00475",
-    alt: "Modern server room with glowing blue LED lights and organized cable management systems",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70",
+    alt: "Developer workstation showing CI/CD pipeline code and build status on screen",
     technologies: [
     { name: "Jenkins", icon: "CogIcon", category: "CI/CD" },
     { name: "GitLab CI", icon: "CodeBracketIcon", category: "CI/CD" },
@@ -149,8 +149,8 @@ const PortfolioInteractive = () => {
     category: "orchestration",
     description: "Developed custom Kubernetes management platform with auto-scaling, monitoring, and cost optimization features for enterprise workloads.",
     longDescription: "Created a comprehensive Kubernetes management solution that provides enterprise-grade features including intelligent auto-scaling, resource optimization, security policy enforcement, and cost management. The platform serves multiple development teams with isolated namespaces and RBAC controls.",
-    image: "https://images.unsplash.com/photo-1648614593495-e0955bf287e5",
-    alt: "Futuristic digital network visualization with interconnected geometric shapes and glowing connections",
+    image: "https://images.unsplash.com/photo-1649682892309-e10e0b7cd40b?auto=format&fit=crop&w=1600&q=70",
+    alt: "Futuristic network of containers and nodes representing Kubernetes orchestration",
     technologies: [
     { name: "Kubernetes", icon: "CubeIcon", category: "Orchestration" },
     { name: "Prometheus", icon: "ChartBarIcon", category: "Monitoring" },
@@ -175,7 +175,7 @@ const PortfolioInteractive = () => {
     "Established comprehensive security policies and network policies",
     "Created custom operators for enterprise tool integration"],
 
-    architectureImage: "https://images.unsplash.com/photo-1667372459470-5f61c93c6d3f",
+    architectureImage: "https://images.unsplash.com/photo-1667372459470-5f61c93c6d3f?auto=format&fit=crop&w=1400&q=70",
     architectureAlt: "Kubernetes cluster architecture diagram showing pods, services, and ingress controllers"
   },
   {
@@ -184,8 +184,8 @@ const PortfolioInteractive = () => {
     category: "cost-optimization",
     description: "Built intelligent cost optimization system that automatically rightsizes resources and schedules workloads, saving ₹3.2L annually.",
     longDescription: "Developed an AI-driven cost optimization platform that continuously monitors cloud resource utilization, identifies optimization opportunities, and automatically implements cost-saving measures while maintaining performance SLAs. The system includes predictive analytics for capacity planning and automated resource scheduling.",
-    image: "https://images.unsplash.com/photo-1710492341412-8b3aee7e70a6",
-    alt: "Financial dashboard showing cost reduction charts and analytics with green trending arrows",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=70",
+    alt: "Laptop displaying cost analytics dashboard with charts and savings metrics",
     technologies: [
     { name: "Python", icon: "CodeBracketIcon", category: "Programming" },
     { name: "AWS Cost Explorer", icon: "ChartBarIcon", category: "Analytics" },
@@ -224,8 +224,8 @@ const PortfolioInteractive = () => {
     category: "security",
     description: "Implemented zero-trust security architecture for microservices with automated threat detection and compliance monitoring.",
     longDescription: "Designed and deployed a comprehensive security framework for microservices architecture that implements zero-trust principles, automated threat detection, vulnerability scanning, and compliance monitoring. The solution includes service mesh security, API gateway protection, and runtime security monitoring.",
-    image: "https://images.unsplash.com/photo-1695287156819-9831ca6d1c46",
-    alt: "Cybersecurity concept with digital lock icons and security shields on dark background with blue accents",
+    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=70",
+    alt: "Cybersecurity lock and shield hologram representing zero-trust protections",
     technologies: [
     { name: "Istio", icon: "ShieldCheckIcon", category: "Service Mesh" },
     { name: "Falco", icon: "ExclamationTriangleIcon", category: "Runtime Security" },
@@ -258,8 +258,8 @@ const PortfolioInteractive = () => {
     category: "monitoring",
     description: "Built comprehensive observability platform with distributed tracing, metrics collection, and intelligent alerting for microservices ecosystem.",
     longDescription: "Architected and implemented a full-stack observability solution that provides deep insights into application performance, infrastructure health, and user experience. The platform includes distributed tracing, custom metrics, log aggregation, and AI-powered anomaly detection with intelligent alerting.",
-    image: "https://images.unsplash.com/photo-1688733718722-27b7027a0f5b",
-    alt: "Real-time monitoring dashboard with multiple graphs, charts, and system metrics displayed on dark interface",
+    image: "https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=1600&q=70",
+    alt: "Large monitor showing observability dashboards with metrics, logs, and traces",
     technologies: [
     { name: "Prometheus", icon: "ChartBarIcon", category: "Metrics" },
     { name: "Grafana", icon: "PresentationChartLineIcon", category: "Visualization" },

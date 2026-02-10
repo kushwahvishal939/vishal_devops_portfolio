@@ -99,7 +99,11 @@ const Header = ({ className = '' }: HeaderProps) => {
 
             {/* More Dropdown */}
             <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth focus-ring flex items-center space-x-2">
+              <button
+                className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth focus-ring flex items-center space-x-2"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
                 <Icon name="EllipsisHorizontalIcon" size={16} />
                 <span>More</span>
               </button>
@@ -139,6 +143,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             onClick={toggleMobileMenu}
             className="lg:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth focus-ring"
             aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
           >
             <Icon 
               name={isMobileMenuOpen ? "XMarkIcon" : "Bars3Icon"} 

@@ -10,11 +10,9 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ className = '' }: HeroSectionProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState(0);
 
   useEffect(() => {
-    setIsHydrated(true);
     const interval = setInterval(() => {
       setCurrentAnimation(prev => (prev + 1) % 3);
     }, 4000);
@@ -35,27 +33,6 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
     { name: 'Terraform', icon: 'CommandLineIcon', delay: '4s' },
     { name: 'Ansible', icon: 'WrenchScrewdriverIcon', delay: '5s' }
   ];
-  if (!isHydrated) {
-    return (
-      <section className={`relative min-h-screen-safe bg-background overflow-hidden ${className}`}>
-        <div className="absolute inset-0 cyber-grid opacity-20"></div>
-        <div className="relative z-10 flex items-center justify-center min-h-screen-safe">
-          <div className="text-center">
-            <div className="w-32 h-32 bg-gradient-to-br from-accent to-primary rounded-full mx-auto mb-8 flex items-center justify-center">
-              <span className="text-4xl font-bold text-background">VK</span>
-            </div>
-            <h1 className="text-5xl lg:text-7xl font-bold text-gradient mb-6">
-              Vishal Kushwah
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              DevOps Engineer
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className={`relative min-h-screen-safe bg-background overflow-hidden ${className}`}>
       {/* Animated Background Grid */}

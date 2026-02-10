@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 
@@ -16,12 +16,7 @@ interface SkillsPreviewProps {
 }
 
 const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const featuredSkills: Skill[] = [
     { name: 'Kubernetes', icon: 'CubeIcon', proficiency: 95, category: 'Container Orchestration' },
@@ -31,36 +26,6 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
     { name: 'Jenkins', icon: 'CogIcon', proficiency: 85, category: 'CI/CD Pipeline' },
     { name: 'Ansible', icon: 'WrenchScrewdriverIcon', proficiency: 87, category: 'Configuration Management' }
   ];
-
-  if (!isHydrated) {
-    return (
-      <section className={`py-20 bg-card/50 ${className}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">
-              DevOps Expertise
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Mastering the tools that power modern cloud infrastructure
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {featuredSkills.map((skill) => (
-              <div key={skill.name} className="glass-card p-6 text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-accent rounded"></div>
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">{skill.name}</h3>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div className="bg-accent h-2 rounded-full" style={{ width: '0%' }}></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className={`py-20 bg-card/50 ${className}`}>

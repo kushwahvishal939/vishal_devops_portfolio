@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 import AppImage from '@/components/ui/AppImage';
@@ -22,20 +22,15 @@ interface FeaturedProjectsProps {
 }
 
 const FeaturedProjects = ({ className = '' }: FeaturedProjectsProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const featuredProjects: Project[] = [
   {
     id: 1,
     title: 'Cloud Migration & Cost Optimization',
     description: 'Migrated legacy monolithic application to microservices architecture on AWS, implementing auto-scaling and cost optimization strategies.',
-    image: "https://images.unsplash.com/photo-1733295928625-439a9692ba63",
-    alt: 'Digital cloud infrastructure visualization with interconnected nodes and data streams on dark background',
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=70",
+    alt: 'Abstract cloud computing visualization with servers and data connections',
     technologies: ['AWS', 'Kubernetes', 'Terraform', 'Docker'],
     impact: '57% Cost Reduction',
     category: 'Cloud Architecture',
@@ -45,8 +40,8 @@ const FeaturedProjects = ({ className = '' }: FeaturedProjectsProps) => {
     id: 2,
     title: 'CI/CD Pipeline Automation',
     description: 'Built comprehensive CI/CD pipeline with automated testing, security scanning, and deployment strategies for multiple environments.',
-    image: "https://images.unsplash.com/flagged/photo-1579274216947-86eaa4b00475",
-    alt: 'Modern server room with glowing blue LED lights and organized cable management systems',
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70",
+    alt: 'Developer screen showing automated build and deployment pipeline code',
     technologies: ['Jenkins', 'GitLab', 'SonarQube', 'Ansible'],
     impact: '40% Faster Deployments',
     category: 'DevOps Automation',
@@ -56,46 +51,14 @@ const FeaturedProjects = ({ className = '' }: FeaturedProjectsProps) => {
     id: 3,
     title: 'Kubernetes Orchestration Platform',
     description: 'Designed and implemented enterprise-grade Kubernetes platform with monitoring, logging, and security best practices.',
-    image: "https://images.unsplash.com/photo-1649682892309-e10e0b7cd40b",
-    alt: 'Futuristic digital network with glowing blue connections and geometric patterns representing container orchestration',
+    image: "https://images.unsplash.com/photo-1649682892309-e10e0b7cd40b?auto=format&fit=crop&w=1600&q=70",
+    alt: 'Glowing container network visualization representing Kubernetes orchestration',
     technologies: ['Kubernetes', 'Helm', 'Prometheus', 'Grafana'],
     impact: '100% Uptime Achieved',
     category: 'Container Orchestration',
     icon: 'CubeIcon'
   }];
 
-
-  if (!isHydrated) {
-    return (
-      <section className={`py-20 bg-card/30 ${className}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">
-              Featured Projects
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Real-world solutions that deliver measurable business impact
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project) =>
-            <div key={project.id} className="glass-card overflow-hidden">
-                <div className="h-48 bg-muted"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-accent font-semibold text-sm">{project.impact}</span>
-                    <span className="text-xs text-muted-foreground">{project.category}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>);
-
-  }
 
   return (
     <section className={`py-20 bg-card/30 ${className}`}>

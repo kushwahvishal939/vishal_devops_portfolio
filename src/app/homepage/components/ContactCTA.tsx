@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 
@@ -9,11 +9,6 @@ interface ContactCTAProps {
 }
 
 const ContactCTA = ({ className = '' }: ContactCTAProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const contactMethods = [
     {
@@ -38,29 +33,6 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
       description: 'Call me directly'
     }
   ];
-
-  if (!isHydrated) {
-    return (
-      <section className={`py-20 bg-gradient-to-br from-primary/10 to-accent/10 ${className}`}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-6">
-            Ready to Transform Your Infrastructure?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Let's discuss how I can help optimize your cloud infrastructure and accelerate your DevOps journey.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <div className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg">
-              Start Conversation
-            </div>
-            <div className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-accent text-accent rounded-lg font-semibold text-lg">
-              Download Resume
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className={`py-20 bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden ${className}`}>

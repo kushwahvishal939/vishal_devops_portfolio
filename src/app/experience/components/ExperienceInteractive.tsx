@@ -1,31 +1,88 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ExperienceTimeline from './ExperienceTimeline';
 import ExperienceStats from './ExperienceStats';
 import CareerJourney from './CareerJourney';
 import TestimonialsSection from './TestimonialsSection';
 
 const ExperienceInteractive = () => {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const experienceData = [
   {
     id: 1,
+    company: "RDASH",
+    position: "DevOps Engineer",
+    duration: "Dec 22, 2025 - Present",
+    startDate: "2025-12-22",
+    endDate: null,
+    isCurrent: true,
+    location: "Gurgaon, India",
+    type: "current" as const,
+    companyLogo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+    companyLogoAlt: "Engineers in a server room representing active DevOps operations",
+    description: "Driving platform reliability and automation at RDASH with cloud-native architectures, cost governance, and secure delivery pipelines across multiple environments.",
+    keyAchievements: [
+    {
+      metric: "Stability",
+      value: "99.99%",
+      description: "Maintained near-perfect uptime for tier-1 services",
+      icon: "ShieldCheckIcon"
+    },
+    {
+      metric: "Cost Optimization",
+      value: "45%",
+      description: "Reduced monthly cloud spend via right‑sizing and autoscaling",
+      icon: "CurrencyRupeeIcon"
+    },
+    {
+      metric: "Delivery Velocity",
+      value: "35%",
+      description: "Improved deployment cadence with progressive delivery",
+      icon: "RocketLaunchIcon"
+    }],
+
+    projects: [
+    {
+      name: "Multi-Cluster Platform Rollout",
+      description: "Rolled out a hardened Kubernetes platform with GitOps-driven delivery and automated policy enforcement for RDASH services.",
+      technologies: ["Kubernetes", "ArgoCD", "Terraform", "Helm", "OPA"],
+      outcomes: [
+      "Standardized deployments across staging and production clusters",
+      "Policy violations reduced by 60% through automated checks",
+      "Blue/green rollouts adopted for zero-downtime releases"]
+
+    },
+    {
+      name: "FinOps & Autoscaling",
+      description: "Implemented autoscaling policies and lifecycle rules to remove waste while keeping SLOs intact.",
+      technologies: ["AWS", "Karpenter", "CloudWatch", "Grafana", "Prometheus"],
+      outcomes: [
+      "45% monthly cloud savings while preserving latency SLOs",
+      "Predictive scaling reduced burst-related incidents by 70%",
+      "Created dashboards for exec-level cost visibility"]
+
+    }],
+
+    technologies: ["AWS", "Kubernetes", "Terraform", "ArgoCD", "Helm", "Prometheus", "Grafana", "OPA"],
+    teamSize: "3 DevOps Engineers",
+    budget: "₹75,000"
+  },
+  {
+    id: 2,
     company: "XGrowth LLC",
     position: "DevOps Engineer",
-    duration: "Oct 2023 - Present",
+    duration: "Oct 2023 - Dec 18, 2025",
+    startDate: "2023-10-01",
+    endDate: "2025-12-18",
+    isCurrent: false,
     location: "Noida, India",
-    type: "current" as const,
-    companyLogo: "https://images.unsplash.com/photo-1735306104001-835e59d817b2",
-    companyLogoAlt: "Modern tech company office building with glass facade and blue lighting",
-    description: "Leading DevOps transformation initiatives for enterprise-scale applications, implementing cloud-native solutions and automation frameworks that revolutionized deployment processes and infrastructure management.",
+    type: "previous" as const,
+    companyLogo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+    companyLogoAlt: "Team collaborating on DevOps dashboards and cloud architecture",
+    description: "Led DevOps transformation initiatives for enterprise-scale applications, implementing cloud-native solutions and automation frameworks that revolutionized deployment processes and infrastructure management.",
     keyAchievements: [
     {
       metric: "Cost Reduction",
@@ -266,8 +323,6 @@ const ExperienceInteractive = () => {
 
 
   const handleToggleExpand = (id: number) => {
-    if (!isHydrated) return;
-
     setExpandedItems((prev) =>
     prev.includes(id) ?
     prev.filter((item) => item !== id) :
@@ -276,42 +331,16 @@ const ExperienceInteractive = () => {
   };
 
   const handleNextTestimonial = () => {
-    if (!isHydrated) return;
-
     setCurrentTestimonial((prev) =>
     prev === testimonialsData.length - 1 ? 0 : prev + 1
     );
   };
 
   const handlePreviousTestimonial = () => {
-    if (!isHydrated) return;
-
     setCurrentTestimonial((prev) =>
     prev === 0 ? testimonialsData.length - 1 : prev - 1
     );
   };
-
-  if (!isHydrated) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-20">
-          <div className="animate-pulse space-y-8">
-            <div className="h-8 bg-muted rounded w-1/3"></div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) =>
-              <div key={i} className="h-32 bg-muted rounded-lg"></div>
-              )}
-            </div>
-            <div className="space-y-6">
-              {[...Array(3)].map((_, i) =>
-              <div key={i} className="h-64 bg-muted rounded-lg"></div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>);
-
-  }
 
   return (
     <div className="space-y-16">

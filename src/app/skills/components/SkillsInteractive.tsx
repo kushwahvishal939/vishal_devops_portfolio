@@ -1,18 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SkillCategory from './SkillCategory';
 import CertificationBadge from './CertificationBadge';
 import ToolPlayground from './ToolPlayground';
 import SkillsMetrics from './SkillsMetrics';
 
 export default function SkillsInteractive() {
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [activeTab, setActiveTab] = useState('skills');
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  const [activeTab, setActiveTab] = useState('tools');
 
   const skillCategories = [
     {
@@ -280,21 +275,6 @@ export default function SkillsInteractive() {
     { id: 'certifications', label: 'Certifications', icon: '🏆' },
     { id: 'metrics', label: 'Metrics', icon: '📊' }
   ];
-
-  if (!isHydrated) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="animate-pulse space-y-8 p-8">
-          <div className="h-8 bg-muted rounded w-1/3 mx-auto"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-64 bg-muted rounded-lg"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-12">
