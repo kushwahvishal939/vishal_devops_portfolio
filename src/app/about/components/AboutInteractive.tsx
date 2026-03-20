@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import PageTransition from '@/components/animations/PageTransition';
 import HeroSection from './HeroSection';
 import PhilosophySection from './PhilosophySection';
 import ExpertiseSection from './ExpertiseSection';
@@ -31,12 +32,14 @@ const AboutInteractive = ({ className = '' }: AboutInteractiveProps) => {
   }
 
   return (
-    <div className={`min-h-screen-safe bg-background ${className}`}>
-      <HeroSection />
-      <PhilosophySection />
-      <ExpertiseSection />
-      <JourneyTimeline />
-    </div>
+    <PageTransition>
+      <div className={`min-h-screen-safe bg-background ${className}`}>
+        <HeroSection />
+        <PhilosophySection />
+        <ExpertiseSection />
+        <JourneyTimeline />
+      </div>
+    </PageTransition>
   );
 };
 

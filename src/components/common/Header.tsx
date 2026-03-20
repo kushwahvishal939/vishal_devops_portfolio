@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
+import MagneticHover from '@/components/animations/MagneticHover';
 
 interface HeaderProps {
   className?: string;
@@ -42,31 +44,36 @@ const Header = ({ className = '' }: HeaderProps) => {
   };
 
   return (
-    <header
+    <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-premium'
           : 'bg-transparent'
       } ${className}`}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link
-            href="/homepage"
-            className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg"
-          >
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center transform-3d group-hover:scale-110 transition-smooth">
-                <span className="text-background font-bold text-lg font-mono">V</span>
+          <MagneticHover strength={6}>
+            <Link
+              href="/homepage"
+              className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg"
+            >
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center transform-3d group-hover:scale-110 transition-smooth">
+                  <span className="text-background font-bold text-lg font-mono">V</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-smooth"></div>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-smooth"></div>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gradient">Vishal</h1>
-              <p className="text-xs text-muted-foreground font-mono">DevOps Portfolio</p>
-            </div>
-          </Link>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-gradient">Vishal</h1>
+                <p className="text-xs text-muted-foreground font-mono">DevOps Portfolio</p>
+              </div>
+            </Link>
+          </MagneticHover>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
@@ -76,7 +83,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 href={item.href}
                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-smooth focus-ring group ${
                   isActiveRoute(item.href)
-                    ? 'text-accent bg-accent/10'
+                    ? 'text-accent'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}
               >
@@ -91,7 +98,11 @@ const Header = ({ className = '' }: HeaderProps) => {
                   <span>{item.name}</span>
                 </div>
                 {isActiveRoute(item.href) && (
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-accent rounded-full"></div>
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-accent rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
                 )}
               </Link>
             ))}
@@ -130,12 +141,14 @@ const Header = ({ className = '' }: HeaderProps) => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link
-              href="/contact"
-              className="px-6 py-2.5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon focus-ring magnetic-hover"
-            >
-              Hire Me
-            </Link>
+            <MagneticHover strength={8}>
+              <Link
+                href="/contact"
+                className="px-6 py-2.5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon focus-ring"
+              >
+                Hire Me
+              </Link>
+            </MagneticHover>
           </div>
 
           {/* Mobile Menu Button */}
@@ -151,42 +164,59 @@ const Header = ({ className = '' }: HeaderProps) => {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`lg:hidden transition-all duration-300 ${
-          isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-        }`}
-      >
-        <div className="bg-background/95 backdrop-blur-md border-t border-border">
-          <nav className="px-4 py-4 space-y-2">
-            {[...navigationItems, ...moreItems].map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-smooth ${
-                  isActiveRoute(item.href)
-                    ? 'text-accent bg-accent/10'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                }`}
-              >
-                <Icon name={item.icon as any} size={20} />
-                <span>{item.name}</span>
-              </Link>
-            ))}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="lg:hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="bg-background/95 backdrop-blur-md border-t border-border">
+              <nav className="px-4 py-4 space-y-2">
+                {[...navigationItems, ...moreItems].map((item, index) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-smooth ${
+                        isActiveRoute(item.href)
+                          ? 'text-accent bg-accent/10'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      }`}
+                    >
+                      <Icon name={item.icon as any} size={20} />
+                      <span>{item.name}</span>
+                    </Link>
+                  </motion.div>
+                ))}
 
-            <div className="pt-4 border-t border-border">
-              <Link
-                href="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon"
-              >
-                Hire Me
-              </Link>
+                <motion.div
+                  className="pt-4 border-t border-border"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon"
+                  >
+                    Hire Me
+                  </Link>
+                </motion.div>
+              </nav>
             </div>
-          </nav>
-        </div>
-      </div>
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 

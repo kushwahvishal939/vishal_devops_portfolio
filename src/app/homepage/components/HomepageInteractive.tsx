@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import PageTransition from '@/components/animations/PageTransition';
 import HeroSection from './HeroSection';
 import SkillsPreview from './SkillsPreview';
 import ExperienceTimeline from './ExperienceTimeline';
@@ -13,22 +14,15 @@ interface HomepageInteractiveProps {
 
 const HomepageInteractive = ({ className = '' }: HomepageInteractiveProps) => {
   return (
-    <div className={`min-h-screen bg-background ${className}`}>
-      {/* Hero Command Center */}
-      <HeroSection />
-
-      {/* Skills Laboratory Preview */}
-      <SkillsPreview />
-
-      {/* Experience Timeline Portal */}
-      <ExperienceTimeline />
-
-      {/* Project Showcase Arena */}
-      <FeaturedProjects />
-
-      {/* Contact & Collaboration Zone */}
-      <ContactCTA />
-    </div>
+    <PageTransition>
+      <div className={`min-h-screen bg-background ${className}`}>
+        <HeroSection />
+        <SkillsPreview />
+        <ExperienceTimeline />
+        <FeaturedProjects />
+        <ContactCTA />
+      </div>
+    </PageTransition>
   );
 };
 

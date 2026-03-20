@@ -114,7 +114,7 @@ const JourneyTimeline = ({ className = '' }: JourneyTimelineProps) => {
     return colorMap[type as keyof typeof colorMap] || 'accent';
   };
 
-  const getTypeIcon = (type: string) => {
+  const _getTypeIcon = (type: string) => {
     const iconMap = {
       experience: 'BriefcaseIcon',
       education: 'AcademicCapIcon',

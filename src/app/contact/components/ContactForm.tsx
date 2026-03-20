@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import MagneticHover from '@/components/animations/MagneticHover';
 
 interface FormData {
   name: string;
@@ -149,195 +151,209 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className={`glass-card p-8 space-y-6 ${className}`}>
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-2">Start Your Project</h2>
-        <p className="text-muted-foreground">
-          Tell me about your DevOps challenges and let's discuss how I can help
-        </p>
-      </div>
+      <ScrollReveal direction="up">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-2">Start Your Project</h2>
+          <p className="text-muted-foreground">
+            Tell me about your DevOps challenges and let's discuss how I can help
+          </p>
+        </div>
+      </ScrollReveal>
 
       {/* Name and Email Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <ScrollReveal direction="up" delay={0.1}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium mb-2">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
+                errors.name ? 'border-error' : 'border-border'
+              }`}
+              placeholder="John Doe"
+            />
+            {errors.name && (
+              <p className="text-error text-sm mt-1 flex items-center">
+                <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
+                {errors.name}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-2">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
+                errors.email ? 'border-error' : 'border-border'
+              }`}
+              placeholder="john@company.com"
+            />
+            {errors.email && (
+              <p className="text-error text-sm mt-1 flex items-center">
+                <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
+                {errors.email}
+              </p>
+            )}
+          </div>
+        </div>
+      </ScrollReveal>
+
+      {/* Company */}
+      <ScrollReveal direction="up" delay={0.2}>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-2">
-            Full Name *
+          <label htmlFor="company" className="block text-sm font-medium mb-2">
+            Company / Organization
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="company"
+            name="company"
+            value={formData.company}
             onChange={handleInputChange}
-            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-              errors.name ? 'border-error' : 'border-border'
-            }`}
-            placeholder="John Doe"
+            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
+            placeholder="Your Company Name"
           />
-          {errors.name && (
-            <p className="text-error text-sm mt-1 flex items-center">
-              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-              {errors.name}
-            </p>
-          )}
         </div>
-
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-              errors.email ? 'border-error' : 'border-border'
-            }`}
-            placeholder="john@company.com"
-          />
-          {errors.email && (
-            <p className="text-error text-sm mt-1 flex items-center">
-              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-              {errors.email}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Company */}
-      <div>
-        <label htmlFor="company" className="block text-sm font-medium mb-2">
-          Company / Organization
-        </label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          value={formData.company}
-          onChange={handleInputChange}
-          className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
-          placeholder="Your Company Name"
-        />
-      </div>
+      </ScrollReveal>
 
       {/* Project Type */}
-      <div>
-        <label htmlFor="projectType" className="block text-sm font-medium mb-2">
-          Project Type *
-        </label>
-        <select
-          id="projectType"
-          name="projectType"
-          value={formData.projectType}
-          onChange={handleInputChange}
-          className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-            errors.projectType ? 'border-error' : 'border-border'
-          }`}
-        >
-          <option value="">Select a project type</option>
-          {projectTypes.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        {errors.projectType && (
-          <p className="text-error text-sm mt-1 flex items-center">
-            <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-            {errors.projectType}
-          </p>
-        )}
-      </div>
+      <ScrollReveal direction="up" delay={0.3}>
+        <div>
+          <label htmlFor="projectType" className="block text-sm font-medium mb-2">
+            Project Type *
+          </label>
+          <select
+            id="projectType"
+            name="projectType"
+            value={formData.projectType}
+            onChange={handleInputChange}
+            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
+              errors.projectType ? 'border-error' : 'border-border'
+            }`}
+          >
+            <option value="">Select a project type</option>
+            {projectTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+          {errors.projectType && (
+            <p className="text-error text-sm mt-1 flex items-center">
+              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
+              {errors.projectType}
+            </p>
+          )}
+        </div>
+      </ScrollReveal>
 
       {/* Budget and Timeline Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="budget" className="block text-sm font-medium mb-2">
-            Project Budget
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            value={formData.budget}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
-          >
-            <option value="">Select budget range</option>
-            {budgetRanges.map((range) => (
-              <option key={range} value={range}>
-                {range}
-              </option>
-            ))}
-          </select>
-        </div>
+      <ScrollReveal direction="up" delay={0.4}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="budget" className="block text-sm font-medium mb-2">
+              Project Budget
+            </label>
+            <select
+              id="budget"
+              name="budget"
+              value={formData.budget}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
+            >
+              <option value="">Select budget range</option>
+              {budgetRanges.map((range) => (
+                <option key={range} value={range}>
+                  {range}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label htmlFor="timeline" className="block text-sm font-medium mb-2">
-            Project Timeline
-          </label>
-          <select
-            id="timeline"
-            name="timeline"
-            value={formData.timeline}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
-          >
-            <option value="">Select timeline</option>
-            {timelineOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          <div>
+            <label htmlFor="timeline" className="block text-sm font-medium mb-2">
+              Project Timeline
+            </label>
+            <select
+              id="timeline"
+              name="timeline"
+              value={formData.timeline}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
+            >
+              <option value="">Select timeline</option>
+              {timelineOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Message */}
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium mb-2">
-          Project Description *
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          value={formData.message}
-          onChange={handleInputChange}
-          className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth resize-none ${
-            errors.message ? 'border-error' : 'border-border'
-          }`}
-          placeholder="Describe your project requirements, current challenges, and what you're looking to achieve..."
-        />
-        {errors.message && (
-          <p className="text-error text-sm mt-1 flex items-center">
-            <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-            {errors.message}
+      <ScrollReveal direction="up" delay={0.5}>
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium mb-2">
+            Project Description *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={6}
+            value={formData.message}
+            onChange={handleInputChange}
+            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth resize-none ${
+              errors.message ? 'border-error' : 'border-border'
+            }`}
+            placeholder="Describe your project requirements, current challenges, and what you're looking to achieve..."
+          />
+          {errors.message && (
+            <p className="text-error text-sm mt-1 flex items-center">
+              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
+              {errors.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground mt-1">
+            {formData.message.length}/500 characters
           </p>
-        )}
-        <p className="text-xs text-muted-foreground mt-1">
-          {formData.message.length}/500 characters
-        </p>
-      </div>
+        </div>
+      </ScrollReveal>
 
       {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-smooth hover:shadow-neon focus-ring disabled:opacity-50 disabled:cursor-not-allowed magnetic-hover"
-      >
-        {isSubmitting ? (
-          <div className="flex items-center justify-center">
-            <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
-            Sending Message...
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <Icon name="PaperAirplaneIcon" size={20} className="mr-2" />
-            Send Project Details
-          </div>
-        )}
-      </button>
+      <MagneticHover>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-smooth hover:shadow-neon focus-ring disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? (
+            <div className="flex items-center justify-center">
+              <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
+              Sending Message...
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <Icon name="PaperAirplaneIcon" size={20} className="mr-2" />
+              Send Project Details
+            </div>
+          )}
+        </button>
+      </MagneticHover>
 
       <p className="text-xs text-muted-foreground text-center">
         By submitting this form, you agree to receive project-related communications. Your

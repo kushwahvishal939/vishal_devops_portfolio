@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import Icon from '@/components/ui/AppIcon';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface Stat {
   label: string;
@@ -51,20 +54,21 @@ const ProjectStats = ({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
-        <div
-          key={index}
-          className="p-4 bg-card border border-border rounded-xl hover:shadow-premium transition-all duration-300 group"
-        >
-          <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-lg bg-muted/30 group-hover:bg-muted/50 transition-colors`}>
-              <Icon name={stat.icon as any} size={20} className={stat.color} />
-            </div>
-            <div>
-              <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-              <div className="text-xs text-muted-foreground">{stat.label}</div>
+        <ScrollReveal key={index} direction="up" delay={index * 0.1}>
+          <div className="p-4 bg-card border border-border rounded-xl hover:shadow-premium transition-all duration-300 group">
+            <div className="flex items-center space-x-3">
+              <div
+                className={`p-2 rounded-lg bg-muted/30 group-hover:bg-muted/50 transition-colors`}
+              >
+                <Icon name={stat.icon as any} size={20} className={stat.color} />
+              </div>
+              <div>
+                <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       ))}
     </div>
   );

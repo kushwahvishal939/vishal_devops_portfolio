@@ -5,6 +5,8 @@ import SkillCategory from './SkillCategory';
 import CertificationBadge from './CertificationBadge';
 import ToolPlayground from './ToolPlayground';
 import SkillsMetrics from './SkillsMetrics';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import PageTransition from '@/components/animations/PageTransition';
 
 export default function SkillsInteractive() {
   const [activeTab, setActiveTab] = useState('tools');
@@ -300,92 +302,107 @@ export default function SkillsInteractive() {
   ];
 
   return (
-    <div className="space-y-12">
-      {/* Hero Section */}
-      <div className="text-center space-y-6">
-        <div className="inline-flex items-center space-x-2 px-4 py-2 bg-accent/10 rounded-full text-accent text-sm font-medium">
-          <span className="animate-pulse">🔥</span>
-          <span>Skills Laboratory</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient">DevOps Mastery</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Interactive showcase of technical capabilities with real-time demonstrations, proficiency
-          meters, and hands-on tool playground experiences
-        </p>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap justify-center gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-smooth focus-ring ${
-              activeTab === tab.id
-                ? 'bg-accent text-accent-foreground shadow-neon'
-                : 'bg-muted/20 text-muted-foreground hover:text-foreground hover:bg-muted/40'
-            }`}
-          >
-            <span>{tab.icon}</span>
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Content Sections */}
+    <PageTransition>
       <div className="space-y-12">
-        {activeTab === 'skills' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {skillCategories.map((category, index) => (
-              <SkillCategory
-                key={index}
-                title={category.title}
-                skills={category.skills}
-                icon={category.icon}
-                color={category.color}
-              />
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'tools' && <ToolPlayground tools={tools} />}
-
-        {activeTab === 'certifications' && (
-          <div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gradient mb-4">Professional Certifications</h3>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Industry-recognized credentials validating expertise across cloud platforms and
-                DevOps practices
-              </p>
+        {/* Hero Section */}
+        <ScrollReveal direction="up">
+          <div className="text-center space-y-6">
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-accent/10 rounded-full text-accent text-sm font-medium">
+              <span className="animate-pulse">🔥</span>
+              <span>Skills Laboratory</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {certifications.map((cert, index) => (
-                <CertificationBadge key={index} certification={cert} />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient">
+              DevOps Mastery
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Interactive showcase of technical capabilities with real-time demonstrations,
+              proficiency meters, and hands-on tool playground experiences
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Navigation Tabs */}
+        <div className="flex flex-wrap justify-center gap-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-smooth focus-ring ${
+                activeTab === tab.id
+                  ? 'bg-accent text-accent-foreground shadow-neon'
+                  : 'bg-muted/20 text-muted-foreground hover:text-foreground hover:bg-muted/40'
+              }`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Content Sections */}
+        <div className="space-y-12">
+          {activeTab === 'skills' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {skillCategories.map((category, index) => (
+                <ScrollReveal key={index} direction="up" delay={index * 0.1}>
+                  <SkillCategory
+                    title={category.title}
+                    skills={category.skills}
+                    icon={category.icon}
+                    color={category.color}
+                  />
+                </ScrollReveal>
               ))}
             </div>
-          </div>
-        )}
+          )}
 
-        {activeTab === 'metrics' && (
-          <div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gradient mb-4">Skills Overview</h3>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Quantified expertise and professional achievements in DevOps engineering
-              </p>
+          {activeTab === 'tools' && <ToolPlayground tools={tools} />}
+
+          {activeTab === 'certifications' && (
+            <div>
+              <ScrollReveal direction="up">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gradient mb-4">
+                    Professional Certifications
+                  </h3>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Industry-recognized credentials validating expertise across cloud platforms and
+                    DevOps practices
+                  </p>
+                </div>
+              </ScrollReveal>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {certifications.map((cert, index) => (
+                  <ScrollReveal key={index} direction="up" delay={index * 0.1}>
+                    <CertificationBadge certification={cert} />
+                  </ScrollReveal>
+                ))}
+              </div>
             </div>
-            <SkillsMetrics metrics={metrics} />
-          </div>
-        )}
-      </div>
+          )}
 
-      {/* Floating Animation Elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent rounded-full animate-ping opacity-20"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-primary rounded-full animate-pulse opacity-30"></div>
-        <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-accent rounded-full animate-bounce opacity-25"></div>
+          {activeTab === 'metrics' && (
+            <div>
+              <ScrollReveal direction="up">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gradient mb-4">Skills Overview</h3>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Quantified expertise and professional achievements in DevOps engineering
+                  </p>
+                </div>
+              </ScrollReveal>
+              <SkillsMetrics metrics={metrics} />
+            </div>
+          )}
+        </div>
+
+        {/* Floating Animation Elements */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent rounded-full animate-ping opacity-20"></div>
+          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-primary rounded-full animate-pulse opacity-30"></div>
+          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-accent rounded-full animate-bounce opacity-25"></div>
+        </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }
