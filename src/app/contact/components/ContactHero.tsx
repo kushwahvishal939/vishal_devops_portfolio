@@ -1,5 +1,9 @@
+'use client';
+
 import React from 'react';
 import Icon from '@/components/ui/AppIcon';
+import FloatingParticles from '@/components/animations/FloatingParticles';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface ContactHeroProps {
   className?: string;
@@ -12,27 +16,34 @@ const ContactHero = ({ className = '' }: ContactHeroProps) => {
       <div className="absolute inset-0 cyber-grid opacity-30"></div>
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+      <FloatingParticles particleCount={20} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           {/* Status Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-success/10 border border-success/20 rounded-full mb-8">
-            <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-            <span className="text-success text-sm font-medium">Available for New Projects</span>
-          </div>
+          <ScrollReveal direction="up">
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-success/10 border border-success/20 rounded-full mb-8">
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+              <span className="text-success text-sm font-medium">Available for New Projects</span>
+            </div>
+          </ScrollReveal>
 
           {/* Main Heading */}
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-            Let's Build Something
-            <span className="block text-gradient">Extraordinary Together</span>
-          </h1>
+          <ScrollReveal direction="up" delay={0.1}>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+              Let's Build Something
+              <span className="block text-gradient">Extraordinary Together</span>
+            </h1>
+          </ScrollReveal>
 
           {/* Description */}
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Ready to transform your infrastructure? Whether you need DevOps consulting, cloud
-            migration, or automation solutions, I'm here to help you achieve zero-downtime
-            deployments and cost optimization.
-          </p>
+          <ScrollReveal direction="up" delay={0.2}>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
+              Ready to transform your infrastructure? Whether you need DevOps consulting, cloud
+              migration, or automation solutions, I'm here to help you achieve zero-downtime
+              deployments and cost optimization.
+            </p>
+          </ScrollReveal>
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">

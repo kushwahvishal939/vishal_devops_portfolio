@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface FAQ {
   id: string;
@@ -94,15 +96,17 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
   return (
     <section className={`py-16 ${className}`}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Frequently Asked
-            <span className="block text-gradient">Questions</span>
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Everything you need to know about working with me
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              Frequently Asked
+              <span className="block text-gradient">Questions</span>
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Everything you need to know about working with me
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -140,15 +144,21 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
                 />
               </button>
 
-              <div
-                className={`transition-all duration-300 ease-in-out ${
-                  openFAQ === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-                }`}
-              >
-                <div className="px-6 pb-4 border-t border-border/50">
-                  <p className="text-muted-foreground leading-relaxed pt-4">{faq.answer}</p>
-                </div>
-              </div>
+              <AnimatePresence initial={false}>
+                {openFAQ === faq.id && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-4 border-t border-border/50">
+                      <p className="text-muted-foreground leading-relaxed pt-4">{faq.answer}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>

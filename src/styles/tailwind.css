@@ -35,6 +35,13 @@
     --color-destructive: #ff4444; /* Error states - clear problem indication */
     --color-destructive-foreground: #ffffff; /* Pure white - high contrast */
 
+    /* Anti-Gravity Depth Colors */
+    --color-void: #050510; /* Deeper than background - parallax far layer */
+    --color-nebula: rgba(0, 212, 255, 0.03); /* Subtle fill for floating panels */
+    --color-glow-primary: rgba(0, 212, 255, 0.4);
+    --color-glow-secondary: rgba(0, 153, 204, 0.3);
+    --gradient-antigravity: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(0, 153, 204, 0.04), transparent);
+
     /* Typography & Spacing */
     --radius: 0.5rem;
     --font-family-primary: var(--font-inter, 'Inter', sans-serif);
@@ -172,6 +179,16 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Sweeping animated gradient text */
+  .text-gradient-wide {
+    background: linear-gradient(100deg, #00d4ff 0%, #0099cc 40%, #00d4ff 80%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s linear infinite;
   }
 
   /* Smooth transitions */

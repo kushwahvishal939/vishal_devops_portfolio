@@ -104,6 +104,13 @@ module.exports = {
         "neural-pulse": "neural-pulse 4s ease-in-out infinite",
         "float": "float 3s ease-in-out infinite",
         "rotate-slow": "rotate-slow 20s linear infinite",
+        "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-medium": "float-medium 4s ease-in-out infinite",
+        "float-fast": "float-fast 2.5s ease-in-out infinite",
+        "levitate": "levitate 5s ease-in-out infinite",
+        "drift-left": "drift-left 20s linear infinite",
+        "drift-right": "drift-right 20s linear infinite",
+        "scale-in": "scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "accordion-down": {
@@ -142,6 +149,36 @@ module.exports = {
         "rotate-slow": {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
+        },
+        "float-slow": {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(1deg)" },
+        },
+        "float-medium": {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-12px) rotate(-0.5deg)" },
+        },
+        "float-fast": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "levitate": {
+          "0%": { transform: "translateY(0) scale(1)" },
+          "33%": { transform: "translateY(-8px) scale(1.01)" },
+          "66%": { transform: "translateY(-15px) scale(1.02)" },
+          "100%": { transform: "translateY(0) scale(1)" },
+        },
+        "drift-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100px)" },
+        },
+        "drift-right": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(100px)" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.9)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
         },
       },
       backdropBlur: {

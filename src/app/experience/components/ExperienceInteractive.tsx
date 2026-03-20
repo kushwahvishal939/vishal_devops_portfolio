@@ -5,6 +5,8 @@ import ExperienceTimeline from './ExperienceTimeline';
 import ExperienceStats from './ExperienceStats';
 import CareerJourney from './CareerJourney';
 import TestimonialsSection from './TestimonialsSection';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import PageTransition from '@/components/animations/PageTransition';
 
 const ExperienceInteractive = () => {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
@@ -368,42 +370,46 @@ const ExperienceInteractive = () => {
   };
 
   return (
-    <div className="space-y-16">
-      {/* Experience Stats */}
-      <section>
-        <ExperienceStats stats={statsData} />
-      </section>
+    <PageTransition>
+      <div className="space-y-16">
+        {/* Experience Stats */}
+        <section>
+          <ExperienceStats stats={statsData} />
+        </section>
 
-      {/* Experience Timeline */}
-      <section>
-        <div className="text-center mb-12">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gradient mb-4">
-            Professional Experience
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A journey from maintaining systems to revolutionizing infrastructure with quantified
-            achievements and measurable impact
-          </p>
-        </div>
+        {/* Experience Timeline */}
+        <section>
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gradient mb-4">
+                Professional Experience
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                A journey from maintaining systems to revolutionizing infrastructure with quantified
+                achievements and measurable impact
+              </p>
+            </div>
+          </ScrollReveal>
 
-        <ExperienceTimeline
-          experiences={experienceData}
-          expandedItems={expandedItems}
-          onToggleExpand={handleToggleExpand}
-        />
-      </section>
+          <ExperienceTimeline
+            experiences={experienceData}
+            expandedItems={expandedItems}
+            onToggleExpand={handleToggleExpand}
+          />
+        </section>
 
-      {/* Career Journey & Testimonials Grid */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <CareerJourney milestones={journeyMilestones} />
-        <TestimonialsSection
-          testimonials={testimonialsData}
-          currentTestimonial={currentTestimonial}
-          onNext={handleNextTestimonial}
-          onPrevious={handlePreviousTestimonial}
-        />
-      </section>
-    </div>
+        {/* Career Journey & Testimonials Grid */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <CareerJourney milestones={journeyMilestones} />
+          <TestimonialsSection
+            testimonials={testimonialsData}
+            currentTestimonial={currentTestimonial}
+            onNext={handleNextTestimonial}
+            onPrevious={handlePreviousTestimonial}
+          />
+        </section>
+      </div>
+    </PageTransition>
   );
 };
 

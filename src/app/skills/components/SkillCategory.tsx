@@ -1,3 +1,5 @@
+import AntiGravityCard from '@/components/animations/AntiGravityCard';
+
 interface Skill {
   name: string;
   proficiency: number;
@@ -15,7 +17,7 @@ interface SkillCategoryProps {
 
 export default function SkillCategory({ title, skills, icon, color }: SkillCategoryProps) {
   return (
-    <div className="glass-card p-6 hover:shadow-premium-lg transition-smooth">
+    <AntiGravityCard className="glass-card p-6 hover:shadow-premium-lg transition-smooth">
       <div className="flex items-center space-x-3 mb-6">
         <div
           className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center`}
@@ -56,6 +58,6 @@ export default function SkillCategory({ title, skills, icon, color }: SkillCateg
           </div>
         ))}
       </div>
-    </div>
+    </AntiGravityCard>
   );
 }

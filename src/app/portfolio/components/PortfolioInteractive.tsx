@@ -5,6 +5,7 @@ import ProjectCard from './ProjectCard';
 import ProjectFilter from './ProjectFilter';
 import ProjectStats from './ProjectStats';
 import Icon from '@/components/ui/AppIcon';
+import PageTransition from '@/components/animations/PageTransition';
 
 interface Technology {
   name: string;
@@ -391,103 +392,105 @@ const PortfolioInteractive = () => {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Stats Section */}
-      <ProjectStats
-        totalProjects={mockProjects.length}
-        completedProjects={mockProjects.length}
-        totalCostSavings="₹8.5L+"
-        averagePerformanceGain="48%"
-      />
+    <PageTransition>
+      <div className="space-y-8">
+        {/* Stats Section */}
+        <ProjectStats
+          totalProjects={mockProjects.length}
+          completedProjects={mockProjects.length}
+          totalCostSavings="₹8.5L+"
+          averagePerformanceGain="48%"
+        />
 
-      {/* Search and Sort */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Icon
-            name="MagnifyingGlassIcon"
-            size={20}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-          />
+        {/* Search and Sort */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Icon
+              name="MagnifyingGlassIcon"
+              size={20}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+            />
 
-          <input
-            type="text"
-            placeholder="Search projects..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
-          />
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+            />
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="px-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+            >
+              <option value="recent">Most Recent</option>
+              <option value="impact">Highest Impact</option>
+              <option value="complexity">Most Complex</option>
+            </select>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
-          >
-            <option value="recent">Most Recent</option>
-            <option value="impact">Highest Impact</option>
-            <option value="complexity">Most Complex</option>
-          </select>
+        {/* Filters */}
+        <ProjectFilter
+          categories={categories}
+          technologies={technologies}
+          activeCategory={activeCategory}
+          activeTechnology={activeTechnology}
+          onCategoryChange={setActiveCategory}
+          onTechnologyChange={setActiveTechnology}
+        />
+
+        {/* Results Count */}
+        <div className="flex items-center justify-between">
+          <p className="text-muted-foreground">
+            Showing {sortedProjects.length} of {mockProjects.length} projects
+          </p>
+          {(activeCategory !== 'all' || activeTechnology !== 'all' || searchQuery) && (
+            <button
+              onClick={() => {
+                setActiveCategory('all');
+                setActiveTechnology('all');
+                setSearchQuery('');
+              }}
+              className="text-accent hover:text-accent/80 text-sm font-medium transition-colors"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
-      </div>
 
-      {/* Filters */}
-      <ProjectFilter
-        categories={categories}
-        technologies={technologies}
-        activeCategory={activeCategory}
-        activeTechnology={activeTechnology}
-        onCategoryChange={setActiveCategory}
-        onTechnologyChange={setActiveTechnology}
-      />
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          {sortedProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
 
-      {/* Results Count */}
-      <div className="flex items-center justify-between">
-        <p className="text-muted-foreground">
-          Showing {sortedProjects.length} of {mockProjects.length} projects
-        </p>
-        {(activeCategory !== 'all' || activeTechnology !== 'all' || searchQuery) && (
-          <button
-            onClick={() => {
-              setActiveCategory('all');
-              setActiveTechnology('all');
-              setSearchQuery('');
-            }}
-            className="text-accent hover:text-accent/80 text-sm font-medium transition-colors"
-          >
-            Clear filters
-          </button>
+        {/* Empty State */}
+        {sortedProjects.length === 0 && (
+          <div className="text-center py-16">
+            <Icon name="FolderIcon" size={64} className="text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-foreground mb-2">No projects found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your filters or search terms to find what you're looking for.
+            </p>
+            <button
+              onClick={() => {
+                setActiveCategory('all');
+                setActiveTechnology('all');
+                setSearchQuery('');
+              }}
+              className="px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+            >
+              View All Projects
+            </button>
+          </div>
         )}
       </div>
-
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-        {sortedProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
-
-      {/* Empty State */}
-      {sortedProjects.length === 0 && (
-        <div className="text-center py-16">
-          <Icon name="FolderIcon" size={64} className="text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-foreground mb-2">No projects found</h3>
-          <p className="text-muted-foreground mb-4">
-            Try adjusting your filters or search terms to find what you're looking for.
-          </p>
-          <button
-            onClick={() => {
-              setActiveCategory('all');
-              setActiveTechnology('all');
-              setSearchQuery('');
-            }}
-            className="px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-          >
-            View All Projects
-          </button>
-        </div>
-      )}
-    </div>
+    </PageTransition>
   );
 };
 
