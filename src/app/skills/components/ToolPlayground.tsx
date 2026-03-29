@@ -32,17 +32,8 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
         </p>
       </div>
 
-      {categories.map((category) => (
-        <div key={category} className="space-y-4">
-          <h4 className="text-lg font-semibold text-foreground flex items-center space-x-2">
-            <div className="w-2 h-2 bg-accent rounded-full"></div>
-            <span>{category}</span>
-          </h4>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {tools
-              .filter((tool) => tool.category === category)
-              .map((tool, index) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {tools.map((tool, index) => (
                 <div
                   key={index}
                   className="relative group cursor-pointer"
@@ -89,9 +80,7 @@ export default function ToolPlayground({ tools }: ToolPlaygroundProps) {
                   )}
                 </div>
               ))}
-          </div>
-        </div>
-      ))}
+      </div>
 
       {/* Tool Detail Modal */}
       {selectedTool && (
