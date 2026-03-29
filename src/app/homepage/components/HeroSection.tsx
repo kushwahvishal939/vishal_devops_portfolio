@@ -6,8 +6,9 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import FloatingParticles from '@/components/animations/FloatingParticles';
-import MagneticHover from '@/components/animations/MagneticHover';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
+import MagneticButton from '@/components/animations/MagneticButton';
+import TiltCard from '@/components/animations/TiltCard';
+import StaggeredReveal from '@/components/animations/StaggeredReveal';
 
 interface HeroSectionProps {
   className?: string;
@@ -96,10 +97,10 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
         <div className="max-w-6xl mx-auto text-center">
           {/* Professional Avatar */}
           <ScrollReveal direction="up" delay={0}>
-            <MagneticHover strength={8} className="inline-block">
+            <MagneticButton className="inline-block">
               <div className="relative mb-8 mt-12">
                 <div className="w-32 h-32 lg:w-40 lg:h-40 mx-auto relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-full animate-levitate"></div>
+                  <div className="absolute inset-0 bg-[#00F5FF]/20 rounded-full animate-levitate blur-md"></div>
                   <div className="absolute inset-2 bg-background rounded-full flex items-center justify-center">
                     <div className="w-24 h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center neon-glow">
                       <span className="text-2xl lg:text-4xl font-bold text-background font-mono">
@@ -109,15 +110,17 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
                   </div>
                 </div>
               </div>
-            </MagneticHover>
+            </MagneticButton>
           </ScrollReveal>
 
           {/* Hero Typography */}
           <ScrollReveal direction="up" delay={0.1}>
-            <div className="mb-12">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-gradient-wide mb-4 font-primary">
-                Vishal Kushwah
-              </h1>
+            <div className="mb-12 flex flex-col items-center">
+              <StaggeredReveal
+                text="Vishal Kushwah"
+                className="text-5xl sm:text-6xl lg:text-8xl font-bold text-gradient-cyan mb-4 font-primary"
+                delay={2}
+              />
               <motion.div
                 className="text-lg sm:text-xl lg:text-2xl text-accent font-semibold mb-4"
                 initial={{ opacity: 0, width: 0 }}
@@ -137,17 +140,17 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
             {achievements.map((achievement, index) => (
               <ScrollReveal key={achievement.label} direction="up" delay={0.2 + index * 0.15}>
-                <AntiGravityCard className="p-6 text-center group">
+                <TiltCard className="p-6 text-center group glass-card">
                   <div className="flex justify-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center">
-                      <Icon name={achievement.icon as any} size={24} className="text-background" />
+                    <div className="w-12 h-12 bg-[#CCFF00]/10 rounded-lg flex items-center justify-center border border-[#CCFF00]/30 transition-transform group-hover:scale-110">
+                      <Icon name={achievement.icon as any} size={24} className="text-[#CCFF00]" />
                     </div>
                   </div>
                   <div className="text-2xl lg:text-3xl font-bold text-accent mb-2">
                     {achievement.metric}
                   </div>
-                  <div className="text-sm text-muted-foreground">{achievement.label}</div>
-                </AntiGravityCard>
+                  <div className="text-sm text-muted-foreground font-mono">{achievement.label}</div>
+                </TiltCard>
               </ScrollReveal>
             ))}
           </div>
@@ -155,17 +158,17 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
           {/* CTA Buttons */}
           <ScrollReveal direction="up" delay={0.5}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <MagneticHover strength={10}>
+              <MagneticButton>
                 <Link
                   href="/contact"
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-smooth hover:shadow-premium-lg pulse-glow focus-ring inline-block"
+                  className="w-full sm:w-auto px-8 py-4 bg-[#00F5FF] text-black rounded-lg font-bold text-lg transition-smooth hover:neon-glow-cyan focus-ring inline-block"
                 >
                   <div className="flex items-center justify-center space-x-2">
                     <Icon name="RocketLaunchIcon" size={20} />
                     <span>Hire Me</span>
                   </div>
                 </Link>
-              </MagneticHover>
+              </MagneticButton>
               <Link
                 href="/portfolio"
                 className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-accent text-accent rounded-lg font-semibold text-lg transition-smooth hover:bg-accent hover:text-background focus-ring inline-block"

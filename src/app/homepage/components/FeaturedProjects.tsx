@@ -6,8 +6,9 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
 import AppImage from '@/components/ui/AppImage';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
-import MagneticHover from '@/components/animations/MagneticHover';
+import TiltCard from '@/components/animations/TiltCard';
+import MagneticButton from '@/components/animations/MagneticButton';
+import StaggeredReveal from '@/components/animations/StaggeredReveal';
 
 interface Project {
   id: number;
@@ -75,9 +76,12 @@ const FeaturedProjects = ({ className = '' }: FeaturedProjectsProps) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <ScrollReveal direction="up">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">Featured Projects</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16 flex flex-col items-center">
+            <StaggeredReveal
+              text="Featured Projects"
+              className="text-4xl lg:text-5xl font-bold text-gradient-cyan mb-4 font-primary"
+            />
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono mt-2">
               Real-world solutions that deliver measurable business impact through innovative DevOps
               practices
             </p>
@@ -88,110 +92,111 @@ const FeaturedProjects = ({ className = '' }: FeaturedProjectsProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {featuredProjects.map((project, index) => (
             <ScrollReveal key={project.id} direction="up" delay={index * 0.15}>
-              <AntiGravityCard
-                className="overflow-hidden cursor-pointer"
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <motion.div
-                    className="w-full h-full"
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                  >
-                    <AppImage
-                      src={project.image}
-                      alt={project.alt}
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
+              <TiltCard className="overflow-hidden cursor-pointer glass-card group">
+                <div
+                  onMouseEnter={() => setHoveredProject(project.id)}
+                  onMouseLeave={() => setHoveredProject(null)}
+                >
+                  {/* Project Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <motion.div
+                      className="w-full h-full"
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    >
+                      <AppImage
+                        src={project.image}
+                        alt={project.alt}
+                        className="w-full h-full object-cover"
+                      />
+                    </motion.div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
 
-                  {/* Project Icon */}
-                  <div className="absolute top-4 right-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center neon-glow">
-                      <Icon name={project.icon as any} size={20} className="text-background" />
+                    {/* Project Icon */}
+                    <div className="absolute top-4 right-4">
+                      <div className="w-10 h-10 bg-[#00F5FF]/20 border border-[#00F5FF]/30 rounded-lg flex items-center justify-center shadow-neon">
+                        <Icon name={project.icon as any} size={20} className="text-[#00F5FF]" />
+                      </div>
+                    </div>
+
+                    {/* Impact Badge */}
+                    <div className="absolute bottom-4 left-4">
+                      <span className="px-3 py-1 bg-success/90 text-success-foreground rounded-full text-xs font-semibold backdrop-blur-sm animate-float-medium">
+                        {project.impact}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Impact Badge */}
-                  <div className="absolute bottom-4 left-4">
-                    <span className="px-3 py-1 bg-success/90 text-success-foreground rounded-full text-xs font-semibold backdrop-blur-sm animate-float-medium">
-                      {project.impact}
-                    </span>
+                  {/* Project Content */}
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs text-accent font-semibold uppercase tracking-wide">
+                        {project.category}
+                      </span>
+                      <Icon
+                        name="ArrowTopRightOnSquareIcon"
+                        size={16}
+                        className={`text-muted-foreground transition-smooth ${
+                          hoveredProject === project.id ? 'text-accent transform rotate-45' : ''
+                        }`}
+                      />
+                    </div>
+
+                    <h3 className="text-xl font-bold text-foreground mb-3 line-clamp-2">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 bg-accent/10 text-accent rounded text-xs font-medium border border-accent/20"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="px-2 py-1 bg-muted text-muted-foreground rounded text-xs">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={
+                        hoveredProject === project.id ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+                      }
+                      transition={{ duration: 0.2 }}
+                    >
+                      <button className="w-full px-4 py-2 bg-[#00F5FF] text-black rounded-lg font-bold text-sm transition-smooth hover:shadow-neon focus-ring">
+                        View Case Study
+                      </button>
+                    </motion.div>
                   </div>
                 </div>
-
-                {/* Project Content */}
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs text-accent font-semibold uppercase tracking-wide">
-                      {project.category}
-                    </span>
-                    <Icon
-                      name="ArrowTopRightOnSquareIcon"
-                      size={16}
-                      className={`text-muted-foreground transition-smooth ${
-                        hoveredProject === project.id ? 'text-accent transform rotate-45' : ''
-                      }`}
-                    />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-3 line-clamp-2">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 bg-accent/10 text-accent rounded text-xs font-medium border border-accent/20"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-2 py-1 bg-muted text-muted-foreground rounded text-xs">
-                        +{project.technologies.length - 3}
-                      </span>
-                    )}
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={
-                      hoveredProject === project.id ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
-                    }
-                    transition={{ duration: 0.2 }}
-                  >
-                    <button className="w-full px-4 py-2 bg-gradient-to-r from-accent to-primary text-background rounded-lg font-semibold text-sm transition-smooth hover:shadow-premium focus-ring">
-                      View Case Study
-                    </button>
-                  </motion.div>
-                </div>
-              </AntiGravityCard>
+              </TiltCard>
             </ScrollReveal>
           ))}
         </div>
 
         {/* View All Projects CTA */}
         <ScrollReveal direction="up" delay={0.3}>
-          <div className="text-center">
-            <MagneticHover strength={8}>
+          <div className="text-center mt-8">
+            <MagneticButton>
               <Link
                 href="/portfolio"
-                className="inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-smooth hover:shadow-premium-lg focus-ring"
+                className="inline-flex items-center space-x-2 px-8 py-4 bg-[#CCFF00] text-black rounded-lg font-bold text-lg transition-smooth hover:shadow-neon focus-ring"
               >
                 <span>Explore All Projects</span>
                 <Icon name="ArrowRightIcon" size={20} />
               </Link>
-            </MagneticHover>
+            </MagneticButton>
           </div>
         </ScrollReveal>
       </div>

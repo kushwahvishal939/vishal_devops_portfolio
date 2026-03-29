@@ -6,7 +6,8 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
+import TiltCard from '@/components/animations/TiltCard';
+import StaggeredReveal from '@/components/animations/StaggeredReveal';
 
 interface Skill {
   name: string;
@@ -62,9 +63,12 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <ScrollReveal direction="up">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gradient mb-4">DevOps Expertise</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16 flex flex-col items-center">
+            <StaggeredReveal
+              text="DevOps Expertise"
+              className="text-4xl lg:text-5xl font-bold text-gradient-cyan mb-4 font-primary"
+            />
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono mt-2">
               Mastering the tools that power modern cloud infrastructure and automation
             </p>
           </div>
@@ -74,7 +78,7 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
           {featuredSkills.map((skill, index) => (
             <ScrollReveal key={skill.name} direction="up" delay={index * 0.08}>
-              <AntiGravityCard className="p-6 text-center cursor-pointer" tiltStrength={6}>
+              <TiltCard className="p-6 text-center cursor-pointer glass-card">
                 <div
                   onMouseEnter={() => setHoveredSkill(skill.name)}
                   onMouseLeave={() => setHoveredSkill(null)}
@@ -84,15 +88,15 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
                     <div
                       className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center transition-smooth ${
                         hoveredSkill === skill.name
-                          ? 'bg-gradient-to-br from-accent to-primary neon-glow'
-                          : 'bg-accent/20'
+                          ? 'bg-[#CCFF00]/20 border border-[#CCFF00]/50 neon-glow-acid'
+                          : 'bg-[#00F5FF]/10 border border-[#00F5FF]/20'
                       }`}
                     >
                       <Icon
                         name={skill.icon as any}
                         size={32}
                         className={`transition-smooth ${
-                          hoveredSkill === skill.name ? 'text-background' : 'text-accent'
+                          hoveredSkill === skill.name ? 'text-[#CCFF00]' : 'text-[#00F5FF]'
                         }`}
                       />
                     </div>
@@ -109,7 +113,7 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
                   </div>
 
                   {/* Skill Name */}
-                  <h3 className="font-semibold text-foreground mb-2 text-sm lg:text-base">
+                  <h3 className="font-semibold text-foreground mb-2 text-sm lg:text-base font-primary">
                     {skill.name}
                   </h3>
 
@@ -117,11 +121,11 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
                   <SkillBar proficiency={skill.proficiency} />
 
                   {/* Proficiency Percentage */}
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-muted-foreground font-mono">
                     {hoveredSkill === skill.name ? `${skill.proficiency}%` : skill.category}
                   </div>
                 </div>
-              </AntiGravityCard>
+              </TiltCard>
             </ScrollReveal>
           ))}
         </div>
