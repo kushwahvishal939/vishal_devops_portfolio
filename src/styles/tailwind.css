@@ -4,47 +4,45 @@
 
 @layer base {
   :root {
-    /* Core Infrastructure Colors */
-    --color-background: #0a0a0a; /* Deep space black - command center atmosphere */
-    --color-foreground: #ffffff; /* Pure white - maximum readability */
-    --color-card: #2a2a2a; /* Surface elevation - subtle content cards */
-    --color-card-foreground: #f0f0f0; /* Soft white - comfortable reading */
-    --color-popover: #1a1a1a; /* Professional foundation - dropdown backgrounds */
-    --color-popover-foreground: #ffffff; /* Pure white - clear communication */
-    --color-muted: #2a2a2a; /* Subtle content elevation */
-    --color-muted-foreground: #b0b0b0; /* Supporting information - elegant hierarchy */
-    --color-border: rgba(255, 255, 255, 0.1); /* Minimal separation - clean boundaries */
-    --color-input: #2a2a2a; /* Form field backgrounds */
-    --color-ring: #00d4ff; /* Electric blue - focus indicators */
-
     /* Brand Identity Colors */
-    --color-primary: #0099cc; /* DevOps reliability - trustworthy innovation */
-    --color-primary-foreground: #ffffff; /* Pure white - high contrast */
-    --color-secondary: #1a1a1a; /* Professional foundation - enterprise stability */
-    --color-secondary-foreground: #ffffff; /* Pure white - clear text */
-    --color-accent: #00d4ff; /* Interactive moments - technical precision */
-    --color-accent-foreground: #0a0a0a; /* Deep black - strong contrast */
+    --color-background: #0b0d17; /* Deep Midnight Navy */
+    --color-foreground: #ffffff;
 
-    /* Status & Feedback Colors */
-    --color-success: #00ff88; /* Achievement metrics - positive performance */
-    --color-success-foreground: #0a0a0a; /* Deep black - readable contrast */
-    --color-warning: #ffaa00; /* Strategic emphasis - attention without alarm */
-    --color-warning-foreground: #0a0a0a; /* Deep black - clear visibility */
-    --color-error: #ff4444; /* Clear feedback - helpful problem identification */
-    --color-error-foreground: #ffffff; /* Pure white - urgent readability */
-    --color-destructive: #ff4444; /* Error states - clear problem indication */
-    --color-destructive-foreground: #ffffff; /* Pure white - high contrast */
+    --color-card: rgba(11, 13, 23, 0.4);
+    --color-card-foreground: #ffffff;
 
-    /* Anti-Gravity Depth Colors */
-    --color-void: #050510; /* Deeper than background - parallax far layer */
-    --color-nebula: rgba(0, 212, 255, 0.03); /* Subtle fill for floating panels */
-    --color-glow-primary: rgba(0, 212, 255, 0.4);
-    --color-glow-secondary: rgba(0, 153, 204, 0.3);
-    --gradient-antigravity: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(0, 153, 204, 0.04), transparent);
+    --color-popover: #0b0d17;
+    --color-popover-foreground: #ffffff;
 
-    /* Typography & Spacing */
+    --color-muted: rgba(255, 255, 255, 0.05);
+    --color-muted-foreground: #a0a0a0;
+
+    --color-border: rgba(0, 245, 255, 0.1); /* Subtle cyan border */
+
+    --color-input: rgba(255, 255, 255, 0.05);
+
+    --color-ring: #00f5ff; /* Electric Cyan */
+
+    --color-primary: #00f5ff; /* Electric Cyan */
+    --color-primary-foreground: #000000;
+
+    --color-secondary: #ccff00; /* Acid Green */
+    --color-secondary-foreground: #000000;
+
+    --color-accent: #00f5ff;
+    --color-accent-foreground: #0b0d17;
+
+    --color-success: #ccff00;
+    --color-success-foreground: #000000;
+    --color-warning: #ffb800;
+    --color-warning-foreground: #000000;
+    --color-error: #ff3366;
+    --color-error-foreground: #ffffff;
+    --color-destructive: #ff3366;
+    --color-destructive-foreground: #ffffff;
+
     --radius: 0.5rem;
-    --font-family-primary: var(--font-inter, 'Inter', sans-serif);
+    --font-family-primary: var(--font-syne, 'Syne', sans-serif);
     --font-family-mono: var(--font-jetbrains-mono, 'JetBrains Mono', monospace);
   }
 
@@ -54,162 +52,96 @@
 
   body {
     @apply bg-background text-foreground font-primary;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: var(--color-background);
   }
 
-  /* Custom scrollbar for dark theme */
+  /* Lenis smooth scrolling core styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
-
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    background: #0b0d17;
   }
-
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted rounded-full;
+    background: rgba(0, 245, 255, 0.2);
+    border-radius: 10px;
   }
-::-webkit-scrollbar-thumb:hover  {
-    
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 245, 255, 0.5);
   }
 }
 
 @layer components {
-  /* Glassmorphism effect for cards */
+  /* Frosted Glass */
   .glass-card {
-    backdrop-filter: blur(10px);
-    background: rgba(0, 212, 255, 0.1);
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     @apply rounded-2xl;
   }
 
-  /* Neon glow effects */
-  .neon-glow {
-    filter: drop-shadow(0 0 10px #00d4ff);
+  .glass-nav {
+    backdrop-filter: blur(20px);
+    background: rgba(11, 13, 23, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 50;
   }
 
-  /* 3D transform utilities */
-  .transform-3d {
-    transform-style: preserve-3d;
-    perspective: 1000px;
+  .neon-glow-cyan {
+    filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.5));
   }
 
-  /* Cyber grid pattern */
-  .cyber-grid {
-    background-image: 
-      linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
+  .neon-glow-acid {
+    filter: drop-shadow(0 0 10px rgba(204, 255, 0, 0.5));
   }
 
-  /* Premium shadows */
-  .shadow-premium {
-    box-shadow: 0 4px 20px rgba(0, 153, 204, 0.1);
-  }
-
-  .shadow-premium-lg {
-    box-shadow: 0 8px 40px rgba(0, 153, 204, 0.15);
-  }
-
-  /* Animated gradient backgrounds */
-  .gradient-animated {
-    background: linear-gradient(45deg, #0099cc, #00d4ff, #0099cc);
-    background-size: 200% 200%;
-    animation: gradientShift 3s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Pulse animation for CTAs */
-  .pulse-glow {
-    animation: pulseGlow 2s ease-in-out infinite;
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    }
-    50% { 
-      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
-    }
-  }
-
-  /* Hover magnetic effect */
   .magnetic-hover {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .magnetic-hover:hover {
     transform: scale(1.05) translateY(-2px);
-    filter: brightness(1.1);
-  }
-
-  /* Neural network connection lines */
-  .neural-lines {
-    background-image: 
-      radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-    background-size: 100px 100px;
-    animation: neuralPulse 4s ease-in-out infinite;
-  }
-
-  @keyframes neuralPulse {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.3; }
   }
 }
 
 @layer utilities {
-  /* Font family utilities */
   .font-primary {
     font-family: var(--font-family-primary);
   }
-
   .font-mono {
     font-family: var(--font-family-mono);
   }
-
-  /* Text gradient utilities */
-  .text-gradient {
-    background: linear-gradient(135deg, #00d4ff, #0099cc);
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00f5ff, #ffffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  /* Sweeping animated gradient text */
-  .text-gradient-wide {
-    background: linear-gradient(100deg, #00d4ff 0%, #0099cc 40%, #00d4ff 80%);
-    background-size: 200% auto;
+  .text-gradient-acid {
+    background: linear-gradient(135deg, #ccff00, #ffffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 4s linear infinite;
   }
-
-  /* Smooth transitions */
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Grid utilities for golden ratio */
-  .grid-golden {
-    display: grid;
-    gap: clamp(1rem, 4vw, 3rem);
-  }
-
-  /* Viewport utilities */
   .min-h-screen-safe {
     min-height: 100vh;
     min-height: 100dvh;
-  }
-
-  /* Focus utilities for accessibility */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
   }
 }

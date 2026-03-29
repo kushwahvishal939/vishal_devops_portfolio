@@ -1,8 +1,10 @@
 import React from 'react';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Syne, JetBrains_Mono } from 'next/font/google';
 import '../styles/index.css';
+import SmoothScroll from '../components/animations/SmoothScroll';
+import CustomCursor from '../components/animations/CustomCursor';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+const syne = Syne({ subsets: ['latin'], display: 'swap', variable: '--font-syne' });
 const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
@@ -15,8 +17,9 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Next.js with Tailwind CSS',
-  description: 'A boilerplate project with Next.js and Tailwind CSS',
+  title: 'Vishal Kushwah - DevOps & Full Stack Portfolio',
+  description:
+    'Premium portfolio of Vishal Kushwah, showcasing high-end motion design and DevOps expertise.',
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
   },
@@ -28,9 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetBrainsMono.variable}`}>
-      <body className="font-primary">
-        {children}
+    <html lang="en" className={`${syne.variable} ${jetBrainsMono.variable}`}>
+      <body className="font-primary overflow-x-hidden">
+        <SmoothScroll>
+          <CustomCursor />
+          {children}
+        </SmoothScroll>
 
         <script
           type="module"

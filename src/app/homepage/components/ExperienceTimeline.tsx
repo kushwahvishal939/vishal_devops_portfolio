@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import StaggeredReveal from '@/components/animations/StaggeredReveal';
 
 interface Experience {
   id: number;
@@ -101,15 +102,16 @@ const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,212,255,0.08),transparent_35%),radial-gradient(circle_at_80%_60%,rgba(0,153,204,0.1),transparent_40%)]" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <ScrollReveal direction="up">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-accent text-sm font-semibold">
+          <div className="text-center mb-16 flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CCFF00]/10 border border-[#CCFF00]/30 text-[#CCFF00] text-sm font-semibold mb-4">
               <Icon name="BoltIcon" size={16} />
               <span>DevOps Career Path</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gradient mt-4">
-              Reliability-Driven Journey
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <StaggeredReveal
+              text="Reliability-Driven Journey"
+              className="text-4xl lg:text-5xl font-bold text-gradient-cyan"
+            />
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4 font-mono">
               From cost-cutting migrations to platform reliability, here&apos;s the story in uptime,
               pipelines, and autoscaling.
             </p>
@@ -142,7 +144,7 @@ const ExperienceTimeline = ({ className = '' }: ExperienceTimelineProps) => {
                       <div className="p-6 space-y-4">
                         <div className="flex flex-wrap items-start justify-between gap-4">
                           <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center text-background shadow-neon">
+                            <div className="w-12 h-12 rounded-xl bg-[#00F5FF]/10 border border-[#00F5FF]/30 flex items-center justify-center text-[#00F5FF] shadow-neon">
                               <Icon name={exp.icon as any} size={22} />
                             </div>
                             <div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
-import MagneticHover from '@/components/animations/MagneticHover';
+import MagneticButton from '@/components/animations/MagneticButton';
 
 interface HeaderProps {
   className?: string;
@@ -46,9 +46,7 @@ const Header = ({ className = '' }: HeaderProps) => {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-premium'
-          : 'bg-transparent'
+        isScrolled ? 'glass-nav shadow-premium' : 'bg-transparent'
       } ${className}`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -57,10 +55,10 @@ const Header = ({ className = '' }: HeaderProps) => {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <MagneticHover strength={6}>
+          <MagneticButton>
             <Link
               href="/homepage"
-              className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg"
+              className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg cursor-pointer"
             >
               <div className="relative">
                 <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center transform-3d group-hover:scale-110 transition-smooth">
@@ -73,7 +71,7 @@ const Header = ({ className = '' }: HeaderProps) => {
                 <p className="text-xs text-muted-foreground font-mono">DevOps Portfolio</p>
               </div>
             </Link>
-          </MagneticHover>
+          </MagneticButton>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
@@ -141,14 +139,14 @@ const Header = ({ className = '' }: HeaderProps) => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <MagneticHover strength={8}>
+            <MagneticButton>
               <Link
                 href="/contact"
-                className="px-6 py-2.5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon focus-ring"
+                className="px-6 py-2.5 bg-[#00F5FF] text-black rounded-lg font-bold text-sm transition-smooth hover:neon-glow-cyan focus-ring"
               >
                 Hire Me
               </Link>
-            </MagneticHover>
+            </MagneticButton>
           </div>
 
           {/* Mobile Menu Button */}
