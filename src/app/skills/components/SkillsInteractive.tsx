@@ -130,6 +130,15 @@ export default function SkillsInteractive() {
       status: 'active' as const,
     },
     {
+      name: 'AWS Certified Solutions Architect - Professional',
+      issuer: 'Amazon Web Services',
+      date: 'Aug 2026',
+      credentialId: 'SAP-C02-VK2026',
+      verificationUrl:
+        'https://www.credly.com/badges/d927676d-a144-44a7-9bb7-73e8cc31579c/linked_in_profile',
+      status: 'active' as const,
+    },
+    {
       name: 'Cisco Network Automation Essentials',
       issuer: 'CISCO',
       date: 'Oct 2025',
