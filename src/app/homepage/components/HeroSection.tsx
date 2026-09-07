@@ -115,6 +115,14 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
                 <Icon name="FolderOpenIcon" size={16} />
                 <span>VIEW_PORTFOLIO</span>
               </Link>
+              <a
+                href="/resume.pdf"
+                download
+                className="px-6 py-3 border border-[#f59e0b] text-[#f59e0b] font-mono font-bold text-sm tracking-wide hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-150 inline-flex items-center gap-2"
+              >
+                <Icon name="ArrowDownTrayIcon" size={16} />
+                <span>RESUME</span>
+              </a>
             </div>
           </ScrollReveal>
 

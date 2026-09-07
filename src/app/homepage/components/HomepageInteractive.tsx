@@ -3,6 +3,9 @@
 import React from 'react';
 import PageTransition from '@/components/animations/PageTransition';
 import HeroSection from './HeroSection';
+import InteractiveTerminal from './InteractiveTerminal';
+import LiveDashboard from './LiveDashboard';
+import PipelineVisualization from './PipelineVisualization';
 import SkillsPreview from './SkillsPreview';
 import ExperienceTimeline from './ExperienceTimeline';
 import FeaturedProjects from './FeaturedProjects';
@@ -17,6 +20,9 @@ const HomepageInteractive = ({ className = '' }: HomepageInteractiveProps) => {
     <PageTransition>
       <div className={`min-h-screen bg-background ${className}`}>
         <HeroSection />
+        <InteractiveTerminal />
+        <LiveDashboard />
+        <PipelineVisualization />
         <SkillsPreview />
         <ExperienceTimeline />
         <FeaturedProjects />

@@ -61,10 +61,14 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
               <Icon name="ChatBubbleLeftRightIcon" size={16} />
               <span>START_CONVERSATION</span>
             </Link>
-            <button className="px-6 py-3 border border-[#f59e0b] text-[#f59e0b] font-mono font-bold text-sm tracking-wide hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-150 inline-flex items-center gap-2">
-              <Icon name="DocumentArrowDownIcon" size={16} />
+            <a
+              href="/resume.pdf"
+              download
+              className="px-6 py-3 border border-[#f59e0b] text-[#f59e0b] font-mono font-bold text-sm tracking-wide hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-150 inline-flex items-center gap-2"
+            >
+              <Icon name="ArrowDownTrayIcon" size={16} />
               <span>DOWNLOAD_RESUME</span>
-            </button>
+            </a>
           </div>
         </ScrollReveal>
 
