@@ -62,7 +62,7 @@ const ContactCTA = ({ className = '' }: ContactCTAProps) => {
               <span>START_CONVERSATION</span>
             </Link>
             <a
-              href="https://hostile-ivory-nd1qhsn9.edgeone.dev/"
+              href="https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf"
               download
               className="px-6 py-3 border border-[#f59e0b] text-[#f59e0b] font-mono font-bold text-sm tracking-wide hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-150 inline-flex items-center gap-2"
             >
