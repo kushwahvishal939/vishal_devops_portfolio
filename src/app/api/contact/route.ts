@@ -11,7 +11,7 @@ const ses = new SESClient({
 });
 
 const TO_EMAIL = 'kushwahvishal939@gmail.com';
-const FROM_EMAIL = process.env.AWS_SES_FROM_EMAIL || 'kushwahvishal939@gmail.com';
+const FROM_EMAIL = process.env.AWS_SES_FROM_EMAIL || 'portfolio@vishalkushwah.com';
 
 // Simple rate limit: max 5 submissions per IP per hour (in-memory, resets on restart)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
