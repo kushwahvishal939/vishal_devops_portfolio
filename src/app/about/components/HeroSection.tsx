@@ -107,7 +107,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
 
                 <motion.a
                   whileHover={{ y: -1 }}
-                  href="/resume.pdf"
+                  href="https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 font-mono text-sm font-semibold flex items-center gap-2"
