@@ -628,7 +628,7 @@ function processCommand(cmd: string, router: ReturnType<typeof useRouter>): stri
   if (lower === 'cat resume.pdf') {
     if (typeof window !== 'undefined') {
       const link = document.createElement('a');
-      link.href = 'https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf';
+      link.href = 'https://hostile-ivory-nd1qhsn9.edgeone.dev/';
       link.download = 'vishal_kushwah_resume.pdf';
       link.click();
     }

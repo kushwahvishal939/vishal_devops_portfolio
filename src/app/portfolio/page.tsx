@@ -71,7 +71,7 @@ export default function PortfolioPage() {
                 start_project
               </a>
               <a
-                href="https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf"
+                href="https://hostile-ivory-nd1qhsn9.edgeone.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-2.5 border border-[#f59e0b] text-[#f59e0b] text-xs font-bold uppercase tracking-wider hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors"
