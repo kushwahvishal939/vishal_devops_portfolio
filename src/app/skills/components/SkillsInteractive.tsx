@@ -1,12 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import SkillCategory from './SkillCategory';
-import CertificationBadge from './CertificationBadge';
+import { motion, AnimatePresence } from 'framer-motion';
 import ToolPlayground from './ToolPlayground';
-import SkillsMetrics from './SkillsMetrics';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import PageTransition from '@/components/animations/PageTransition';
+import Icon from '@/components/ui/AppIcon';
+
+function buildAsciiBar(value: number, length: number = 24): string {
+  const filled = Math.round((value / 100) * length);
+  const empty = length - filled;
+  return '[' + '\u2588'.repeat(filled) + '\u2591'.repeat(empty) + ']';
+}
 
 export default function SkillsInteractive() {
   const [activeTab, setActiveTab] = useState('tools');
@@ -14,13 +18,10 @@ export default function SkillsInteractive() {
   const skillCategories = [
     {
       title: 'Cloud Platforms',
-      icon: '☁️',
-      color: 'from-blue-500 to-cyan-500',
       skills: [
         {
           name: 'Amazon Web Services',
           proficiency: 92,
-          icon: '🟠',
           description:
             'Expert in EC2, S3, Lambda, RDS, CloudFormation, and cost optimization strategies',
           yearsExperience: 2,
@@ -28,14 +29,12 @@ export default function SkillsInteractive() {
         {
           name: 'Microsoft Azure',
           proficiency: 88,
-          icon: '🔵',
           description: 'Certified in DevOps solutions, ARM templates, and Azure Kubernetes Service',
           yearsExperience: 1,
         },
         {
           name: 'Google Cloud Platform',
           proficiency: 85,
-          icon: '🔴',
           description:
             'Proficient in GKE, Cloud Functions, BigQuery, and infrastructure automation',
           yearsExperience: 1,
@@ -44,13 +43,10 @@ export default function SkillsInteractive() {
     },
     {
       title: 'Container Orchestration',
-      icon: '🐳',
-      color: 'from-purple-500 to-pink-500',
       skills: [
         {
           name: 'Kubernetes',
           proficiency: 90,
-          icon: '⚙️',
           description:
             'Advanced cluster management, RBAC, networking, and custom resource definitions',
           yearsExperience: 2,
@@ -58,14 +54,12 @@ export default function SkillsInteractive() {
         {
           name: 'Docker',
           proficiency: 95,
-          icon: '🐋',
           description: 'Container optimization, multi-stage builds, and security best practices',
           yearsExperience: 2,
         },
         {
           name: 'Helm',
           proficiency: 87,
-          icon: '⛵',
           description: 'Chart development, templating, and application lifecycle management',
           yearsExperience: 2,
         },
@@ -73,27 +67,22 @@ export default function SkillsInteractive() {
     },
     {
       title: 'CI/CD & Automation',
-      icon: '🔄',
-      color: 'from-green-500 to-teal-500',
       skills: [
         {
           name: 'Jenkins',
           proficiency: 93,
-          icon: '🔧',
           description: 'Pipeline as code, plugin development, and distributed build systems',
           yearsExperience: 2,
         },
         {
           name: 'GitHub Actions',
           proficiency: 89,
-          icon: '🐙',
           description: 'Workflow automation, custom actions, and security scanning integration',
           yearsExperience: 2,
         },
         {
           name: 'GitLab CI/CD',
           proficiency: 86,
-          icon: '🦊',
           description: 'Multi-stage pipelines, auto-scaling runners, and deployment strategies',
           yearsExperience: 2,
         },
@@ -101,30 +90,13 @@ export default function SkillsInteractive() {
     },
     {
       title: 'Infrastructure as Code',
-      icon: '📜',
-      color: 'from-orange-500 to-red-500',
       skills: [
         {
           name: 'Terraform',
           proficiency: 91,
-          icon: '🏗️',
           description: 'Multi-cloud provisioning, state management, and module development',
           yearsExperience: 1,
         },
-        // {
-        //   name: "Ansible",
-        //   proficiency: 88,
-        //   icon: "📋",
-        //   description: "Configuration management, playbook optimization, and inventory management",
-        //   yearsExperience: 4
-        // },
-        // {
-        //   name: "CloudFormation",
-        //   proficiency: 85,
-        //   icon: "☁️",
-        //   description: "AWS resource provisioning, nested stacks, and custom resources",
-        //   yearsExperience: 3
-        // }
       ],
     },
   ];
@@ -137,7 +109,6 @@ export default function SkillsInteractive() {
       credentialId: 'AZ-400-VK2024',
       verificationUrl:
         'https://www.credly.com/badges/7ea892bf-806d-423e-bf1f-149d2b10d2a6/linked_in_profile',
-      badgeIcon: '🏆',
       status: 'active' as const,
     },
     {
@@ -147,7 +118,6 @@ export default function SkillsInteractive() {
       credentialId: 'SAA-C03-VK2024',
       verificationUrl:
         'https://aws.amazon.com/certification/certified-solutions-architect-associate/',
-      badgeIcon: '🎯',
       status: 'active' as const,
     },
     {
@@ -157,7 +127,6 @@ export default function SkillsInteractive() {
       credentialId: 'GCP-PDE-VK2024',
       verificationUrl:
         'https://www.skills.google/public_profiles/2f0f4e69-4786-4ea0-af6c-89de4ea6d88b/badges/18053972?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share',
-      badgeIcon: '⭐',
       status: 'active' as const,
     },
     {
@@ -167,7 +136,6 @@ export default function SkillsInteractive() {
       credentialId: 'CKA-VK2024',
       verificationUrl:
         'https://www.credly.com/badges/894eb797-6766-40fb-b680-44467bf68b54/linked_in_profile',
-      badgeIcon: '🚀',
       status: 'active' as const,
     },
   ];
@@ -176,7 +144,7 @@ export default function SkillsInteractive() {
     {
       name: 'Docker',
       category: 'Containerization',
-      icon: '🐋',
+      icon: '\uD83D\uDC0B',
       description: 'Container platform for building, shipping, and running applications',
       features: [
         'Multi-stage builds',
@@ -190,7 +158,7 @@ export default function SkillsInteractive() {
     {
       name: 'Kubernetes',
       category: 'Orchestration',
-      icon: '⚙️',
+      icon: '\u2699\uFE0F',
       description: 'Container orchestration platform for automated deployment and scaling',
       features: ['Cluster management', 'Service mesh', 'Auto-scaling', 'Rolling updates'],
       proficiency: 90,
@@ -199,7 +167,7 @@ export default function SkillsInteractive() {
     {
       name: 'Jenkins',
       category: 'CI/CD',
-      icon: '🔧',
+      icon: '\uD83D\uDD27',
       description: 'Automation server for continuous integration and deployment',
       features: ['Pipeline as code', 'Plugin ecosystem', 'Distributed builds', 'Blue Ocean UI'],
       proficiency: 93,
@@ -208,7 +176,7 @@ export default function SkillsInteractive() {
     {
       name: 'Terraform',
       category: 'Infrastructure',
-      icon: '🏗️',
+      icon: '\uD83C\uDFD7\uFE0F',
       description: 'Infrastructure as code tool for building and managing cloud resources',
       features: ['Multi-cloud support', 'State management', 'Module system', 'Plan validation'],
       proficiency: 91,
@@ -217,7 +185,7 @@ export default function SkillsInteractive() {
     {
       name: 'AWS',
       category: 'Cloud Platform',
-      icon: '🟠',
+      icon: '\uD83D\uDFE0',
       description: 'Comprehensive cloud computing platform with 200+ services',
       features: [
         'EC2 & Lambda',
@@ -234,19 +202,10 @@ export default function SkillsInteractive() {
       proficiency: 92,
       projects: 20,
     },
-    // {
-    //   name: "Ansible",
-    //   category: "Configuration",
-    //   icon: "📋",
-    //   description: "Automation tool for configuration management and application deployment",
-    //   features: ["Playbook automation", "Inventory management", "Idempotent operations", "Vault encryption"],
-    //   proficiency: 88,
-    //   projects: 20
-    // },
     {
       name: 'Prometheus',
       category: 'Monitoring',
-      icon: '📊',
+      icon: '\uD83D\uDCCA',
       description: 'Open-source monitoring and alerting toolkit for cloud-native environments',
       features: ['Time-series database', 'PromQL queries', 'Alertmanager', 'Service discovery'],
       proficiency: 86,
@@ -255,7 +214,7 @@ export default function SkillsInteractive() {
     {
       name: 'Grafana',
       category: 'Visualization',
-      icon: '📈',
+      icon: '\uD83D\uDCC8',
       description: 'Analytics and monitoring platform with beautiful dashboards',
       features: ['Custom dashboards', 'Data source integration', 'Alerting', 'Team collaboration'],
       proficiency: 89,
@@ -267,142 +226,337 @@ export default function SkillsInteractive() {
     {
       label: 'Technologies Mastered',
       value: '50+',
-      icon: '🛠️',
-      color: 'from-blue-500 to-cyan-500',
       description: 'DevOps tools and platforms',
     },
     {
       label: 'Certifications Earned',
       value: '8',
-      icon: '🏆',
-      color: 'from-purple-500 to-pink-500',
       description: 'Industry-recognized credentials',
     },
     {
       label: 'Years Experience',
       value: '2+',
-      icon: '⏱️',
-      color: 'from-green-500 to-teal-500',
       description: 'Professional DevOps expertise',
     },
     {
       label: 'Projects Delivered',
       value: '50+',
-      icon: '🚀',
-      color: 'from-orange-500 to-red-500',
       description: 'Successful implementations',
     },
   ];
 
   const tabs = [
-    { id: 'skills', label: 'Core Skills', icon: '🎯' },
-    { id: 'tools', label: 'Tool Playground', icon: '🛠️' },
-    { id: 'certifications', label: 'Certifications', icon: '🏆' },
-    { id: 'metrics', label: 'Metrics', icon: '📊' },
+    { id: 'skills', label: 'skills' },
+    { id: 'tools', label: 'tools' },
+    { id: 'certs', label: 'certs' },
+    { id: 'metrics', label: 'metrics' },
   ];
 
   return (
-    <PageTransition>
-      <div className="space-y-12">
-        {/* Hero Section */}
-        <ScrollReveal direction="up">
-          <div className="text-center space-y-6">
-            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-accent/10 rounded-full text-accent text-sm font-medium">
-              <span className="animate-pulse">🔥</span>
-              <span>Skills Laboratory</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient">
-              DevOps Mastery
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Interactive showcase of technical capabilities with real-time demonstrations,
-              proficiency meters, and hands-on tool playground experiences
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-smooth focus-ring ${
-                activeTab === tab.id
-                  ? 'bg-accent text-accent-foreground shadow-neon'
-                  : 'bg-muted/20 text-muted-foreground hover:text-foreground hover:bg-muted/40'
-              }`}
-            >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
-            </button>
-          ))}
+    <div className="space-y-10">
+      {/* Header */}
+      <ScrollReveal direction="up">
+        <div className="space-y-3">
+          <p className="font-mono text-sm text-[#666]">
+            <span className="text-[#f59e0b]">$</span> cat /etc/skills.conf
+          </p>
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-[#e0e0e0] tracking-tight">
+            DevOps Mastery
+          </h1>
+          <p className="font-mono text-sm text-[#666] max-w-2xl">
+            Technical capabilities, proficiency metrics, certifications, and tooling -- all in one
+            place.
+          </p>
         </div>
+      </ScrollReveal>
 
-        {/* Content Sections */}
-        <div className="space-y-12">
-          {activeTab === 'skills' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {skillCategories.map((category, index) => (
-                <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-                  <SkillCategory
-                    title={category.title}
-                    skills={category.skills}
-                    icon={category.icon}
-                    color={category.color}
-                  />
-                </ScrollReveal>
-              ))}
-            </div>
-          )}
+      {/* Terminal Tab Navigation */}
+      <ScrollReveal direction="up" delay={0.1}>
+        <div className="border-b border-[#222]">
+          <div className="flex gap-0">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`
+                    relative px-5 py-3 font-mono text-sm transition-colors duration-150
+                    border border-b-0 -mb-px
+                    ${
+                      isActive
+                        ? 'bg-[#111] text-[#f59e0b] border-[#222] border-b-[#111]'
+                        : 'bg-transparent text-[#666] border-transparent hover:text-[#e0e0e0]'
+                    }
+                  `}
+                  style={{ borderRadius: '2px 2px 0 0' }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="tab-indicator"
+                      className="absolute top-0 left-0 right-0 h-[2px] bg-[#f59e0b]"
+                      style={{ borderRadius: '2px 2px 0 0' }}
+                    />
+                  )}
+                  <span className="text-[#666] mr-1">&gt;</span>
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </ScrollReveal>
 
-          {activeTab === 'tools' && <ToolPlayground tools={tools} />}
+      {/* Content Area */}
+      <AnimatePresence mode="wait">
+        {/* ===== SKILLS TAB ===== */}
+        {activeTab === 'skills' && (
+          <motion.div
+            key="skills"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-8"
+          >
+            {skillCategories.map((category, catIndex) => (
+              <ScrollReveal key={catIndex} direction="up" delay={catIndex * 0.08}>
+                <div className="bg-[#111] border border-[#222] p-5" style={{ borderRadius: '2px' }}>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-[#f59e0b] font-mono text-sm">$</span>
+                    <h3 className="font-mono text-sm font-bold text-[#e0e0e0]">{category.title}</h3>
+                    <span className="font-mono text-xs text-[#666]">
+                      ({category.skills.length})
+                    </span>
+                  </div>
 
-          {activeTab === 'certifications' && (
-            <div>
-              <ScrollReveal direction="up">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gradient mb-4">
-                    Professional Certifications
-                  </h3>
-                  <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Industry-recognized credentials validating expertise across cloud platforms and
-                    DevOps practices
-                  </p>
+                  <div className="space-y-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="group">
+                        <div className="flex items-baseline justify-between mb-1">
+                          <span className="font-mono text-sm text-[#e0e0e0]">{skill.name}</span>
+                          <span className="font-mono text-xs text-[#666]">
+                            {skill.yearsExperience}y exp
+                          </span>
+                        </div>
+                        <div className="font-mono text-xs flex items-center gap-2">
+                          <span className="text-[#f59e0b] whitespace-pre">
+                            {buildAsciiBar(skill.proficiency)}
+                          </span>
+                          <span className="text-[#e0e0e0] tabular-nums w-8 text-right">
+                            {skill.proficiency}%
+                          </span>
+                        </div>
+                        <p className="font-mono text-xs text-[#666] mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                          {skill.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </ScrollReveal>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            ))}
+          </motion.div>
+        )}
+
+        {/* ===== TOOLS TAB ===== */}
+        {activeTab === 'tools' && (
+          <motion.div
+            key="tools"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ToolPlayground tools={tools} />
+          </motion.div>
+        )}
+
+        {/* ===== CERTIFICATIONS TAB ===== */}
+        {activeTab === 'certs' && (
+          <motion.div
+            key="certs"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <ScrollReveal direction="up">
+              <div className="mb-6">
+                <p className="font-mono text-sm text-[#666]">
+                  <span className="text-[#f59e0b]">$</span> kubectl get certifications
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Table Header */}
+            <ScrollReveal direction="up" delay={0.05}>
+              <div
+                className="bg-[#111] border border-[#222] overflow-hidden"
+                style={{ borderRadius: '2px' }}
+              >
+                <div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-[#222] bg-[#0d0d0d]">
+                  <span className="col-span-5 font-mono text-xs text-[#666] uppercase tracking-wider">
+                    Name
+                  </span>
+                  <span className="col-span-2 font-mono text-xs text-[#666] uppercase tracking-wider">
+                    Issuer
+                  </span>
+                  <span className="col-span-2 font-mono text-xs text-[#666] uppercase tracking-wider">
+                    Date
+                  </span>
+                  <span className="col-span-1 font-mono text-xs text-[#666] uppercase tracking-wider">
+                    Status
+                  </span>
+                  <span className="col-span-2 font-mono text-xs text-[#666] uppercase tracking-wider text-right">
+                    Action
+                  </span>
+                </div>
+
                 {certifications.map((cert, index) => (
-                  <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-                    <CertificationBadge certification={cert} />
+                  <ScrollReveal key={index} direction="up" delay={index * 0.06}>
+                    <div
+                      className={`
+                        grid grid-cols-12 gap-2 px-4 py-3 items-center
+                        hover:bg-[#1a1a1a] transition-colors duration-100
+                        ${index < certifications.length - 1 ? 'border-b border-[#1a1a1a]' : ''}
+                      `}
+                    >
+                      <div className="col-span-5">
+                        <p className="font-mono text-sm text-[#e0e0e0] truncate">{cert.name}</p>
+                        <p className="font-mono text-xs text-[#666] truncate">
+                          {cert.credentialId}
+                        </p>
+                      </div>
+                      <span className="col-span-2 font-mono text-xs text-[#666]">
+                        {cert.issuer}
+                      </span>
+                      <span className="col-span-2 font-mono text-xs text-[#666]">{cert.date}</span>
+                      <span className="col-span-1">
+                        <span className="font-mono text-xs text-[#22c55e]">{cert.status}</span>
+                      </span>
+                      <div className="col-span-2 text-right">
+                        <a
+                          href={cert.verificationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-mono text-xs text-[#f59e0b] hover:underline"
+                        >
+                          verify
+                          <Icon
+                            name="ArrowTopRightOnSquareIcon"
+                            size={12}
+                            className="text-[#f59e0b]"
+                          />
+                        </a>
+                      </div>
+                    </div>
                   </ScrollReveal>
                 ))}
               </div>
-            </div>
-          )}
+            </ScrollReveal>
 
-          {activeTab === 'metrics' && (
-            <div>
-              <ScrollReveal direction="up">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gradient mb-4">Skills Overview</h3>
-                  <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Quantified expertise and professional achievements in DevOps engineering
-                  </p>
-                </div>
-              </ScrollReveal>
-              <SkillsMetrics metrics={metrics} />
+            {/* Mobile-friendly card fallback */}
+            <div className="block sm:hidden space-y-3">
+              {certifications.map((cert, index) => (
+                <ScrollReveal key={`mobile-${index}`} direction="up" delay={index * 0.06}>
+                  <div
+                    className="bg-[#111] border border-[#222] p-4 space-y-2"
+                    style={{ borderRadius: '2px' }}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-mono text-sm text-[#e0e0e0]">{cert.name}</p>
+                        <p className="font-mono text-xs text-[#666]">
+                          {cert.issuer} -- {cert.date}
+                        </p>
+                      </div>
+                      <span className="font-mono text-xs text-[#22c55e]">{cert.status}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs text-[#666]">{cert.credentialId}</span>
+                      <a
+                        href={cert.verificationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-mono text-xs text-[#f59e0b] hover:underline"
+                      >
+                        verify
+                        <Icon
+                          name="ArrowTopRightOnSquareIcon"
+                          size={12}
+                          className="text-[#f59e0b]"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
             </div>
-          )}
-        </div>
+          </motion.div>
+        )}
 
-        {/* Floating Animation Elements */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent rounded-full animate-ping opacity-20"></div>
-          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-primary rounded-full animate-pulse opacity-30"></div>
-          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-accent rounded-full animate-bounce opacity-25"></div>
-        </div>
-      </div>
-    </PageTransition>
+        {/* ===== METRICS TAB ===== */}
+        {activeTab === 'metrics' && (
+          <motion.div
+            key="metrics"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <ScrollReveal direction="up">
+              <div className="mb-6">
+                <p className="font-mono text-sm text-[#666]">
+                  <span className="text-[#f59e0b]">$</span> cat /var/log/career-metrics.json
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {metrics.map((metric, index) => (
+                <ScrollReveal key={index} direction="up" delay={index * 0.08}>
+                  <div
+                    className="bg-[#111] border border-[#222] p-5 hover:border-[#333] transition-colors duration-150"
+                    style={{ borderRadius: '2px' }}
+                  >
+                    <p className="font-mono text-3xl font-bold text-[#f59e0b] mb-1">
+                      {metric.value}
+                    </p>
+                    <p className="font-mono text-sm text-[#e0e0e0] mb-1">{metric.label}</p>
+                    <p className="font-mono text-xs text-[#666]">{metric.description}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            {/* Summary block */}
+            <ScrollReveal direction="up" delay={0.3}>
+              <div
+                className="bg-[#111] border border-[#222] p-5 font-mono text-xs text-[#666] space-y-1"
+                style={{ borderRadius: '2px' }}
+              >
+                <p>
+                  <span className="text-[#f59e0b]">&gt;</span> overview.status ={' '}
+                  <span className="text-[#22c55e]">&quot;active&quot;</span>
+                </p>
+                <p>
+                  <span className="text-[#f59e0b]">&gt;</span> overview.focus ={' '}
+                  <span className="text-[#e0e0e0]">
+                    &quot;Cloud-Native DevOps &amp; Platform Engineering&quot;
+                  </span>
+                </p>
+                <p>
+                  <span className="text-[#f59e0b]">&gt;</span> overview.learning ={' '}
+                  <span className="text-[#e0e0e0]">&quot;Always&quot;</span>
+                </p>
+              </div>
+            </ScrollReveal>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

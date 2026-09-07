@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Technology {
   name: string;
@@ -51,278 +50,289 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'metrics'>('overview');
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   return (
     <ScrollReveal direction="up">
-      <AntiGravityCard className="group relative bg-card border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-premium-lg hover:border-accent/30">
-        {/* Project Image */}
-        <div className="relative h-48 overflow-hidden">
-          <AppImage
-            src={project.image}
-            alt={project.alt}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
-
-          {/* Category Badge */}
-          <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 bg-accent/20 text-accent text-xs font-semibold rounded-full backdrop-blur-sm border border-accent/30">
-              {project.category}
+      <div className="border border-[#222] bg-[#111] font-mono group hover:border-[#333] transition-colors duration-150">
+        {/* Title bar */}
+        <div className="flex items-center justify-between px-4 py-2 border-b border-[#222] bg-[#0d0d0d]">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-[#f59e0b]" />
+            <span className="text-[10px] uppercase tracking-widest text-[#666]">
+              {project.category.replace('-', '_')}
             </span>
           </div>
-
-          {/* Action Buttons */}
-          <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="flex items-center gap-2">
             {project.demoUrl && (
-              <button className="p-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border hover:bg-accent hover:text-background transition-colors">
-                <Icon name="EyeIcon" size={16} />
-              </button>
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#666] hover:text-[#f59e0b] transition-colors duration-100"
+                aria-label={`Demo for ${project.title}`}
+              >
+                <Icon name="EyeIcon" size={14} />
+              </a>
             )}
             {project.githubUrl && (
-              <button className="p-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border hover:bg-accent hover:text-background transition-colors">
-                <Icon name="CodeBracketIcon" size={16} />
-              </button>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#666] hover:text-[#f59e0b] transition-colors duration-100"
+                aria-label={`Source code for ${project.title}`}
+              >
+                <Icon name="CodeBracketIcon" size={14} />
+              </a>
             )}
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          {/* Header */}
-          <div className="mb-4">
-            <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-accent transition-colors">
-              {project.title}
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
-          </div>
+        <div className="p-5">
+          {/* Title */}
+          <h3 className="text-[#e0e0e0] text-base font-bold mb-2 leading-tight">{project.title}</h3>
+          <p className="text-[#666] text-xs leading-relaxed mb-4">{project.description}</p>
 
           {/* Technologies */}
-          <div className="mb-4">
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.slice(0, 4).map((tech, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-1 px-2 py-1 bg-muted/50 rounded-md text-xs"
-                >
-                  <Icon name={tech.icon as any} size={12} className="text-accent" />
-                  <span className="text-muted-foreground">{tech.name}</span>
-                </div>
-              ))}
-              {project.technologies.length > 4 && (
-                <span className="px-2 py-1 bg-muted/50 rounded-md text-xs text-muted-foreground">
-                  +{project.technologies.length - 4} more
-                </span>
-              )}
-            </div>
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {project.technologies.slice(0, 4).map((tech, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center gap-1 px-2 py-1 text-[10px] border border-[#222] text-[#888] bg-[#0d0d0d]"
+              >
+                <Icon name={tech.icon as any} size={10} className="text-[#f59e0b]/60" />
+                {tech.name}
+              </span>
+            ))}
+            {project.technologies.length > 4 && (
+              <span className="inline-flex items-center px-2 py-1 text-[10px] border border-[#222] text-[#444]">
+                +{project.technologies.length - 4}
+              </span>
+            )}
           </div>
 
-          {/* Key Metrics */}
-          <div className="mb-4 grid grid-cols-2 gap-3">
+          {/* Metrics row */}
+          <div className="grid grid-cols-2 gap-px bg-[#222] mb-4">
             {project.metrics.costReduction && (
-              <div className="text-center p-3 bg-success/10 rounded-lg border border-success/20">
-                <div className="text-lg font-bold text-success">
+              <div className="bg-[#0d0d0d] p-3">
+                <div className="text-[#f59e0b] text-sm font-bold font-mono">
                   {project.metrics.costReduction}
                 </div>
-                <div className="text-xs text-muted-foreground">Cost Reduction</div>
+                <div className="text-[10px] text-[#444] uppercase tracking-wider">
+                  cost_reduction
+                </div>
               </div>
             )}
             {project.metrics.performanceImprovement && (
-              <div className="text-center p-3 bg-accent/10 rounded-lg border border-accent/20">
-                <div className="text-lg font-bold text-accent">
+              <div className="bg-[#0d0d0d] p-3">
+                <div className="text-[#e0e0e0] text-sm font-bold font-mono">
                   {project.metrics.performanceImprovement}
                 </div>
-                <div className="text-xs text-muted-foreground">Performance</div>
+                <div className="text-[10px] text-[#444] uppercase tracking-wider">performance</div>
+              </div>
+            )}
+            {project.metrics.uptime && (
+              <div className="bg-[#0d0d0d] p-3">
+                <div className="text-[#22c55e] text-sm font-bold font-mono">
+                  {project.metrics.uptime}
+                </div>
+                <div className="text-[10px] text-[#444] uppercase tracking-wider">uptime</div>
+              </div>
+            )}
+            {project.metrics.deploymentTime && (
+              <div className="bg-[#0d0d0d] p-3">
+                <div className="text-[#e0e0e0] text-sm font-bold font-mono">
+                  {project.metrics.deploymentTime}
+                </div>
+                <div className="text-[10px] text-[#444] uppercase tracking-wider">deploy_time</div>
               </div>
             )}
           </div>
 
-          {/* Expand Button */}
+          {/* Expand toggle */}
           <button
-            onClick={toggleExpanded}
-            className="w-full flex items-center justify-center space-x-2 py-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors focus-ring"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full flex items-center justify-center gap-2 py-2.5 border border-[#222] text-[#666] hover:text-[#e0e0e0] hover:border-[#333] transition-colors duration-100 text-xs"
+            aria-expanded={isExpanded}
           >
-            <span className="text-sm font-medium">{isExpanded ? 'Show Less' : 'View Details'}</span>
-            <Icon
-              name={isExpanded ? 'ChevronUpIcon' : 'ChevronDownIcon'}
-              size={16}
-              className="transition-transform duration-300"
-            />
+            <span>{isExpanded ? '[-] collapse' : '[+] expand --details'}</span>
           </button>
         </div>
 
-        {/* Expanded Content */}
-        {isExpanded && (
-          <div className="border-t border-border bg-muted/20">
-            {/* Tab Navigation */}
-            <div className="flex border-b border-border">
-              {[
-                { key: 'overview', label: 'Overview', icon: 'DocumentTextIcon' },
-                { key: 'architecture', label: 'Architecture', icon: 'CubeIcon' },
-                { key: 'metrics', label: 'Impact', icon: 'ChartBarIcon' },
-              ].map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
-                  className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 text-sm font-medium transition-colors ${
-                    activeTab === tab.key
-                      ? 'text-accent border-b-2 border-accent bg-accent/5'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
-                  }`}
-                >
-                  <Icon name={tab.icon as any} size={16} />
-                  <span>{tab.label}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Tab Content */}
-            <div className="p-6">
-              {activeTab === 'overview' && (
-                <div className="space-y-6">
-                  <div>
-                    <p className="text-muted-foreground leading-relaxed mb-4">
-                      {project.longDescription}
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-3 flex items-center space-x-2">
-                        <Icon name="ExclamationTriangleIcon" size={16} className="text-warning" />
-                        <span>Challenges</span>
-                      </h4>
-                      <ul className="space-y-2">
-                        {project.challenges.map((challenge, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start space-x-2 text-sm text-muted-foreground"
-                          >
-                            <Icon
-                              name="MinusIcon"
-                              size={12}
-                              className="text-warning mt-1 flex-shrink-0"
-                            />
-                            <span>{challenge}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-3 flex items-center space-x-2">
-                        <Icon name="CheckCircleIcon" size={16} className="text-success" />
-                        <span>Solutions</span>
-                      </h4>
-                      <ul className="space-y-2">
-                        {project.solutions.map((solution, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start space-x-2 text-sm text-muted-foreground"
-                          >
-                            <Icon
-                              name="CheckIcon"
-                              size={12}
-                              className="text-success mt-1 flex-shrink-0"
-                            />
-                            <span>{solution}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* All Technologies */}
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-3">Technology Stack</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {project.technologies.map((tech, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center space-x-2 p-2 bg-muted/30 rounded-lg"
-                        >
-                          <Icon name={tech.icon as any} size={16} className="text-accent" />
-                          <div>
-                            <div className="text-sm font-medium text-foreground">{tech.name}</div>
-                            <div className="text-xs text-muted-foreground">{tech.category}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+        {/* Expanded content */}
+        <AnimatePresence initial={false}>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="border-t border-[#222]">
+                {/* Tab bar */}
+                <div className="flex border-b border-[#222]">
+                  {(
+                    [
+                      { key: 'overview', label: 'overview' },
+                      { key: 'architecture', label: 'arch' },
+                      { key: 'metrics', label: 'impact' },
+                    ] as const
+                  ).map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key)}
+                      className={`flex-1 py-2.5 text-[11px] uppercase tracking-wider transition-colors duration-100 ${
+                        activeTab === tab.key
+                          ? 'text-[#f59e0b] border-b border-[#f59e0b] bg-[#111]'
+                          : 'text-[#444] hover:text-[#666] bg-[#0d0d0d]'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
                 </div>
-              )}
 
-              {activeTab === 'architecture' && (
-                <div className="space-y-4">
-                  {project.architectureImage ? (
-                    <div className="relative">
-                      <AppImage
-                        src={project.architectureImage}
-                        alt={project.architectureAlt || `Architecture diagram for ${project.title}`}
-                        className="w-full rounded-lg border border-border"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-64 bg-muted/30 rounded-lg border-2 border-dashed border-border">
-                      <div className="text-center">
-                        <Icon
-                          name="CubeIcon"
-                          size={48}
-                          className="text-muted-foreground mx-auto mb-2"
-                        />
-                        <p className="text-muted-foreground">Architecture diagram coming soon</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                {/* Tab content */}
+                <div className="p-5">
+                  {activeTab === 'overview' && (
+                    <div className="space-y-5">
+                      <p className="text-[#888] text-xs leading-relaxed">
+                        {project.longDescription}
+                      </p>
 
-              {activeTab === 'metrics' && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="p-4 bg-muted/30 rounded-lg border border-border">
-                        <div className="text-2xl font-bold text-accent mb-1">{value}</div>
-                        <div className="text-sm text-muted-foreground capitalize">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {project.testimonial && (
-                    <div className="p-4 bg-accent/5 border border-accent/20 rounded-lg">
-                      <div className="flex items-start space-x-3">
-                        <Icon
-                          name="ChatBubbleLeftEllipsisIcon"
-                          size={20}
-                          className="text-accent mt-1"
-                        />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Challenges */}
                         <div>
-                          <p className="text-muted-foreground italic mb-3">
-                            "{project.testimonial.text}"
-                          </p>
-                          <div className="text-sm">
-                            <div className="font-semibold text-foreground">
-                              {project.testimonial.author}
-                            </div>
-                            <div className="text-muted-foreground">
-                              {project.testimonial.position} at {project.testimonial.company}
-                            </div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="text-[#f59e0b] text-[10px]">!!</span>
+                            <span className="text-[11px] uppercase tracking-wider text-[#666]">
+                              challenges
+                            </span>
                           </div>
+                          <ul className="space-y-2">
+                            {project.challenges.map((challenge, index) => (
+                              <li
+                                key={index}
+                                className="flex items-start gap-2 text-[11px] text-[#666]"
+                              >
+                                <span className="text-[#f59e0b] mt-px shrink-0">-</span>
+                                <span>{challenge}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Solutions */}
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="text-[#22c55e] text-[10px]">[ok]</span>
+                            <span className="text-[11px] uppercase tracking-wider text-[#666]">
+                              solutions
+                            </span>
+                          </div>
+                          <ul className="space-y-2">
+                            {project.solutions.map((solution, index) => (
+                              <li
+                                key={index}
+                                className="flex items-start gap-2 text-[11px] text-[#666]"
+                              >
+                                <span className="text-[#22c55e] mt-px shrink-0">+</span>
+                                <span>{solution}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Full tech stack */}
+                      <div>
+                        <div className="text-[11px] uppercase tracking-wider text-[#666] mb-3">
+                          stack --full
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-[#222]">
+                          {project.technologies.map((tech, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2 px-3 py-2 bg-[#0d0d0d]"
+                            >
+                              <Icon
+                                name={tech.icon as any}
+                                size={12}
+                                className="text-[#f59e0b]/50"
+                              />
+                              <div>
+                                <div className="text-[11px] text-[#e0e0e0]">{tech.name}</div>
+                                <div className="text-[9px] text-[#444]">{tech.category}</div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   )}
+
+                  {activeTab === 'architecture' && (
+                    <div>
+                      {project.architectureImage ? (
+                        <div className="border border-[#222]">
+                          <img
+                            src={project.architectureImage}
+                            alt={
+                              project.architectureAlt || `Architecture diagram for ${project.title}`
+                            }
+                            className="w-full"
+                            loading="lazy"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center h-48 border border-dashed border-[#222] bg-[#0d0d0d]">
+                          <div className="text-center font-mono">
+                            <Icon name="CubeIcon" size={32} className="text-[#333] mx-auto mb-2" />
+                            <p className="text-[#444] text-xs">{`// architecture diagram pending`}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {activeTab === 'metrics' && (
+                    <div className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#222]">
+                        {Object.entries(project.metrics).map(([key, value]) => (
+                          <div key={key} className="bg-[#0d0d0d] p-4">
+                            <div className="text-[#f59e0b] text-lg font-bold font-mono mb-1">
+                              {value}
+                            </div>
+                            <div className="text-[10px] text-[#444] uppercase tracking-wider font-mono">
+                              {key.replace(/([A-Z])/g, '_$1').toLowerCase()}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {project.testimonial && (
+                        <div className="border-l-2 border-[#f59e0b] bg-[#0d0d0d] p-4">
+                          <p className="text-[#888] text-xs leading-relaxed italic mb-3">
+                            &quot;{project.testimonial.text}&quot;
+                          </p>
+                          <div className="text-[11px]">
+                            <span className="text-[#e0e0e0]">{project.testimonial.author}</span>
+                            <span className="text-[#444] mx-2">|</span>
+                            <span className="text-[#666]">
+                              {project.testimonial.position}, {project.testimonial.company}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        )}
-      </AntiGravityCard>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </ScrollReveal>
   );
 };

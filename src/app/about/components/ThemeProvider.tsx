@@ -1,8 +1,11 @@
 'use client';
 
-import { ThemeProvider as NextThemesProvider, type ThemeProviderProps } from 'next-themes';
 import * as React from 'react';
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+/**
+ * No-op ThemeProvider pass-through.
+ * Theme switching has been removed in favor of a fixed dark terminal aesthetic.
+ */
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }

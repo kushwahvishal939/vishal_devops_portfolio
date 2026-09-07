@@ -5,7 +5,7 @@ import ProjectCard from './ProjectCard';
 import ProjectFilter from './ProjectFilter';
 import ProjectStats from './ProjectStats';
 import Icon from '@/components/ui/AppIcon';
-import PageTransition from '@/components/animations/PageTransition';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface Technology {
   name: string;
@@ -82,7 +82,6 @@ const PortfolioInteractive = () => {
         { name: 'Terraform', icon: 'CodeBracketIcon', category: 'IaC' },
         { name: 'Prometheus', icon: 'ChartBarIcon', category: 'Monitoring' },
       ],
-
       metrics: {
         costReduction: '55%',
         performanceImprovement: '40%',
@@ -95,14 +94,12 @@ const PortfolioInteractive = () => {
         'Legacy application dependencies and tight coupling issues',
         'Compliance requirements for financial data handling',
       ],
-
       solutions: [
         'Implemented blue-green deployment strategy with automated rollback',
         'Designed event-driven architecture for real-time data synchronization',
         'Gradual microservices extraction using strangler fig pattern',
         'Established comprehensive security and compliance framework',
       ],
-
       demoUrl: 'https://demo.example.com',
       githubUrl: 'https://github.com/example',
       architectureImage:
@@ -110,7 +107,7 @@ const PortfolioInteractive = () => {
       architectureAlt:
         'Whiteboard-style microservices and cloud architecture drawing with connected services and databases',
       testimonial: {
-        text: "Vishal's expertise in cloud migration saved us over ₹2.5L annually while improving our system reliability. His attention to detail and proactive approach made the entire process seamless.",
+        text: "Vishal's expertise in cloud migration saved us over 2.5L annually while improving our system reliability. His attention to detail and proactive approach made the entire process seamless.",
         author: 'Rajesh Kumar',
         position: 'CTO',
         company: 'TechCorp Solutions',
@@ -135,7 +132,6 @@ const PortfolioInteractive = () => {
         { name: 'Helm', icon: 'CubeIcon', category: 'Package Manager' },
         { name: 'Grafana', icon: 'ChartBarIcon', category: 'Monitoring' },
       ],
-
       metrics: {
         deploymentTime: '94% reduction',
         performanceImprovement: '60%',
@@ -147,14 +143,12 @@ const PortfolioInteractive = () => {
         'Lack of automated testing and quality gates',
         'Security vulnerabilities discovered post-deployment',
       ],
-
       solutions: [
         'Implemented GitOps workflow with automated pipeline triggers',
         'Containerized applications with consistent environment configs',
         'Integrated comprehensive testing suite with quality gates',
         'Added security scanning and compliance checks in pipeline',
       ],
-
       demoUrl: 'https://pipeline-demo.example.com',
       githubUrl: 'https://github.com/example/cicd',
     },
@@ -176,7 +170,6 @@ const PortfolioInteractive = () => {
         { name: 'Cert-Manager', icon: 'ShieldCheckIcon', category: 'Security' },
         { name: 'ArgoCD', icon: 'ArrowPathIcon', category: 'GitOps' },
       ],
-
       metrics: {
         costReduction: '45%',
         performanceImprovement: '70%',
@@ -188,14 +181,12 @@ const PortfolioInteractive = () => {
         'Security compliance for financial services industry',
         'Seamless integration with existing enterprise tools',
       ],
-
       solutions: [
         'Implemented namespace-based multi-tenancy with RBAC',
         'Developed custom HPA and VPA configurations',
         'Established comprehensive security policies and network policies',
         'Created custom operators for enterprise tool integration',
       ],
-
       architectureImage:
         'https://images.unsplash.com/photo-1667372459470-5f61c93c6d3f?auto=format&fit=crop&w=1400&q=70',
       architectureAlt:
@@ -206,7 +197,7 @@ const PortfolioInteractive = () => {
       title: 'Infrastructure Cost Optimization Engine',
       category: 'cost-optimization',
       description:
-        'Built intelligent cost optimization system that automatically rightsizes resources and schedules workloads, saving ₹3.2L annually.',
+        'Built intelligent cost optimization system that automatically rightsizes resources and schedules workloads, saving 3.2L annually.',
       longDescription:
         'Developed an AI-driven cost optimization platform that continuously monitors cloud resource utilization, identifies optimization opportunities, and automatically implements cost-saving measures while maintaining performance SLAs. The system includes predictive analytics for capacity planning and automated resource scheduling.',
       image:
@@ -220,9 +211,8 @@ const PortfolioInteractive = () => {
         { name: 'Elasticsearch', icon: 'MagnifyingGlassIcon', category: 'Search' },
         { name: 'Kibana', icon: 'ChartBarIcon', category: 'Visualization' },
       ],
-
       metrics: {
-        costReduction: '₹3.2L annually',
+        costReduction: '3.2L annually',
         performanceImprovement: '25%',
         deploymentTime: '50% faster',
       },
@@ -232,16 +222,14 @@ const PortfolioInteractive = () => {
         'Lack of visibility into cost drivers and trends',
         'Balancing cost optimization with performance requirements',
       ],
-
       solutions: [
         'Implemented ML-based workload prediction algorithms',
         'Automated resource rightsizing based on historical data',
         'Created comprehensive cost visibility dashboards',
         'Established performance SLA monitoring with automated alerts',
       ],
-
       testimonial: {
-        text: "The cost optimization engine Vishal built has been a game-changer for our startup. We've saved over ₹3L in the first year alone while actually improving our application performance.",
+        text: "The cost optimization engine Vishal built has been a game-changer for our startup. We've saved over 3L in the first year alone while actually improving our application performance.",
         author: 'Priya Sharma',
         position: 'Founder & CEO',
         company: 'InnovateTech',
@@ -266,7 +254,6 @@ const PortfolioInteractive = () => {
         { name: 'Twistlock', icon: 'LockClosedIcon', category: 'Container Security' },
         { name: 'OWASP ZAP', icon: 'BugAntIcon', category: 'Security Testing' },
       ],
-
       metrics: {
         performanceImprovement: 'Security incidents reduced by 90%',
         uptime: '100% compliance',
@@ -278,7 +265,6 @@ const PortfolioInteractive = () => {
         'Runtime threat detection without performance impact',
         'Automated security policy enforcement across environments',
       ],
-
       solutions: [
         'Implemented mTLS with automatic certificate rotation',
         'Established comprehensive audit logging and monitoring',
@@ -305,7 +291,6 @@ const PortfolioInteractive = () => {
         { name: 'AlertManager', icon: 'BellIcon', category: 'Alerting' },
         { name: 'OpenTelemetry', icon: 'SignalIcon', category: 'Instrumentation' },
       ],
-
       metrics: {
         performanceImprovement: 'MTTR reduced by 75%',
         uptime: '99.99%',
@@ -317,7 +302,6 @@ const PortfolioInteractive = () => {
         'Difficulty correlating issues across multiple services',
         'High operational overhead for monitoring infrastructure',
       ],
-
       solutions: [
         'Implemented comprehensive distributed tracing across all services',
         'Developed intelligent alerting with ML-based anomaly detection',
@@ -362,28 +346,26 @@ const PortfolioInteractive = () => {
   const sortedProjects = [...filteredProjects].sort((a, b) => {
     switch (sortBy) {
       case 'impact':
-        return b.id - a.id; // Assuming higher ID means higher impact
+        return b.id - a.id;
       case 'complexity':
         return b.technologies.length - a.technologies.length;
       default:
-        return b.id - a.id; // Most recent first
+        return b.id - a.id;
     }
   });
 
   if (!isHydrated) {
     return (
-      <div className="space-y-8">
-        {/* Loading skeleton */}
+      <div className="space-y-6 font-mono">
         <div className="animate-pulse">
-          <div className="h-8 bg-muted/30 rounded w-1/3 mb-4"></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#222]">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-20 bg-muted/30 rounded-xl"></div>
+              <div key={i} className="h-20 bg-[#111]" />
             ))}
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-96 bg-muted/30 rounded-2xl"></div>
+              <div key={i} className="h-72 bg-[#111] border border-[#222]" />
             ))}
           </div>
         </div>
@@ -392,105 +374,103 @@ const PortfolioInteractive = () => {
   }
 
   return (
-    <PageTransition>
-      <div className="space-y-8">
-        {/* Stats Section */}
-        <ProjectStats
-          totalProjects={mockProjects.length}
-          completedProjects={mockProjects.length}
-          totalCostSavings="₹8.5L+"
-          averagePerformanceGain="48%"
-        />
+    <div className="space-y-6 font-mono">
+      {/* Stats */}
+      <ProjectStats
+        totalProjects={mockProjects.length}
+        completedProjects={mockProjects.length}
+        totalCostSavings="8.5L+"
+        averagePerformanceGain="48%"
+      />
 
-        {/* Search and Sort */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div className="relative flex-1 max-w-md">
-            <Icon
-              name="MagnifyingGlassIcon"
-              size={20}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-            />
-
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
-            />
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-4 py-3 bg-muted/30 border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
-            >
-              <option value="recent">Most Recent</option>
-              <option value="impact">Highest Impact</option>
-              <option value="complexity">Most Complex</option>
-            </select>
-          </div>
+      {/* Search and Sort */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+        <div className="relative flex-1 max-w-md">
+          <Icon
+            name="MagnifyingGlassIcon"
+            size={14}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444]"
+          />
+          <input
+            type="text"
+            placeholder="grep --projects ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-4 py-2.5 bg-[#111] border border-[#222] text-[#e0e0e0] text-xs font-mono placeholder-[#444] focus:outline-none focus:border-[#f59e0b] transition-colors duration-100"
+          />
         </div>
 
-        {/* Filters */}
-        <ProjectFilter
-          categories={categories}
-          technologies={technologies}
-          activeCategory={activeCategory}
-          activeTechnology={activeTechnology}
-          onCategoryChange={setActiveCategory}
-          onTechnologyChange={setActiveTechnology}
-        />
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as 'recent' | 'impact' | 'complexity')}
+          className="px-4 py-2.5 bg-[#111] border border-[#222] text-[#e0e0e0] text-xs font-mono focus:outline-none focus:border-[#f59e0b] transition-colors duration-100 appearance-none cursor-pointer"
+        >
+          <option value="recent">sort --recent</option>
+          <option value="impact">sort --impact</option>
+          <option value="complexity">sort --complexity</option>
+        </select>
+      </div>
 
-        {/* Results Count */}
-        <div className="flex items-center justify-between">
-          <p className="text-muted-foreground">
-            Showing {sortedProjects.length} of {mockProjects.length} projects
-          </p>
-          {(activeCategory !== 'all' || activeTechnology !== 'all' || searchQuery) && (
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setActiveTechnology('all');
-                setSearchQuery('');
-              }}
-              className="text-accent hover:text-accent/80 text-sm font-medium transition-colors"
-            >
-              Clear filters
-            </button>
-          )}
-        </div>
+      {/* Filters */}
+      <ProjectFilter
+        categories={categories}
+        technologies={technologies}
+        activeCategory={activeCategory}
+        activeTechnology={activeTechnology}
+        onCategoryChange={setActiveCategory}
+        onTechnologyChange={setActiveTechnology}
+      />
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {sortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {sortedProjects.length === 0 && (
-          <div className="text-center py-16">
-            <Icon name="FolderIcon" size={64} className="text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">No projects found</h3>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your filters or search terms to find what you're looking for.
-            </p>
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setActiveTechnology('all');
-                setSearchQuery('');
-              }}
-              className="px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-            >
-              View All Projects
-            </button>
-          </div>
+      {/* Results */}
+      <div className="flex items-center justify-between py-2 border-b border-[#222]">
+        <p className="text-[#666] text-xs">
+          <span className="text-[#f59e0b]">{sortedProjects.length}</span>
+          <span className="text-[#444]"> / </span>
+          <span>{mockProjects.length}</span>
+          <span className="text-[#444]"> results</span>
+        </p>
+        {(activeCategory !== 'all' || activeTechnology !== 'all' || searchQuery) && (
+          <button
+            onClick={() => {
+              setActiveCategory('all');
+              setActiveTechnology('all');
+              setSearchQuery('');
+            }}
+            className="text-[#f59e0b] hover:text-[#e0e0e0] text-xs transition-colors duration-100"
+          >
+            [clear filters]
+          </button>
         )}
       </div>
-    </PageTransition>
+
+      {/* Projects grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        {sortedProjects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
+
+      {/* Empty state */}
+      {sortedProjects.length === 0 && (
+        <ScrollReveal direction="up">
+          <div className="text-center py-16 border border-dashed border-[#222]">
+            <Icon name="FolderIcon" size={40} className="text-[#333] mx-auto mb-4" />
+            <p className="text-[#666] text-sm mb-1">{`// no matching projects found`}</p>
+            <p className="text-[#444] text-xs mb-6">try adjusting filters or search query</p>
+            <button
+              onClick={() => {
+                setActiveCategory('all');
+                setActiveTechnology('all');
+                setSearchQuery('');
+              }}
+              className="px-6 py-2.5 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold hover:bg-[#d97706] transition-colors duration-100"
+            >
+              reset --all
+            </button>
+          </div>
+        </ScrollReveal>
+      )}
+    </div>
   );
 };
 
