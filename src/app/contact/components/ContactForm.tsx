@@ -97,8 +97,11 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     }
   };
 
+  const [submitError, setSubmitError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
 
     if (!validateForm()) {
       return;
@@ -107,7 +110,19 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSubmitError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
       setIsSubmitted(true);
       setFormData({
         name: '',
@@ -118,8 +133,8 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
         timeline: '',
         message: '',
       });
-    } catch (error) {
-      console.error('Form submission error:', error);
+    } catch {
+      setSubmitError('Network error. Please try again or email directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -334,6 +349,14 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
             </p>
           </div>
         </ScrollReveal>
+
+        {/* Error message */}
+        {submitError && (
+          <div className="border border-red-500/30 bg-red-500/5 p-3 text-red-400 text-xs flex items-start gap-2">
+            <span className="shrink-0">!!</span>
+            <span>{submitError}</span>
+          </div>
+        )}
 
         {/* Submit */}
         <button
