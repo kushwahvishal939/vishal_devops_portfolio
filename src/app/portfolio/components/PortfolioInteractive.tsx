@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectFilter from './ProjectFilter';
 import ProjectStats from './ProjectStats';
+import MCPShowcase from './MCPShowcase';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
@@ -375,6 +376,12 @@ const PortfolioInteractive = () => {
 
   return (
     <div className="space-y-6 font-mono">
+      {/* Featured: DevOps MCP Project */}
+      <MCPShowcase />
+
+      {/* Divider */}
+      <div className="border-t border-[#222] my-8" />
+
       {/* Stats */}
       <ProjectStats
         totalProjects={mockProjects.length}
