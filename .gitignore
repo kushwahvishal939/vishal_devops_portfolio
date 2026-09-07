@@ -41,3 +41,8 @@ jest-test-results.json
 
 # Optional: if using TurboRepo or monorepo
 turbo/
+# Wrangler local secrets (NEVER commit)
+.dev.vars
+
+# Wrangler local state
+.wrangler/
