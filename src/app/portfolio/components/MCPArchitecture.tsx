@@ -1,619 +1,417 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface ArchNode {
-  id: string;
-  label: string;
-  sublabel?: string;
-  icon: string;
-  color: string;
-  tools?: number;
-  details: string[];
-}
 
 interface MCPArchitectureProps {
   className?: string;
 }
 
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
-
-const INGRESS_NODES: ArchNode[] = [
-  {
-    id: 'users',
-    label: 'Users',
-    sublabel: 'Claude CLI / Desktop / Browser',
-    icon: 'UserGroupIcon',
-    color: '#e0e0e0',
-    details: [
-      'Claude CLI (terminal)',
-      'Claude Desktop (macOS/Win)',
-      'Browser-based clients',
-      'SSE streaming transport',
-    ],
-  },
-  {
-    id: 'ingress',
-    label: 'NGINX Ingress',
-    sublabel: 'TLS + Rate Limit + Auth',
-    icon: 'ShieldCheckIcon',
-    color: '#3b82f6',
-    details: [
-      "TLS termination (Let's Encrypt)",
-      'Rate limiting per-user',
-      'Request size limits',
-      'CORS + security headers',
-    ],
-  },
-  {
-    id: 'oauth',
-    label: 'OAuth2 Proxy',
-    sublabel: 'Google SSO (@rdash.io)',
-    icon: 'LockClosedIcon',
-    color: '#a855f7',
-    details: [
-      'Google Workspace SSO',
-      '@rdash.io domain restriction',
-      'Session cookie management',
-      'Token refresh handling',
-    ],
-  },
-  {
-    id: 'mcp',
-    label: 'MCP Server',
-    sublabel: 'Python / SSE / 54 tools',
-    icon: 'CpuChipIcon',
-    color: '#f59e0b',
-    details: [
-      'Python FastAPI runtime',
-      'SSE transport layer',
-      '54 registered tools',
-      'Async request handling',
-    ],
-  },
-];
-
-const BACKEND_NODES: ArchNode[] = [
-  {
-    id: 'postgres',
-    label: 'PostgreSQL',
-    sublabel: '7 databases',
-    icon: 'CircleStackIcon',
-    color: '#3b82f6',
-    tools: 17,
-    details: [
-      'Health checks & slow queries',
-      'Connection pool monitoring',
-      'Table bloat & vacuum stats',
-      'Index usage analysis',
-    ],
-  },
-  {
-    id: 'loki',
-    label: 'Loki Logs',
-    sublabel: 'Centralized logging',
-    icon: 'DocumentTextIcon',
-    color: '#22c55e',
-    tools: 8,
-    details: [
-      'Pod log search',
-      'Error summary aggregation',
-      'Request tracing by ID',
-      'Django ORM query logs',
-    ],
-  },
-  {
-    id: 'k8s',
-    label: 'Kubernetes',
-    sublabel: '8 namespaces',
-    icon: 'CubeIcon',
-    color: '#a855f7',
-    tools: 7,
-    details: [
-      'Pod health & events',
-      'Deployment status',
-      'HPA scaling metrics',
-      'Node resource usage',
-    ],
-  },
-  {
-    id: 'prometheus',
-    label: 'Prometheus',
-    sublabel: 'Metrics engine',
-    icon: 'ChartBarIcon',
-    color: '#f59e0b',
-    tools: 5,
-    details: [
-      'CPU & memory trends',
-      'HTTP request metrics',
-      'Cluster summary',
-      'Custom PromQL queries',
-    ],
-  },
-];
-
-const MEMORY_LAYERS: ArchNode[] = [
-  {
-    id: 'redis',
-    label: 'Redis',
-    sublabel: 'Layer 1 -- 24h TTL',
-    icon: 'BoltIcon',
-    color: '#ef4444',
-    details: [
-      'Fast context cache',
-      'Session state storage',
-      '24-hour TTL expiry',
-      'Sub-ms read latency',
-    ],
-  },
-  {
-    id: 'qdrant',
-    label: 'Qdrant',
-    sublabel: 'Layer 2 -- Permanent',
-    icon: 'MagnifyingGlassIcon',
-    color: '#3b82f6',
-    details: [
-      'Vector embeddings',
-      'Semantic similarity search',
-      'Permanent storage',
-      'Incident pattern matching',
-    ],
-  },
-  {
-    id: 'neo4j',
-    label: 'Neo4j',
-    sublabel: 'Layer 3 -- Permanent',
-    icon: 'ShareIcon',
-    color: '#22c55e',
-    details: [
-      'Knowledge graph',
-      'Causal memory chains',
-      'Root cause analysis',
-      'Incident relationships',
-    ],
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
-function NodeCard({
-  node,
-  isActive,
-  onHover,
-  onLeave,
-  index,
-  compact,
-}: {
-  node: ArchNode;
-  isActive: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  index: number;
-  compact?: boolean;
-}) {
+// Animated pulse dot for live connections
+function PulseDot({ color, delay = 0 }: { color: string; delay?: number }) {
+  const reduced = useReducedMotion();
+  if (reduced) return <span className="w-1.5 h-1.5 inline-block" style={{ background: color }} />;
   return (
-    <motion.div
-      className="relative"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.08, duration: 0.4 }}
-    >
-      <div
-        className={`border bg-[#111] font-mono cursor-default transition-colors duration-100 ${
-          isActive ? 'border-[#444]' : 'border-[#222]'
-        } ${compact ? 'p-3' : 'p-4'}`}
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
-        role="button"
-        tabIndex={0}
-        aria-label={`${node.label}: ${node.sublabel}`}
-        onFocus={onHover}
-        onBlur={onLeave}
-      >
-        {/* Header */}
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-5 h-5 flex items-center justify-center" style={{ color: node.color }}>
-            <Icon name={node.icon} size={16} />
-          </div>
-          <span className="text-[#e0e0e0] text-xs font-bold leading-none">{node.label}</span>
-          {node.tools !== undefined && (
-            <span
-              className="ml-auto text-[10px] px-1.5 py-0.5 border font-bold"
-              style={{
-                color: node.color,
-                borderColor: node.color + '40',
-                backgroundColor: node.color + '10',
-              }}
-            >
-              {node.tools} tools
-            </span>
-          )}
-        </div>
+    <motion.span
+      className="w-1.5 h-1.5 inline-block"
+      style={{ background: color }}
+      animate={{ opacity: [0.3, 1, 0.3] }}
+      transition={{ duration: 2, repeat: Infinity, delay }}
+    />
+  );
+}
 
-        {/* Sublabel */}
-        {node.sublabel && (
-          <div className="text-[10px] text-[#444] leading-tight">{node.sublabel}</div>
+// Animated data flowing down a vertical line
+function DataFlow({ color, height = 32 }: { color: string; height?: number }) {
+  const reduced = useReducedMotion();
+  return (
+    <div className="flex justify-center">
+      <div className="relative" style={{ width: 1, height, background: '#222' }}>
+        {!reduced && (
+          <motion.div
+            className="absolute left-0 w-full"
+            style={{ height: 8, background: color }}
+            animate={{ top: [-8, height] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
+          />
         )}
       </div>
-
-      {/* Tooltip */}
-      {isActive && (
-        <motion.div
-          className="absolute z-50 left-0 right-0 mt-1 bg-[#0d0d0d] border border-[#333] p-3 font-mono"
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.12 }}
-        >
-          <div className="text-[10px] text-[#666] uppercase tracking-wider mb-2">
-            {`${node.label} // details`}
-          </div>
-          <ul className="space-y-1">
-            {node.details.map((detail, i) => (
-              <li key={i} className="text-[11px] text-[#888] flex items-start gap-1.5">
-                <span style={{ color: node.color }} className="mt-px shrink-0">
-                  -
-                </span>
-                <span>{detail}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
-    </motion.div>
-  );
-}
-
-function FlowConnector({
-  direction,
-  color,
-  animated,
-}: {
-  direction: 'horizontal' | 'vertical';
-  color: string;
-  animated: boolean;
-}) {
-  if (!animated) {
-    return (
-      <div
-        className={`${
-          direction === 'horizontal' ? 'w-6 h-px self-center shrink-0' : 'h-6 w-px mx-auto shrink-0'
-        }`}
-        style={{ backgroundColor: color + '30' }}
-      />
-    );
-  }
-
-  return (
-    <div
-      className={`relative overflow-hidden ${
-        direction === 'horizontal' ? 'w-8 h-px self-center shrink-0' : 'h-8 w-px mx-auto shrink-0'
-      }`}
-      style={{ backgroundColor: color + '20' }}
-    >
-      <motion.div
-        className={`absolute ${direction === 'horizontal' ? 'w-3 h-px top-0' : 'h-3 w-px left-0'}`}
-        style={{ backgroundColor: color }}
-        animate={
-          direction === 'horizontal' ? { left: ['-12px', '32px'] } : { top: ['-12px', '32px'] }
-        }
-        transition={{
-          duration: 1.2,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-      />
     </div>
   );
 }
 
-function _AnimatedDataDot({ color }: { color: string }) {
+// Animated data flowing across a horizontal line
+function DataFlowH({ color, width = 40 }: { color: string; width?: number }) {
+  const reduced = useReducedMotion();
   return (
-    <div className="flex items-center justify-center h-6 shrink-0">
-      <motion.div
-        className="w-1.5 h-1.5"
-        style={{ backgroundColor: color }}
-        animate={{ opacity: [0.3, 1, 0.3] }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-      />
+    <div className="flex items-center">
+      <div className="relative overflow-hidden" style={{ width, height: 1, background: '#1a1a1a' }}>
+        {!reduced && (
+          <motion.div
+            className="absolute top-0 h-full"
+            style={{ width: 10, background: color }}
+            animate={{ left: [-10, width] }}
+            transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+          />
+        )}
+      </div>
     </div>
   );
 }
-
-function MemoryFlowArrow({ prefersReduced }: { prefersReduced: boolean }) {
-  return (
-    <div className="flex flex-col items-center gap-0.5 py-1">
-      <div className="w-px h-4 bg-[#222]" />
-      {!prefersReduced && (
-        <motion.div
-          className="w-1 h-1 bg-[#f59e0b]"
-          animate={{ opacity: [0.2, 1, 0.2], y: [0, 4, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
-        />
-      )}
-      <div className="w-px h-4 bg-[#222]" />
-      <div className="text-[#333] text-[8px] leading-none select-none">v</div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main Component
-// ---------------------------------------------------------------------------
 
 export default function MCPArchitecture({ className = '' }: MCPArchitectureProps) {
-  const [activeNode, setActiveNode] = useState<string | null>(null);
-  const [_tick, setTick] = useState(0);
-  const prefersReduced = useReducedMotion() ?? false;
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
-  // Slow tick for ambient pulse animation
-  useEffect(() => {
-    if (prefersReduced) return;
-    const interval = setInterval(() => setTick((t) => t + 1), 3000);
-    return () => clearInterval(interval);
-  }, [prefersReduced]);
-
-  const handleHover = useCallback((id: string) => setActiveNode(id), []);
-  const handleLeave = useCallback(() => setActiveNode(null), []);
-
-  const totalTools = useMemo(() => BACKEND_NODES.reduce((sum, n) => sum + (n.tools ?? 0), 0), []);
+  const nodeBase =
+    'border border-[#222] bg-[#111] font-mono transition-all duration-100 hover:border-[#333]';
+  const activeNode = (id: string) => (hoveredNode === id ? 'border-[#444] bg-[#141414]' : '');
 
   return (
-    <section className={`font-mono ${className}`} aria-label="MCP Architecture Diagram">
-      {/* Section Header */}
+    <section className={`font-mono ${className}`}>
       <ScrollReveal direction="up">
-        <div className="mb-8">
+        <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-[#f59e0b] text-xs">$</span>
             <span className="text-[#e0e0e0] text-sm font-bold">cat architecture.yml</span>
           </div>
-          <p className="text-[#444] text-xs leading-relaxed max-w-2xl">
-            Full system topology: user requests flow through TLS-terminated ingress, Google SSO
-            authentication, into the MCP server which orchestrates 54 monitoring tools across 7
-            databases, centralized logs, Kubernetes clusters, and a 3-layer incident memory system.
+          <p className="text-[#444] text-xs max-w-2xl">
+            End-to-end system topology. Hover nodes for details.
           </p>
         </div>
       </ScrollReveal>
 
-      {/* ================================================================= */}
-      {/* MAIN FLOW: Users -> Ingress -> OAuth -> MCP Server                */}
-      {/* ================================================================= */}
-      <ScrollReveal direction="up" delay={0.1}>
-        <div className="mb-6">
-          <div className="text-[10px] uppercase tracking-widest text-[#333] mb-3">
-            {`// request_flow`}
-          </div>
-
-          {/* Desktop: horizontal chain */}
-          <div className="hidden lg:flex items-start gap-0">
-            {INGRESS_NODES.map((node, i) => (
-              <React.Fragment key={node.id}>
-                <div className="flex-1 min-w-0">
-                  <NodeCard
-                    node={node}
-                    isActive={activeNode === node.id}
-                    onHover={() => handleHover(node.id)}
-                    onLeave={handleLeave}
-                    index={i}
-                  />
-                </div>
-                {i < INGRESS_NODES.length - 1 && (
-                  <FlowConnector
-                    direction="horizontal"
-                    color="#f59e0b"
-                    animated={!prefersReduced}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-
-          {/* Mobile: vertical chain */}
-          <div className="lg:hidden space-y-0">
-            {INGRESS_NODES.map((node, i) => (
-              <React.Fragment key={node.id}>
-                <NodeCard
-                  node={node}
-                  isActive={activeNode === node.id}
-                  onHover={() => handleHover(node.id)}
-                  onLeave={handleLeave}
-                  index={i}
-                />
-                {i < INGRESS_NODES.length - 1 && (
-                  <FlowConnector direction="vertical" color="#f59e0b" animated={!prefersReduced} />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+      {/* ========== MAIN ARCHITECTURE ========== */}
+      <div className="border border-[#222] bg-[#0a0a0a] p-4 sm:p-6 lg:p-8">
+        {/* ---- LAYER 1: CLIENT ---- */}
+        <div className="text-[9px] text-[#333] uppercase tracking-widest mb-2">
+          {'// client_layer'}
         </div>
-      </ScrollReveal>
-
-      {/* ================================================================= */}
-      {/* FAN-OUT: MCP -> Backend Services                                  */}
-      {/* ================================================================= */}
-      <ScrollReveal direction="up" delay={0.2}>
-        <div className="mb-8">
-          {/* Connector line from MCP to backends */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-px h-4 bg-[#222] mx-auto lg:hidden" />
-            <div className="text-[10px] uppercase tracking-widest text-[#333]">
-              {`// backend_services (${totalTools} tools)`}
+        <div
+          className={`${nodeBase} ${activeNode('client')} p-3 max-w-sm`}
+          onMouseEnter={() => setHoveredNode('client')}
+          onMouseLeave={() => setHoveredNode(null)}
+        >
+          <div className="flex items-center gap-2">
+            <PulseDot color="#22c55e" />
+            <span className="text-xs text-[#e0e0e0] font-bold">Team Member</span>
+            <span className="text-[9px] text-[#444] ml-auto">HTTPS / SSE</span>
+          </div>
+          <div className="text-[10px] text-[#555] mt-1">
+            Claude Desktop / Claude CLI / claude.ai
+          </div>
+          {hoveredNode === 'client' && (
+            <div className="text-[10px] text-[#666] mt-2 pt-2 border-t border-[#1a1a1a]">
+              Any team member asks questions in plain English. The AI handles tool selection and
+              correlation automatically.
             </div>
-            {!prefersReduced && (
-              <motion.span
-                className="inline-block w-1.5 h-1.5 bg-[#f59e0b]"
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+          )}
+        </div>
+
+        <DataFlow color="#f59e0b" height={28} />
+
+        {/* ---- LAYER 2: INGRESS + AUTH ---- */}
+        <div className="text-[9px] text-[#333] uppercase tracking-widest mb-2">
+          {'// ingress_layer'}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#222] max-w-2xl mb-0">
+          <div
+            className={`bg-[#111] p-3 ${activeNode('nginx')}`}
+            onMouseEnter={() => setHoveredNode('nginx')}
+            onMouseLeave={() => setHoveredNode(null)}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <PulseDot color="#3b82f6" />
+              <span className="text-xs text-[#e0e0e0] font-bold">NGINX Ingress</span>
+            </div>
+            <div className="text-[10px] text-[#555]">TLS 1.3 | Rate Limit 10rps | HSTS</div>
+            {hoveredNode === 'nginx' && (
+              <div className="text-[10px] text-[#666] mt-2 pt-2 border-t border-[#1a1a1a] space-y-0.5">
+                <div>+ cert-manager + Let&apos;s Encrypt auto-renewal</div>
+                <div>+ Per-user rate limiting (10 RPS, 5 conn)</div>
+                <div>+ Security headers (CSP, X-Frame, HSTS)</div>
+                <div>+ NetworkPolicy: only ingress can reach pod</div>
+              </div>
             )}
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#222]">
-            {BACKEND_NODES.map((node, i) => (
-              <div key={node.id} className="bg-[#0a0a0a]">
-                <NodeCard
-                  node={node}
-                  isActive={activeNode === node.id}
-                  onHover={() => handleHover(node.id)}
-                  onLeave={handleLeave}
-                  index={i + INGRESS_NODES.length}
-                  compact
-                />
+          <div
+            className={`bg-[#111] p-3 ${activeNode('oauth')}`}
+            onMouseEnter={() => setHoveredNode('oauth')}
+            onMouseLeave={() => setHoveredNode(null)}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <PulseDot color="#a855f7" delay={0.3} />
+              <span className="text-xs text-[#e0e0e0] font-bold">OAuth2 Proxy</span>
+            </div>
+            <div className="text-[10px] text-[#555]">Google SSO | @rdash.io domain lock</div>
+            {hoveredNode === 'oauth' && (
+              <div className="text-[10px] text-[#666] mt-2 pt-2 border-t border-[#1a1a1a] space-y-0.5">
+                <div>+ Google Workspace SSO integration</div>
+                <div>+ Strict @rdash.io email domain filter</div>
+                <div>+ Per-user token map (MCP_TOKEN_MAP)</div>
+                <div>+ Audit log: email, IP, tool, timestamp</div>
               </div>
-            ))}
+            )}
           </div>
         </div>
-      </ScrollReveal>
 
-      {/* ================================================================= */}
-      {/* 3-LAYER MEMORY SYSTEM                                             */}
-      {/* ================================================================= */}
-      <ScrollReveal direction="up" delay={0.3}>
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="text-[10px] uppercase tracking-widest text-[#333]">
-              {`// 3-layer_incident_memory`}
-            </div>
-            <div className="flex-1 h-px bg-[#222]" />
+        <DataFlow color="#f59e0b" height={28} />
+
+        {/* ---- LAYER 3: MCP SERVER (CORE) ---- */}
+        <div className="text-[9px] text-[#333] uppercase tracking-widest mb-2">
+          {'// core_server'}
+        </div>
+        <div
+          className={`${nodeBase} ${activeNode('mcp')} p-4 max-w-2xl border-[#f59e0b30]`}
+          onMouseEnter={() => setHoveredNode('mcp')}
+          onMouseLeave={() => setHoveredNode(null)}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <PulseDot color="#f59e0b" delay={0.5} />
+            <span className="text-sm text-[#f59e0b] font-bold">MCP Server</span>
+            <span className="text-[9px] text-[#444] ml-auto">Python 3.11 | FastAPI | SSE</span>
           </div>
-
-          {/* Trigger label */}
-          <div className="border border-[#222] bg-[#111] p-3 mb-0 max-w-xs">
-            <div className="flex items-center gap-2">
-              <Icon name="ExclamationTriangleIcon" size={14} className="text-[#f59e0b]" />
-              <span className="text-[#e0e0e0] text-xs font-bold">Investigation / Alert</span>
+          <div className="grid grid-cols-3 gap-px bg-[#1a1a1a] text-center text-[10px]">
+            <div className="bg-[#0d0d0d] py-1.5">
+              <span className="text-[#f59e0b] font-bold">54</span>
+              <span className="text-[#444]"> tools</span>
             </div>
-            <div className="text-[10px] text-[#444] mt-1">
-              Incoming incident triggers memory cascade
+            <div className="bg-[#0d0d0d] py-1.5">
+              <span className="text-[#3b82f6] font-bold">7</span>
+              <span className="text-[#444]"> databases</span>
+            </div>
+            <div className="bg-[#0d0d0d] py-1.5">
+              <span className="text-[#a855f7] font-bold">8</span>
+              <span className="text-[#444]"> namespaces</span>
             </div>
           </div>
+          {hoveredNode === 'mcp' && (
+            <div className="text-[10px] text-[#666] mt-3 pt-3 border-t border-[#1a1a1a] space-y-0.5">
+              <div>+ Auth middleware (ASGI) + Audit middleware</div>
+              <div>+ Read-only DB connections (no mutation possible)</div>
+              <div>+ Async concurrent tool execution</div>
+              <div>+ Auto-saves every investigation to memory</div>
+            </div>
+          )}
+        </div>
 
-          <MemoryFlowArrow prefersReduced={prefersReduced} />
-
-          {/* Memory layers - vertical stack */}
-          <div className="space-y-0">
-            {MEMORY_LAYERS.map((layer, i) => (
-              <React.Fragment key={layer.id}>
-                <div className="max-w-md">
-                  <div
-                    className={`border bg-[#111] p-4 transition-colors duration-100 ${
-                      activeNode === layer.id ? 'border-[#444]' : 'border-[#222]'
-                    }`}
-                    onMouseEnter={() => handleHover(layer.id)}
-                    onMouseLeave={handleLeave}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`${layer.label}: ${layer.sublabel}`}
-                    onFocus={() => handleHover(layer.id)}
-                    onBlur={handleLeave}
-                  >
-                    <div className="flex items-center gap-3">
-                      {/* Layer number */}
-                      <div
-                        className="w-8 h-8 flex items-center justify-center border text-xs font-bold shrink-0"
-                        style={{
-                          color: layer.color,
-                          borderColor: layer.color + '40',
-                        }}
-                      >
-                        L{i + 1}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <Icon
-                            name={layer.icon}
-                            size={14}
-                            className="shrink-0"
-                            style={{ color: layer.color }}
-                          />
-                          <span className="text-[#e0e0e0] text-xs font-bold">{layer.label}</span>
-                        </div>
-                        <div className="text-[10px] text-[#444] mt-0.5">{layer.sublabel}</div>
-                      </div>
-
-                      {/* Purpose tag */}
-                      <div className="text-[9px] text-[#444] uppercase tracking-wider shrink-0 hidden sm:block">
-                        {i === 0 && 'fast_context'}
-                        {i === 1 && 'semantic_search'}
-                        {i === 2 && 'causal_memory'}
-                      </div>
-                    </div>
-
-                    {/* Expanded details on hover */}
-                    {activeNode === layer.id && (
-                      <motion.div
-                        className="mt-3 pt-3 border-t border-[#222]"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.12 }}
-                      >
-                        <ul className="grid grid-cols-2 gap-1">
-                          {layer.details.map((d, j) => (
-                            <li key={j} className="text-[10px] text-[#666] flex items-start gap-1">
-                              <span style={{ color: layer.color }} className="shrink-0">
-                                -
-                              </span>
-                              <span>{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </div>
-                </div>
-
-                {i < MEMORY_LAYERS.length - 1 && (
-                  <MemoryFlowArrow prefersReduced={prefersReduced} />
-                )}
-              </React.Fragment>
-            ))}
+        {/* ---- FAN-OUT ARROWS ---- */}
+        <div className="flex items-end gap-0 max-w-2xl mt-0">
+          <div className="flex-1">
+            <DataFlow color="#3b82f6" height={24} />
+          </div>
+          <div className="flex-1">
+            <DataFlow color="#22c55e" height={24} />
+          </div>
+          <div className="flex-1">
+            <DataFlow color="#a855f7" height={24} />
+          </div>
+          <div className="flex-1">
+            <DataFlow color="#f59e0b" height={24} />
           </div>
         </div>
-      </ScrollReveal>
 
-      {/* ================================================================= */}
-      {/* STATS BAR                                                         */}
-      {/* ================================================================= */}
-      <ScrollReveal direction="up" delay={0.4}>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-[#222]">
+        {/* ---- LAYER 4: DATA SOURCES ---- */}
+        <div className="text-[9px] text-[#333] uppercase tracking-widest mb-2">
+          {'// data_sources'}
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#222] max-w-2xl">
           {[
-            { value: '54', label: 'tools', color: '#f59e0b' },
-            { value: '7', label: 'databases', color: '#3b82f6' },
-            { value: '8', label: 'namespaces', color: '#a855f7' },
-            { value: '3-layer', label: 'memory', color: '#22c55e' },
-            { value: '10/10', label: 'security', color: '#ef4444' },
-            { value: '<1 min', label: 'investigation', color: '#f59e0b' },
-          ].map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              className="bg-[#0d0d0d] p-3 text-center"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
+            {
+              id: 'pg',
+              name: 'PostgreSQL',
+              tools: 17,
+              color: '#3b82f6',
+              sub: '7 databases | pg_stat_*',
+              detail:
+                'Slow queries, connections, locks, replication, bloat, vacuum, indexes, cache ratio',
+            },
+            {
+              id: 'loki',
+              name: 'Loki',
+              tools: 8,
+              color: '#22c55e',
+              sub: 'Centralized logs',
+              detail:
+                'Error patterns, pod logs, request tracing, Django ORM, latency outliers, error trends',
+            },
+            {
+              id: 'k8s',
+              name: 'Kubernetes',
+              tools: 7,
+              color: '#a855f7',
+              sub: '8 namespaces',
+              detail: 'Pod health, OOMKill, events, deployments, HPA, cronjobs, node pressure',
+            },
+            {
+              id: 'prom',
+              name: 'Prometheus',
+              tools: 5,
+              color: '#f59e0b',
+              sub: 'Metrics engine',
+              detail: 'CPU/memory trends, HTTP metrics, cluster summary, node metrics, pod metrics',
+            },
+          ].map((src) => (
+            <div
+              key={src.id}
+              className={`bg-[#111] p-3 cursor-default transition-colors duration-100 ${activeNode(src.id)}`}
+              onMouseEnter={() => setHoveredNode(src.id)}
+              onMouseLeave={() => setHoveredNode(null)}
             >
-              <div className="text-sm font-bold" style={{ color: stat.color }}>
-                {stat.value}
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1.5">
+                  <PulseDot color={src.color} delay={Math.random()} />
+                  <span className="text-[11px] text-[#e0e0e0] font-bold">{src.name}</span>
+                </div>
+                <span
+                  className="text-[9px] px-1 py-0.5 font-bold"
+                  style={{
+                    color: src.color,
+                    background: src.color + '15',
+                    border: `1px solid ${src.color}30`,
+                  }}
+                >
+                  {src.tools}
+                </span>
               </div>
-              <div className="text-[9px] text-[#444] uppercase tracking-wider mt-0.5">
-                {stat.label}
-              </div>
-            </motion.div>
+              <div className="text-[9px] text-[#444]">{src.sub}</div>
+              {hoveredNode === src.id && (
+                <div className="text-[9px] text-[#555] mt-2 pt-2 border-t border-[#1a1a1a]">
+                  {src.detail}
+                </div>
+              )}
+            </div>
           ))}
         </div>
-      </ScrollReveal>
+
+        {/* ---- SEPARATOR ---- */}
+        <div className="max-w-2xl my-6">
+          <div className="h-px bg-[#1a1a1a]" />
+        </div>
+
+        {/* ---- LAYER 5: 3-LAYER MEMORY ---- */}
+        <div className="text-[9px] text-[#333] uppercase tracking-widest mb-3">
+          {'// incident_memory_system'}
+        </div>
+
+        <div className="max-w-2xl">
+          {/* Trigger */}
+          <div className="flex items-center gap-3 mb-0">
+            <div className="border border-[#f59e0b30] bg-[#111] px-3 py-2">
+              <span className="text-[10px] text-[#f59e0b]">INVESTIGATION TRIGGER</span>
+            </div>
+            <DataFlowH color="#f59e0b" width={30} />
+            <span className="text-[9px] text-[#333]">auto-save to all 3 layers</span>
+          </div>
+
+          <DataFlow color="#f59e0b" height={20} />
+
+          {/* Memory layers side by side on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#222]">
+            {[
+              {
+                id: 'redis',
+                layer: 'L1',
+                name: 'Redis',
+                color: '#ef4444',
+                ttl: '24h TTL',
+                purpose: 'FAST_CONTEXT',
+                desc: 'Recent incidents cached for instant recall. "What happened in prod last hour?"',
+              },
+              {
+                id: 'qdrant',
+                layer: 'L2',
+                name: 'Qdrant',
+                color: '#3b82f6',
+                ttl: 'Permanent',
+                purpose: 'SEMANTIC_SEARCH',
+                desc: 'Vector embeddings of every incident. "Has this error pattern happened before?"',
+              },
+              {
+                id: 'neo4j',
+                layer: 'L3',
+                name: 'Neo4j',
+                color: '#22c55e',
+                ttl: 'Permanent',
+                purpose: 'CAUSAL_GRAPH',
+                desc: 'Knowledge graph with RCA chains. "Why does this keep coming back?"',
+              },
+            ].map((mem) => (
+              <div
+                key={mem.id}
+                className={`bg-[#111] p-3 cursor-default transition-colors duration-100 ${activeNode(mem.id)}`}
+                onMouseEnter={() => setHoveredNode(mem.id)}
+                onMouseLeave={() => setHoveredNode(null)}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <span
+                    className="text-[9px] font-bold px-1 py-0.5"
+                    style={{
+                      color: mem.color,
+                      border: `1px solid ${mem.color}40`,
+                    }}
+                  >
+                    {mem.layer}
+                  </span>
+                  <span className="text-[11px] text-[#e0e0e0] font-bold">{mem.name}</span>
+                  <PulseDot color={mem.color} delay={0.5} />
+                </div>
+                <div className="text-[9px] text-[#444] mb-1">{mem.ttl}</div>
+                <div
+                  className="text-[8px] uppercase tracking-widest mb-2"
+                  style={{ color: mem.color + '80' }}
+                >
+                  {mem.purpose}
+                </div>
+                {hoveredNode === mem.id && (
+                  <div className="text-[9px] text-[#555] pt-2 border-t border-[#1a1a1a]">
+                    {mem.desc}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Neo4j graph relationships */}
+          <div className="mt-3 p-3 bg-[#0d0d0d] border border-[#1a1a1a] text-[9px] text-[#444] font-mono">
+            <div className="text-[#333] mb-1">{'// neo4j_schema'}</div>
+            <div>
+              <span className="text-[#a855f7]">(Incident)</span>
+              <span className="text-[#333]">-[:CAUSED_BY]-&gt;</span>
+              <span className="text-[#ef4444]">(RootCause)</span>
+            </div>
+            <div>
+              <span className="text-[#a855f7]">(Incident)</span>
+              <span className="text-[#333]">-[:FIXED_BY]-&gt;</span>
+              <span className="text-[#22c55e]">(Fix)</span>
+            </div>
+            <div>
+              <span className="text-[#a855f7]">(Incident)</span>
+              <span className="text-[#333]">-[:RECURRED_FROM]-&gt;</span>
+              <span className="text-[#f59e0b]">(Incident)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== STATS BAR ========== */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-px bg-[#222] mt-px">
+        {[
+          { value: '54', label: 'tools', color: '#f59e0b' },
+          { value: '7', label: 'databases', color: '#3b82f6' },
+          { value: '8', label: 'namespaces', color: '#a855f7' },
+          { value: '3-layer', label: 'memory', color: '#22c55e' },
+          { value: '10/10', label: 'security', color: '#ef4444' },
+          { value: '<1 min', label: 'RCA time', color: '#f59e0b' },
+        ].map((stat) => (
+          <div key={stat.label} className="bg-[#0d0d0d] py-2.5 text-center">
+            <div className="text-xs font-bold" style={{ color: stat.color }}>
+              {stat.value}
+            </div>
+            <div className="text-[8px] text-[#333] uppercase tracking-wider">{stat.label}</div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

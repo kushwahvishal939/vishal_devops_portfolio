@@ -233,14 +233,7 @@ export default function MCPShowcase({ className = '' }: MCPShowcaseProps) {
                 featured_project
               </span>
             </div>
-            <a
-              href="#"
-              className="flex items-center gap-1.5 text-[10px] text-[#666] hover:text-[#f59e0b] transition-colors duration-100"
-              aria-label="View project on GitHub"
-            >
-              <Icon name="CodeBracketIcon" size={12} />
-              <span>View on GitHub</span>
-            </a>
+            <span className="text-[10px] text-[#333]">internal project</span>
           </div>
 
           {/* Content */}
@@ -488,30 +481,11 @@ export default function MCPShowcase({ className = '' }: MCPShowcaseProps) {
       </ScrollReveal>
 
       {/* ================================================================= */}
-      {/* FOOTER CTA                                                        */}
+      {/* FOOTER TECH STACK                                                  */}
       {/* ================================================================= */}
       <ScrollReveal direction="up" delay={0.1}>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <a
-            href="#"
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold hover:bg-[#d97706] transition-colors duration-100"
-            aria-label="View DevOps MCP project on GitHub"
-          >
-            <Icon name="CodeBracketIcon" size={14} />
-            <span>View on GitHub</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center justify-center gap-2 px-6 py-3 border border-[#222] text-[#e0e0e0] text-xs hover:border-[#444] transition-colors duration-100"
-            aria-label="Read the technical write-up"
-          >
-            <Icon name="DocumentTextIcon" size={14} />
-            <span>Technical Write-up</span>
-          </a>
-          <div className="flex-1" />
-          <div className="text-[10px] text-[#333] text-right">
-            Python / FastAPI / SSE / K8s / PostgreSQL / Loki / Prometheus
-          </div>
+        <div className="text-[10px] text-[#333] text-right">
+          Python / FastAPI / SSE / K8s / PostgreSQL / Loki / Prometheus / Redis / Qdrant / Neo4j
         </div>
       </ScrollReveal>
     </section>
