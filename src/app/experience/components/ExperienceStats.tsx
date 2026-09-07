@@ -1,15 +1,13 @@
-import React from 'react';
-import Icon from '@/components/ui/AppIcon';
+'use client';
+
+import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
+import Icon from '@/components/ui/AppIcon';
 
 interface StatItem {
   label: string;
   value: string;
-  change: string;
-  trend: 'up' | 'down';
   icon: string;
-  color: string;
 }
 
 interface ExperienceStatsProps {
@@ -18,31 +16,27 @@ interface ExperienceStatsProps {
 
 const ExperienceStats = ({ stats }: ExperienceStatsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
-        <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-          <AntiGravityCard className="glass-card p-6 hover:shadow-premium-lg transition-all duration-300 magnetic-hover group">
-            <div className="flex items-center justify-between mb-4">
-              <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.color} group-hover:scale-110 transition-transform duration-300`}
-              >
-                <Icon name={stat.icon as any} size={24} className="text-white" />
+        <ScrollReveal key={index} direction="up" delay={index * 0.08}>
+          <motion.div
+            whileHover={{ y: -2 }}
+            transition={{ duration: 0.2 }}
+            className="terminal-card p-5 group"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 border border-[#222] flex items-center justify-center">
+                <Icon name={stat.icon} size={16} className="text-[#f59e0b]" />
               </div>
-              <div
-                className={`flex items-center space-x-1 text-sm font-medium ${
-                  stat.trend === 'up' ? 'text-success' : 'text-error'
-                }`}
-              >
-                <Icon name={stat.trend === 'up' ? 'ArrowUpIcon' : 'ArrowDownIcon'} size={16} />
-                <span>{stat.change}</span>
-              </div>
+              <span className="text-xs font-mono uppercase tracking-wider text-[#666]">
+                {stat.label}
+              </span>
             </div>
 
-            <div>
-              <p className="text-3xl font-bold text-gradient mb-1">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-            </div>
-          </AntiGravityCard>
+            <p className="text-3xl lg:text-4xl font-mono font-bold text-[#f59e0b] tracking-tight">
+              {stat.value}
+            </p>
+          </motion.div>
         </ScrollReveal>
       ))}
     </div>

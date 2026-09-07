@@ -1,13 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import TiltCard from '@/components/animations/TiltCard';
-import StaggeredReveal from '@/components/animations/StaggeredReveal';
 
 interface Skill {
   name: string;
@@ -20,25 +16,15 @@ interface SkillsPreviewProps {
   className?: string;
 }
 
-const SkillBar = ({ proficiency }: { proficiency: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+const TOTAL_BLOCKS = 20;
 
-  return (
-    <div ref={ref} className="w-full bg-muted rounded-full h-2 mb-2">
-      <motion.div
-        className="bg-gradient-to-r from-accent to-primary h-2 rounded-full"
-        initial={{ width: 0 }}
-        animate={isInView ? { width: `${proficiency}%` } : { width: 0 }}
-        transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
-      />
-    </div>
-  );
+const renderBar = (proficiency: number): string => {
+  const filled = Math.round((proficiency / 100) * TOTAL_BLOCKS);
+  const empty = TOTAL_BLOCKS - filled;
+  return '[' + '\u2588'.repeat(filled) + '\u2591'.repeat(empty) + ']';
 };
 
 const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
   const featuredSkills: Skill[] = [
     { name: 'Kubernetes', icon: 'CubeIcon', proficiency: 95, category: 'Container Orchestration' },
     { name: 'AWS', icon: 'CloudIcon', proficiency: 92, category: 'Cloud Platform' },
@@ -59,86 +45,64 @@ const SkillsPreview = ({ className = '' }: SkillsPreviewProps) => {
   ];
 
   return (
-    <section className={`py-20 bg-card/50 ${className}`}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className={`py-20 bg-[#0a0a0a] ${className}`}>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <ScrollReveal direction="up">
-          <div className="text-center mb-16 flex flex-col items-center">
-            <StaggeredReveal
-              text="DevOps Expertise"
-              className="text-4xl lg:text-5xl font-bold text-gradient-cyan mb-4 font-primary"
-            />
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono mt-2">
+          <div className="mb-12">
+            <p className="text-[#666] font-mono text-xs uppercase tracking-wider mb-2">
+              <span className="text-[#f59e0b]">$</span> cat skills.log
+            </p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#e0e0e0] font-mono">
+              DevOps Expertise
+            </h2>
+            <p className="text-sm text-[#666] font-mono mt-2">
               Mastering the tools that power modern cloud infrastructure and automation
             </p>
+            <div className="h-px bg-[#222] mt-6" />
           </div>
         </ScrollReveal>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+        {/* Skills List */}
+        <div className="space-y-4 mb-12">
           {featuredSkills.map((skill, index) => (
-            <ScrollReveal key={skill.name} direction="up" delay={index * 0.08}>
-              <TiltCard className="p-6 text-center cursor-pointer glass-card">
-                <div
-                  onMouseEnter={() => setHoveredSkill(skill.name)}
-                  onMouseLeave={() => setHoveredSkill(null)}
-                >
-                  {/* Skill Icon */}
-                  <div className="relative mb-4">
-                    <div
-                      className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center transition-smooth ${
-                        hoveredSkill === skill.name
-                          ? 'bg-[#CCFF00]/20 border border-[#CCFF00]/50 neon-glow-acid'
-                          : 'bg-[#00F5FF]/10 border border-[#00F5FF]/20'
-                      }`}
-                    >
-                      <Icon
-                        name={skill.icon as any}
-                        size={32}
-                        className={`transition-smooth ${
-                          hoveredSkill === skill.name ? 'text-[#CCFF00]' : 'text-[#00F5FF]'
-                        }`}
-                      />
-                    </div>
-                    {hoveredSkill === skill.name && (
-                      <motion.div
-                        className="absolute -top-2 -right-2 w-6 h-6 bg-success rounded-full flex items-center justify-center"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                      >
-                        <Icon name="CheckIcon" size={16} className="text-background" />
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {/* Skill Name */}
-                  <h3 className="font-semibold text-foreground mb-2 text-sm lg:text-base font-primary">
+            <ScrollReveal key={skill.name} direction="up" delay={index * 0.06}>
+              <div className="border border-[#222] bg-[#111] p-4 hover:border-[#f59e0b]/40 transition-colors duration-150">
+                <div className="flex items-center gap-3 mb-2">
+                  <Icon
+                    name={skill.icon as any}
+                    size={16}
+                    className="text-[#f59e0b] flex-shrink-0"
+                  />
+                  <span className="text-[#e0e0e0] font-mono text-sm font-bold min-w-[100px]">
                     {skill.name}
-                  </h3>
-
-                  {/* Proficiency Bar — animates on scroll */}
-                  <SkillBar proficiency={skill.proficiency} />
-
-                  {/* Proficiency Percentage */}
-                  <div className="text-xs text-muted-foreground font-mono">
-                    {hoveredSkill === skill.name ? `${skill.proficiency}%` : skill.category}
-                  </div>
+                  </span>
+                  <span className="text-[#666] font-mono text-xs hidden sm:inline">
+                    {`// ${skill.category}`}
+                  </span>
                 </div>
-              </TiltCard>
+                <div className="flex items-center gap-3 font-mono">
+                  <span className="text-[#f59e0b] text-xs sm:text-sm whitespace-pre tracking-tight">
+                    {renderBar(skill.proficiency)}
+                  </span>
+                  <span className="text-[#e0e0e0] text-xs font-bold ml-auto">
+                    {skill.proficiency}%
+                  </span>
+                </div>
+              </div>
             </ScrollReveal>
           ))}
         </div>
 
         {/* View All Skills CTA */}
         <ScrollReveal direction="up" delay={0.3}>
-          <div className="text-center">
+          <div>
             <Link
               href="/skills"
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-transparent border-2 border-accent text-accent rounded-lg font-semibold transition-smooth hover:bg-accent hover:text-background focus-ring"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#f59e0b] text-[#f59e0b] font-mono text-sm font-bold hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-150"
             >
-              <span>Explore All Skills</span>
-              <Icon name="ArrowRightIcon" size={20} />
+              <span>EXPLORE_ALL_SKILLS</span>
+              <Icon name="ArrowRightIcon" size={16} />
             </Link>
           </div>
         </ScrollReveal>

@@ -28,62 +28,64 @@ const ProjectFilter = ({
   onTechnologyChange,
 }: ProjectFilterProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       {/* Category Filter */}
-      <div>
-        <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center space-x-2">
-          <Icon name="FolderIcon" size={20} className="text-accent" />
-          <span>Project Categories</span>
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => onCategoryChange(category.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeCategory === category.id
-                  ? 'bg-accent text-background shadow-neon'
-                  : 'bg-muted/30 text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-              }`}
-            >
-              <Icon name={category.icon as any} size={16} />
-              <span>{category.label}</span>
-              <span
-                className={`px-1.5 py-0.5 rounded-full text-xs ${
-                  activeCategory === category.id
-                    ? 'bg-background/20 text-background'
-                    : 'bg-accent/20 text-accent'
+      <div className="border border-[#222] bg-[#111]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-[#222] bg-[#0d0d0d]">
+          <Icon name="FolderIcon" size={14} className="text-[#f59e0b]" />
+          <span className="text-[10px] uppercase tracking-widest text-[#666]">
+            filter --category
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-0">
+          {categories.map((category) => {
+            const isActive = activeCategory === category.id;
+            return (
+              <button
+                key={category.id}
+                onClick={() => onCategoryChange(category.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 text-xs transition-colors duration-100 border-r border-[#222] last:border-r-0 ${
+                  isActive
+                    ? 'bg-[#f59e0b] text-[#0a0a0a]'
+                    : 'text-[#666] hover:text-[#e0e0e0] hover:bg-[#161616]'
                 }`}
               >
-                {category.count}
-              </span>
-            </button>
-          ))}
+                <Icon name={category.icon as any} size={12} />
+                <span>{category.label}</span>
+                <span className={`text-[10px] ${isActive ? 'text-[#0a0a0a]/60' : 'text-[#444]'}`}>
+                  [{category.count}]
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Technology Filter */}
-      <div>
-        <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center space-x-2">
-          <Icon name="CogIcon" size={20} className="text-accent" />
-          <span>Technologies</span>
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {technologies.map((tech) => (
-            <button
-              key={tech.id}
-              onClick={() => onTechnologyChange(tech.id)}
-              className={`flex items-center space-x-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
-                activeTechnology === tech.id
-                  ? 'bg-accent/20 text-accent border border-accent/30'
-                  : 'bg-muted/20 text-muted-foreground hover:bg-muted/40 hover:text-foreground border border-transparent'
-              }`}
-            >
-              <Icon name={tech.icon as any} size={12} />
-              <span>{tech.label}</span>
-              <span className="text-xs opacity-70">({tech.count})</span>
-            </button>
-          ))}
+      <div className="border border-[#222] bg-[#111]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-[#222] bg-[#0d0d0d]">
+          <Icon name="CogIcon" size={14} className="text-[#f59e0b]" />
+          <span className="text-[10px] uppercase tracking-widest text-[#666]">filter --tech</span>
+        </div>
+        <div className="flex flex-wrap">
+          {technologies.map((tech) => {
+            const isActive = activeTechnology === tech.id;
+            return (
+              <button
+                key={tech.id}
+                onClick={() => onTechnologyChange(tech.id)}
+                className={`flex items-center gap-1.5 px-3 py-2 text-[11px] transition-colors duration-100 border-r border-b border-[#222] ${
+                  isActive
+                    ? 'bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/30'
+                    : 'text-[#666] hover:text-[#e0e0e0] hover:bg-[#161616]'
+                }`}
+              >
+                <Icon name={tech.icon as any} size={10} />
+                <span>{tech.label}</span>
+                <span className="text-[#444]">({tech.count})</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -1,141 +1,172 @@
 'use client';
+
 import React from 'react';
-import AppImage from '@/components/ui/AppImage';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
-import { ThemeProvider } from './ThemeProvider';
-import { ThemeToggleButton } from './ThemeToggleButton';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import FloatingParticles from '@/components/animations/FloatingParticles';
-import MagneticHover from '@/components/animations/MagneticHover';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
 
 interface HeroSectionProps {
   className?: string;
 }
 
+const metrics = [
+  { value: '55%', label: 'Cost Reduction' },
+  { value: '40%', label: 'Faster Deploys' },
+  { value: '100%', label: 'Uptime Record' },
+];
+
 const HeroSection = ({ className = '' }: HeroSectionProps) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <section
-        className={`relative min-h-screen-safe flex justify-center overflow-hidden pt-32 lg:pt-24 ${className}`}
-      >
-        {/* Background Effects */}
-        <div className="absolute top-5 right-5 z-50">
-          <ThemeToggleButton />
-        </div>
-        <FloatingParticles className="z-0" />
+    <section
+      className={`relative min-h-screen flex items-center pt-24 pb-16 ${className}`}
+      style={{ background: '#0a0a0a' }}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid lg:grid-cols-[1fr_320px] gap-12 lg:gap-16 items-start">
+          {/* Left: Content */}
+          <div className="space-y-8">
+            <ScrollReveal direction="up">
+              <div className="space-y-4">
+                <p className="font-mono text-sm tracking-wider" style={{ color: '#666' }}>
+                  $ whoami
+                </p>
 
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-16 h-16 bg-accent/20 rounded-full blur-xl animate-float-slow"></div>
-        <div className="absolute bottom-32 right-16 w-24 h-24 bg-primary/20 rounded-full blur-2xl animate-float-medium"></div>
-        <div className="absolute top-1/3 right-1/4 w-8 h-8 bg-accent rounded-full opacity-60 animate-levitate"></div>
+                <h1
+                  className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight"
+                  style={{ fontFamily: 'var(--font-display, "Space Grotesk", sans-serif)' }}
+                >
+                  <span style={{ color: '#e0e0e0' }}>Vishal</span>{' '}
+                  <span style={{ color: '#f59e0b' }}>Kushwah</span>
+                </h1>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Content */}
-            <div className="text-center lg:text-left space-y-8">
-              <ScrollReveal direction="up">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center space-x-2 bg-accent/10 border border-accent/30 rounded-full px-4 py-2 text-sm font-medium text-accent">
-                    <Icon name="SparklesIcon" size={16} />
-                    <span>The Cloud Infrastructure Virtuoso</span>
-                  </div>
+                <p className="font-mono text-base sm:text-lg" style={{ color: '#e0e0e0' }}>
+                  {'>'} The Cloud Infrastructure Virtuoso
+                </p>
+              </div>
+            </ScrollReveal>
 
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-foreground">Meet</span>{' '}
-                    <span className="text-gradient-wide">Vishal Kushwah</span>
-                  </h1>
+            <ScrollReveal direction="up" delay={0.1}>
+              <p
+                className="font-mono text-sm sm:text-base leading-relaxed max-w-xl"
+                style={{ color: '#999' }}
+              >
+                DevOps Engineer who doesn&apos;t just maintain systems -- I revolutionize them.
+                Expertise at the intersection of cost optimization, zero-downtime reliability, and
+                automation excellence.
+              </p>
+            </ScrollReveal>
 
-                  <p className="text-xl sm:text-2xl text-muted-foreground font-light">
-                    DevOps Engineer who doesn&apos;t just maintain systems —{' '}
-                    <span className="text-accent font-medium">I revolutionize them</span>
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal direction="up" delay={0.1}>
-                <div className="space-y-6">
-                  <p className="text-lg text-card-foreground leading-relaxed">
-                    I embody the perfect fusion of technical mastery and innovative problem-solving
-                    in the DevOps realm. My expertise lies at the intersection of cost optimization,
-                    zero-downtime reliability, and automation excellence.
-                  </p>
-                  {/* Key Metrics */}
-                  <div className="grid grid-cols-3 gap-4 sm:gap-6">
-                    {[
-                      { value: '55%', label: 'Cost Reduction', color: 'text-success' },
-                      { value: '40%', label: 'Faster Deployments', color: 'text-accent' },
-                      { value: '100%', label: 'Uptime Record', color: 'text-warning' },
-                    ].map((metric, i) => (
-                      <ScrollReveal key={metric.label} direction="up" delay={0.2 + i * 0.1}>
-                        <AntiGravityCard className="text-center p-4 rounded-xl" tiltStrength={5}>
-                          <div className={`text-2xl sm:text-3xl font-bold ${metric.color}`}>
-                            {metric.value}
-                          </div>
-                          <div className="text-sm text-muted-foreground">{metric.label}</div>
-                        </AntiGravityCard>
-                      </ScrollReveal>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              {/* CTA Buttons */}
-              <ScrollReveal direction="up" delay={0.3}>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <MagneticHover strength={8}>
-                    <button className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl font-semibold text-lg transition-smooth hover:shadow-premium-lg pulse-glow">
-                      <div className="flex items-center space-x-2">
-                        <Icon name="RocketLaunchIcon" size={20} />
-                        <span>Explore My Journey</span>
-                      </div>
-                    </button>
-                  </MagneticHover>
-
-                  <button className="px-8 py-4 border border-accent text-accent rounded-xl font-semibold text-lg transition-smooth hover:bg-accent/10 hover:shadow-premium">
-                    <div className="flex items-center space-x-2">
-                      <Icon name="DocumentTextIcon" size={20} />
-                      <span>Download Resume</span>
+            {/* Metrics Grid */}
+            <ScrollReveal direction="up" delay={0.15}>
+              <div className="grid grid-cols-3 max-w-lg" style={{ border: '1px solid #222' }}>
+                {metrics.map((metric, i) => (
+                  <div
+                    key={metric.label}
+                    className="p-4 sm:p-6 text-center"
+                    style={{
+                      borderRight: i < metrics.length - 1 ? '1px solid #222' : 'none',
+                      background: '#111',
+                    }}
+                  >
+                    <div
+                      className="text-2xl sm:text-3xl font-bold font-mono"
+                      style={{ color: '#f59e0b' }}
+                    >
+                      {metric.value}
                     </div>
-                  </button>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            {/* Profile Image */}
-            <ScrollReveal direction="right" delay={0.2}>
-              <div className="relative flex justify-center lg:justify-end mt-8 lg:mt-0">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-3xl blur-2xl opacity-30 scale-110"></div>
-
-                  <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-3xl overflow-hidden glass-card border-2 border-accent/30">
-                    <AppImage
-                      src="https://vishalkushwah.s3.us-east-1.amazonaws.com/8221F8A0-E13A-4AD0-B0A8-CE2114B4383D_1_105_c.jpeg"
-                      alt="Professional headshot of Vishal Kushwah, DevOps engineer with confident smile wearing dark shirt against modern tech background"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+                    <div
+                      className="text-xs font-mono mt-1 uppercase tracking-wider"
+                      style={{ color: '#666' }}
+                    >
+                      {metric.label}
+                    </div>
                   </div>
+                ))}
+              </div>
+            </ScrollReveal>
 
-                  {/* Floating Tech Icons */}
-                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-card border border-accent/30 rounded-2xl flex items-center justify-center glass-card animate-float-slow">
-                    <Icon name="CloudIcon" size={24} className="text-accent" />
-                  </div>
+            {/* CTA Buttons */}
+            <ScrollReveal direction="up" delay={0.2}>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="#journey">
+                  <motion.button
+                    whileHover={{ y: -1 }}
+                    className="px-6 py-3 font-mono text-sm font-semibold flex items-center gap-2"
+                    style={{
+                      background: '#f59e0b',
+                      color: '#0a0a0a',
+                      border: 'none',
+                      borderRadius: '0',
+                    }}
+                  >
+                    <Icon name="ArrowDownIcon" size={16} />
+                    <span>Explore My Journey</span>
+                  </motion.button>
+                </Link>
 
-                  <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-card border border-primary/30 rounded-2xl flex items-center justify-center glass-card animate-float-medium">
-                    <Icon name="CogIcon" size={24} className="text-primary" />
-                  </div>
-
-                  <div className="absolute top-1/2 -left-8 w-12 h-12 bg-card border border-success/30 rounded-xl flex items-center justify-center glass-card animate-levitate">
-                    <Icon name="BoltIcon" size={20} className="text-success" />
-                  </div>
-                </div>
+                <motion.a
+                  whileHover={{ y: -1 }}
+                  href="https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 font-mono text-sm font-semibold flex items-center gap-2"
+                  style={{
+                    background: 'transparent',
+                    color: '#f59e0b',
+                    border: '1px solid #f59e0b',
+                    borderRadius: '0',
+                  }}
+                >
+                  <Icon name="DocumentTextIcon" size={16} />
+                  <span>Download Resume</span>
+                </motion.a>
               </div>
             </ScrollReveal>
           </div>
+
+          {/* Right: Monogram Block */}
+          <ScrollReveal direction="up" delay={0.25}>
+            <div className="hidden lg:block">
+              <div
+                className="w-full aspect-square flex items-center justify-center"
+                style={{
+                  background: '#111',
+                  border: '1px solid #222',
+                }}
+              >
+                <pre
+                  className="font-mono text-xs leading-tight select-none"
+                  style={{ color: '#f59e0b' }}
+                  aria-hidden="true"
+                >
+                  {`
+  ██╗   ██╗██╗  ██╗
+  ██║   ██║██║ ██╔╝
+  ██║   ██║█████╔╝
+  ╚██╗ ██╔╝██╔═██╗
+   ╚████╔╝ ██║  ██╗
+    ╚═══╝  ╚═╝  ╚═╝
+`}
+                </pre>
+              </div>
+              <div
+                className="mt-px p-3 font-mono text-xs"
+                style={{
+                  background: '#111',
+                  border: '1px solid #222',
+                  borderTop: 'none',
+                  color: '#666',
+                }}
+              >
+                <span style={{ color: '#22c55e' }}>STATUS</span>{' '}
+                <span style={{ color: '#e0e0e0' }}>Available for new challenges</span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
-      </section>
-    </ThemeProvider>
+      </div>
+    </section>
   );
 };
 

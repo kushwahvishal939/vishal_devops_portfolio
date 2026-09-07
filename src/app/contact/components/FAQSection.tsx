@@ -18,6 +18,7 @@ interface FAQSectionProps {
 
 const FAQSection = ({ className = '' }: FAQSectionProps) => {
   const [openFAQ, setOpenFAQ] = useState<string | null>('1');
+  const [selectedCategory, setSelectedCategory] = useState<string>('general');
 
   const faqs: FAQ[] = [
     {
@@ -79,13 +80,11 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
   ];
 
   const categories = [
-    { id: 'general', name: 'General', icon: 'QuestionMarkCircleIcon' },
-    { id: 'pricing', name: 'Pricing', icon: 'CurrencyDollarIcon' },
-    { id: 'process', name: 'Process', icon: 'Cog6ToothIcon' },
-    { id: 'technical', name: 'Technical', icon: 'CodeBracketIcon' },
+    { id: 'general', name: 'general', icon: 'QuestionMarkCircleIcon' },
+    { id: 'pricing', name: 'pricing', icon: 'CurrencyDollarIcon' },
+    { id: 'process', name: 'process', icon: 'Cog6ToothIcon' },
+    { id: 'technical', name: 'technical', icon: 'CodeBracketIcon' },
   ];
-
-  const [selectedCategory, setSelectedCategory] = useState<string>('general');
 
   const filteredFAQs = faqs.filter((faq) => faq.category === selectedCategory);
 
@@ -95,53 +94,50 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
 
   return (
     <section className={`py-16 ${className}`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 font-mono">
         <ScrollReveal direction="up">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl lg:text-3xl font-bold text-[#e0e0e0] mb-3">
               Frequently Asked
-              <span className="block text-gradient">Questions</span>
+              <span className="block text-[#f59e0b]">Questions</span>
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Everything you need to know about working with me
-            </p>
+            <p className="text-[#666] text-sm">everything you need to know about working with me</p>
           </div>
         </ScrollReveal>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {/* Category tabs */}
+        <div className="flex border border-[#222] bg-[#0d0d0d] mb-8">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-smooth focus-ring ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] uppercase tracking-wider transition-colors duration-100 ${
                 selectedCategory === category.id
-                  ? 'bg-accent text-background'
-                  : 'bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted'
+                  ? 'bg-[#f59e0b] text-[#0a0a0a]'
+                  : 'text-[#666] hover:text-[#e0e0e0] hover:bg-[#111]'
               }`}
             >
-              <Icon name={category.icon as any} size={16} />
-              <span>{category.name}</span>
+              <Icon name={category.icon as any} size={12} />
+              <span className="hidden sm:inline">{category.name}</span>
             </button>
           ))}
         </div>
 
-        {/* FAQ List */}
-        <div className="space-y-4">
+        {/* FAQ list */}
+        <div className="space-y-px bg-[#222]">
           {filteredFAQs.map((faq) => (
-            <div key={faq.id} className="glass-card overflow-hidden">
+            <div key={faq.id} className="bg-[#111]">
               <button
                 onClick={() => toggleFAQ(faq.id)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-muted/20 transition-colors focus-ring"
+                className="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-[#161616] transition-colors duration-100"
+                aria-expanded={openFAQ === faq.id}
               >
-                <h3 className="font-semibold text-foreground pr-4">{faq.question}</h3>
-                <Icon
-                  name="ChevronDownIcon"
-                  size={20}
-                  className={`text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
-                    openFAQ === faq.id ? 'rotate-180' : ''
-                  }`}
-                />
+                <div className="flex items-start gap-3 pr-4">
+                  <span className="text-[#f59e0b] text-xs mt-0.5 shrink-0">
+                    {openFAQ === faq.id ? '[-]' : '[+]'}
+                  </span>
+                  <h3 className="text-xs font-bold text-[#e0e0e0]">{faq.question}</h3>
+                </div>
               </button>
 
               <AnimatePresence initial={false}>
@@ -150,11 +146,13 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-4 border-t border-border/50">
-                      <p className="text-muted-foreground leading-relaxed pt-4">{faq.answer}</p>
+                    <div className="px-5 pb-4 border-t border-[#1a1a1a]">
+                      <p className="text-[#666] text-[11px] leading-relaxed pt-4 pl-7">
+                        {faq.answer}
+                      </p>
                     </div>
                   </motion.div>
                 )}
@@ -163,37 +161,39 @@ const FAQSection = ({ className = '' }: FAQSectionProps) => {
           ))}
         </div>
 
-        {/* Still Have Questions CTA */}
-        <div className="mt-12 text-center">
-          <div className="glass-card p-8">
-            <h3 className="text-2xl font-bold mb-4">Still Have Questions?</h3>
-            <p className="text-muted-foreground mb-6">
-              Can't find what you're looking for? Let's discuss your specific needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="mailto:kushwahvishal939@gmail.com"
-                className="px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold transition-smooth hover:shadow-neon focus-ring magnetic-hover"
-              >
-                <div className="flex items-center justify-center">
-                  <Icon name="EnvelopeIcon" size={20} className="mr-2" />
-                  Email Me Directly
-                </div>
-              </a>
-              <a
-                href="https://calendly.com/kushwahvishal939/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 border border-accent text-accent rounded-lg font-semibold hover:bg-accent hover:text-background transition-smooth focus-ring"
-              >
-                <div className="flex items-center justify-center">
-                  <Icon name="CalendarDaysIcon" size={20} className="mr-2" />
-                  Schedule a Call
-                </div>
-              </a>
+        {/* Still have questions */}
+        <ScrollReveal direction="up" delay={0.2}>
+          <div className="mt-12 border border-[#222] bg-[#111]">
+            <div className="flex items-center gap-2 px-6 py-3 border-b border-[#222] bg-[#0d0d0d]">
+              <span className="w-2 h-2 bg-[#f59e0b]" />
+              <span className="text-[10px] uppercase tracking-widest text-[#666]">
+                need_more_help
+              </span>
+            </div>
+            <div className="p-6 text-center">
+              <h3 className="text-base font-bold text-[#e0e0e0] mb-2">Still Have Questions?</h3>
+              <p className="text-[#666] text-xs mb-6">let us discuss your specific needs</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href="mailto:kushwahvishal939@gmail.com"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold hover:bg-[#d97706] transition-colors duration-100"
+                >
+                  <Icon name="EnvelopeIcon" size={14} />
+                  email --direct
+                </a>
+                <a
+                  href="https://calendly.com/kushwahvishal939/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 border border-[#f59e0b] text-[#f59e0b] text-xs font-bold hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors duration-100"
+                >
+                  <Icon name="CalendarDaysIcon" size={14} />
+                  schedule --call
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

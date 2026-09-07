@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import AntiGravityCard from '@/components/animations/AntiGravityCard';
-import MagneticHover from '@/components/animations/MagneticHover';
 
 interface ExpertiseArea {
   icon: string;
@@ -12,84 +12,67 @@ interface ExpertiseArea {
   description: string;
   skills: string[];
   achievement: string;
-  color: string;
 }
 
 interface ExpertiseSectionProps {
   className?: string;
 }
 
+const expertiseAreas: ExpertiseArea[] = [
+  {
+    icon: 'CloudIcon',
+    title: 'Cloud Architecture & Migration',
+    description:
+      'Designing and implementing scalable cloud solutions across AWS, Azure, and GCP with focus on cost optimization and performance.',
+    skills: ['AWS', 'Azure', 'GCP', 'Terraform', 'CloudFormation'],
+    achievement: 'Reduced infrastructure costs by 55% through intelligent cloud optimization',
+  },
+  {
+    icon: 'CogIcon',
+    title: 'CI/CD Pipeline Engineering',
+    description:
+      'Building robust deployment pipelines that ensure fast, reliable, and secure software delivery with automated testing and monitoring.',
+    skills: ['Jenkins', 'GitLab CI', 'GitHub Actions', 'Azure DevOps', 'ArgoCD'],
+    achievement: 'Improved deployment speed by 40% with zero-downtime deployments',
+  },
+  {
+    icon: 'ServerIcon',
+    title: 'Container Orchestration',
+    description:
+      'Orchestrating containerized applications at scale using Kubernetes, Docker, and service mesh technologies for high availability.',
+    skills: ['Kubernetes', 'Docker', 'Helm', 'Istio', 'Prometheus'],
+    achievement: 'Achieved 100% uptime across production environments',
+  },
+  {
+    icon: 'ShieldCheckIcon',
+    title: 'Infrastructure Security',
+    description:
+      'Implementing security-first DevOps practices with automated compliance, vulnerability scanning, and secure deployment strategies.',
+    skills: ['Security Scanning', 'Compliance', 'RBAC', 'Network Security', 'Secrets Mgmt'],
+    achievement: 'Zero security incidents with automated threat detection',
+  },
+];
+
 const ExpertiseSection = ({ className = '' }: ExpertiseSectionProps) => {
-  const expertiseAreas: ExpertiseArea[] = [
-    {
-      icon: 'CloudIcon',
-      title: 'Cloud Architecture & Migration',
-      description:
-        'Designing and implementing scalable cloud solutions across AWS, Azure, and GCP with focus on cost optimization and performance.',
-      skills: ['AWS', 'Azure', 'GCP', 'Terraform', 'CloudFormation'],
-      achievement: 'Reduced infrastructure costs by 55% through intelligent cloud optimization',
-      color: 'accent',
-    },
-    {
-      icon: 'CogIcon',
-      title: 'CI/CD Pipeline Engineering',
-      description:
-        'Building robust deployment pipelines that ensure fast, reliable, and secure software delivery with automated testing and monitoring.',
-      skills: ['Jenkins', 'GitLab CI', 'GitHub Actions', 'Azure DevOps', 'ArgoCD'],
-      achievement: 'Improved deployment speed by 40% with zero-downtime deployments',
-      color: 'primary',
-    },
-    {
-      icon: 'ServerIcon',
-      title: 'Container Orchestration',
-      description:
-        'Orchestrating containerized applications at scale using Kubernetes, Docker, and service mesh technologies for high availability.',
-      skills: ['Kubernetes', 'Docker', 'Helm', 'Istio', 'Prometheus'],
-      achievement: 'Achieved 100% uptime across production environments',
-      color: 'success',
-    },
-    {
-      icon: 'ShieldCheckIcon',
-      title: 'Infrastructure Security',
-      description:
-        'Implementing security-first DevOps practices with automated compliance, vulnerability scanning, and secure deployment strategies.',
-      skills: ['Security Scanning', 'Compliance', 'RBAC', 'Network Security', 'Secrets Management'],
-      achievement: 'Zero security incidents with automated threat detection',
-      color: 'warning',
-    },
-  ];
-
-  const getColorClasses = (color: string) => {
-    const colorMap = {
-      accent: 'text-accent border-accent/30 bg-accent/10',
-      primary: 'text-primary border-primary/30 bg-primary/10',
-      success: 'text-success border-success/30 bg-success/10',
-      warning: 'text-warning border-warning/30 bg-warning/10',
-    };
-    return colorMap[color as keyof typeof colorMap] || colorMap.accent;
-  };
-
   return (
-    <section className={`py-20 lg:py-32 relative ${className}`}>
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className={`py-20 lg:py-28 ${className}`} style={{ background: '#0a0a0a' }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <ScrollReveal direction="up">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center space-x-2 bg-success/10 border border-success/30 rounded-full px-4 py-2 text-sm font-medium text-success mb-6">
-              <Icon name="AcademicCapIcon" size={16} />
-              <span>Core Expertise</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="text-foreground">Technical</span>{' '}
-              <span className="text-gradient">Mastery</span>
+          <div className="mb-12">
+            <p className="font-mono text-sm mb-3" style={{ color: '#666' }}>
+              $ ls -la expertise/
+            </p>
+            <h2
+              className="text-3xl sm:text-4xl font-bold"
+              style={{
+                fontFamily: 'var(--font-display, "Space Grotesk", sans-serif)',
+                color: '#e0e0e0',
+              }}
+            >
+              Technical Mastery
             </h2>
-
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="font-mono text-sm mt-3 max-w-2xl" style={{ color: '#999' }}>
               Deep expertise across the entire DevOps ecosystem, from cloud architecture to security
               implementation, with proven results in enterprise environments.
             </p>
@@ -97,34 +80,41 @@ const ExpertiseSection = ({ className = '' }: ExpertiseSectionProps) => {
         </ScrollReveal>
 
         {/* Expertise Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-px" style={{ background: '#222' }}>
           {expertiseAreas.map((area, index) => (
-            <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-              <AntiGravityCard className="relative p-8 rounded-3xl border border-border/50 group">
-                <div className="flex items-start space-x-4 mb-6">
-                  <div
-                    className={`w-16 h-16 rounded-2xl flex items-center justify-center border ${getColorClasses(area.color)} group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <Icon name={area.icon as any} size={28} className={`text-${area.color}`} />
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">
-                      {area.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">{area.description}</p>
-                  </div>
+            <ScrollReveal key={index} direction="up" delay={index * 0.08}>
+              <div className="p-6 sm:p-8" style={{ background: '#111' }}>
+                {/* Title Row */}
+                <div className="flex items-center gap-3 mb-4">
+                  <Icon name={area.icon as any} size={18} style={{ color: '#f59e0b' }} />
+                  <h3 className="font-mono text-base font-semibold" style={{ color: '#e0e0e0' }}>
+                    {area.title}
+                  </h3>
                 </div>
 
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-card-foreground mb-3">
-                    Key Technologies
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {area.skills.map((skill, skillIndex) => (
+                {/* Description */}
+                <p className="font-mono text-sm leading-relaxed mb-5" style={{ color: '#999' }}>
+                  {area.description}
+                </p>
+
+                {/* Skills */}
+                <div className="mb-5">
+                  <p
+                    className="font-mono text-xs uppercase tracking-wider mb-2"
+                    style={{ color: '#666' }}
+                  >
+                    Stack
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {area.skills.map((skill) => (
                       <span
-                        key={skillIndex}
-                        className="px-3 py-1 bg-muted/50 border border-border rounded-full text-xs font-medium text-muted-foreground hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all duration-300"
+                        key={skill}
+                        className="font-mono text-xs px-2 py-1"
+                        style={{
+                          background: '#0a0a0a',
+                          color: '#e0e0e0',
+                          border: '1px solid #222',
+                        }}
                       >
                         {skill}
                       </span>
@@ -132,37 +122,57 @@ const ExpertiseSection = ({ className = '' }: ExpertiseSectionProps) => {
                   </div>
                 </div>
 
+                {/* Achievement */}
                 <div
-                  className={`p-4 rounded-xl border ${getColorClasses(area.color)} bg-opacity-50`}
+                  className="flex items-start gap-2 p-3"
+                  style={{
+                    background: '#0a0a0a',
+                    borderLeft: '2px solid #f59e0b',
+                  }}
                 >
-                  <div className="flex items-center space-x-2">
-                    <Icon name="TrophyIcon" size={16} className={`text-${area.color}`} />
-                    <span className="text-sm font-medium text-card-foreground">
-                      {area.achievement}
-                    </span>
-                  </div>
+                  <Icon
+                    name="CheckCircleIcon"
+                    size={14}
+                    className="shrink-0 mt-0.5"
+                    style={{ color: '#22c55e' }}
+                  />
+                  <span className="font-mono text-xs" style={{ color: '#e0e0e0' }}>
+                    {area.achievement}
+                  </span>
                 </div>
-              </AntiGravityCard>
+              </div>
             </ScrollReveal>
           ))}
         </div>
 
+        {/* CTA */}
         <ScrollReveal direction="up" delay={0.3}>
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center space-x-4 p-6 glass-card rounded-2xl border border-accent/20">
-              <Icon name="ArrowRightIcon" size={24} className="text-accent" />
-              <span className="text-lg font-medium text-foreground">
-                Ready to see these skills in action?
-              </span>
-              <MagneticHover strength={6}>
-                <button
-                  onClick={() => (window.location.href = '/portfolio')}
-                  className="px-6 py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-premium"
-                >
-                  View Portfolio
-                </button>
-              </MagneticHover>
-            </div>
+          <div
+            className="mt-px p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            style={{
+              background: '#111',
+              border: '1px solid #222',
+              borderTop: 'none',
+            }}
+          >
+            <span className="font-mono text-sm" style={{ color: '#999' }}>
+              {'>'} Ready to see these skills in action?
+            </span>
+            <Link href="/portfolio">
+              <motion.button
+                whileHover={{ y: -1 }}
+                className="font-mono text-sm font-semibold px-5 py-2 flex items-center gap-2"
+                style={{
+                  background: '#f59e0b',
+                  color: '#0a0a0a',
+                  border: 'none',
+                  borderRadius: '0',
+                }}
+              >
+                <span>View Portfolio</span>
+                <Icon name="ArrowRightIcon" size={14} />
+              </motion.button>
+            </Link>
           </div>
         </ScrollReveal>
       </div>

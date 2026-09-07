@@ -3,54 +3,44 @@ import Header from '@/components/common/Header';
 import PortfolioInteractive from './components/PortfolioInteractive';
 
 export const metadata: Metadata = {
-  title: 'Portfolio - VishTech DevOps Portfolio',
+  title: 'Portfolio - Vishal Kushwah DevOps',
   description:
-    "Explore Vishal Kushwah's comprehensive DevOps project portfolio featuring cloud migration, automation, cost optimization, and infrastructure solutions with measurable business impact.",
+    "Explore Vishal Kushwah's DevOps project portfolio featuring cloud migration, automation, cost optimization, and infrastructure solutions.",
 };
 
 export default function PortfolioPage() {
   return (
-    <div className="min-h-screen-safe bg-background">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <Header />
 
       <main className="pt-20">
-        {/* Hero Section */}
-        <section className="relative py-16 lg:py-24 overflow-hidden">
-          {/* Background Effects */}
-          <div className="absolute inset-0 cyber-grid opacity-20"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent text-sm font-medium mb-6">
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-                <span>Project Showcase Arena</span>
+        {/* Hero */}
+        <section className="py-12 lg:py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-mono">
+            <div className="mb-10">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-[#f59e0b] text-xs">$</span>
+                <span className="text-[#666] text-xs">ls -la ./portfolio</span>
               </div>
-
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
-                DevOps Project
-                <span className="block text-gradient">Portfolio</span>
+              <h1 className="text-3xl lg:text-5xl font-bold text-[#e0e0e0] mb-3 font-display">
+                Project Portfolio
               </h1>
-
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
-                Explore real-world DevOps solutions that transformed infrastructure, optimized
-                costs, and delivered measurable business impact. Each project demonstrates technical
-                excellence and innovative problem-solving.
+              <p className="text-sm text-[#666] max-w-2xl mb-6">
+                Real-world DevOps solutions that transformed infrastructure, optimized costs, and
+                delivered measurable business impact.
               </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div className="flex items-center space-x-2 text-success">
-                  <div className="w-3 h-3 bg-success rounded-full"></div>
-                  <span className="text-sm font-medium">₹8.5L+ Total Cost Savings</span>
+              <div className="flex flex-wrap gap-4 text-[10px] uppercase tracking-wider">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#22c55e]" />
+                  <span className="text-[#666]">Rs.8.5L+ cost savings</span>
                 </div>
-                <div className="flex items-center space-x-2 text-accent">
-                  <div className="w-3 h-3 bg-accent rounded-full"></div>
-                  <span className="text-sm font-medium">99.9% Average Uptime</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#f59e0b]" />
+                  <span className="text-[#666]">99.9% avg uptime</span>
                 </div>
-                <div className="flex items-center space-x-2 text-warning">
-                  <div className="w-3 h-3 bg-warning rounded-full"></div>
-                  <span className="text-sm font-medium">48% Avg Performance Gain</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#3b82f6]" />
+                  <span className="text-[#666]">48% avg performance gain</span>
                 </div>
               </div>
             </div>
@@ -58,34 +48,41 @@ export default function PortfolioPage() {
         </section>
 
         {/* Portfolio Content */}
-        <section className="py-16 lg:py-24">
+        <section className="pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <PortfolioInteractive />
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="py-16 lg:py-24 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
+        {/* CTA */}
+        <section className="py-12 border-t border-[#222]">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center font-mono">
+            <h2 className="text-xl font-bold text-[#e0e0e0] mb-3">
               Ready to Transform Your Infrastructure?
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Let's discuss how these proven DevOps strategies can optimize your systems, reduce
-              costs, and improve reliability.
+            <p className="text-sm text-[#666] mb-6">
+              Let&apos;s discuss how these proven DevOps strategies can optimize your systems.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               <a
                 href="/contact"
-                className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-all duration-300 hover:shadow-neon magnetic-hover"
+                className="px-6 py-2.5 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold uppercase tracking-wider hover:bg-[#d97706] transition-colors"
               >
-                Start Your Project
+                start_project
+              </a>
+              <a
+                href="https://vishalkushwah.s3.us-east-1.amazonaws.com/vishalkushwah-exp-3.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-2.5 border border-[#f59e0b] text-[#f59e0b] text-xs font-bold uppercase tracking-wider hover:bg-[#f59e0b] hover:text-[#0a0a0a] transition-colors"
+              >
+                download_resume
               </a>
               <a
                 href="/experience"
-                className="px-8 py-4 bg-muted/30 text-foreground border border-border rounded-lg font-semibold text-lg hover:bg-muted/50 transition-colors"
+                className="px-6 py-2.5 border border-[#222] text-[#666] text-xs uppercase tracking-wider hover:border-[#444] hover:text-[#e0e0e0] transition-colors"
               >
-                View Experience
+                view_experience
               </a>
             </div>
           </div>

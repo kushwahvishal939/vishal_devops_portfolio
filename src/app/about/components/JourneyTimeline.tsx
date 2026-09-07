@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface TimelineEvent {
   year: string;
@@ -10,7 +12,7 @@ interface TimelineEvent {
   description: string;
   achievements: string[];
   technologies: string[];
-  type: 'experience' | 'education' | 'certification';
+  type: 'experience' | 'education';
   icon: string;
 }
 
@@ -18,259 +20,245 @@ interface JourneyTimelineProps {
   className?: string;
 }
 
+const timelineEvents: TimelineEvent[] = [
+  {
+    year: '2024',
+    title: 'DevOps Engineer',
+    company: 'XGrowth LLC',
+    description:
+      'Leading cloud transformation initiatives and implementing enterprise-scale DevOps practices.',
+    achievements: [
+      'Designed multi-region disaster recovery',
+      'Reduced infrastructure costs by 1.5L to 65K monthly',
+      'Implemented zero-downtime deployment strategies',
+      'Led team of 8 engineers across multiple projects',
+    ],
+    technologies: ['AWS', 'Kubernetes', 'Terraform', 'Jenkins', 'Prometheus'],
+    type: 'experience',
+    icon: 'BriefcaseIcon',
+  },
+  {
+    year: '2023',
+    title: 'Monitoring & Observability Engineer',
+    company: 'BlinkHealth',
+    description:
+      'Built scalable cloud infrastructure from ground up, focusing on cost optimization and security best practices.',
+    achievements: [
+      'Designed multi-region disaster recovery',
+      'Implemented Infrastructure as Code practices',
+      'Achieved SOC 2 compliance certification',
+    ],
+    technologies: ['AWS', 'Grafana', 'Icinga', 'EC2 Instances'],
+    type: 'experience',
+    icon: 'CloudIcon',
+  },
+  {
+    year: '2020',
+    title: 'B.Tech Civil',
+    company: 'Rajiv Gandhi Proudyogiki Vishwavidyalaya',
+    description:
+      'Graduated with honors, specializing in distributed systems and cloud computing architectures.',
+    achievements: [
+      'CGPA: 7.1/10',
+      'Published research on container orchestration',
+      'Led university DevOps club for 2 years',
+    ],
+    technologies: [
+      'Python',
+      'Linux',
+      'Networking',
+      'Database Systems',
+      'Cloud Computing',
+      'DevOps',
+    ],
+    type: 'education',
+    icon: 'AcademicCapIcon',
+  },
+];
+
 const JourneyTimeline = ({ className = '' }: JourneyTimelineProps) => {
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
 
-  const timelineEvents: TimelineEvent[] = [
-    {
-      year: '2024',
-      title: 'DevOps Enginer',
-      company: 'XGrowth LLC',
-      description:
-        'Leading cloud transformation initiatives and implementing enterprise-scale DevOps practices.',
-      achievements: [
-        'Designed multi-region disaster recovery',
-        'Reduced infrastructure costs by ₹1.5L to ₹65K monthly',
-        'Implemented zero-downtime deployment strategies',
-        'Led team of 8 engineers across multiple projects',
-      ],
-      technologies: ['AWS', 'Kubernetes', 'Terraform', 'Jenkins', 'Prometheus'],
-      type: 'experience',
-      icon: 'BriefcaseIcon',
-    },
-    // {
-    //   year: "2023",
-    //   title: "Microsoft Azure DevOps Expert",
-    //   company: "Microsoft Certification",
-    //   description: "Achieved AZ-400 certification demonstrating expertise in Azure DevOps solutions and practices.",
-    //   achievements: [
-    //     "Scored 95% on certification exam",
-    //     "Specialized in Azure Pipeline optimization",
-    //     "Recognized as Azure Community Contributor"
-    //   ],
-    //   technologies: ["Azure DevOps", "Azure Cloud", "ARM Templates", "PowerShell"],
-    //   type: "certification",
-    //   icon: "AcademicCapIcon"
-    // },
-    // {
-    //   year: "2022",
-    //   title: "DevOps Engineer",
-    //   company: "CloudTech Innovations",
-    //   description: "Designed and implemented CI/CD pipelines, automated infrastructure provisioning, and monitoring solutions.",
-    //   achievements: [
-    //     "Improved deployment frequency by 300%",
-    //     "Reduced mean time to recovery by 60%",
-    //     "Automated 90% of manual deployment processes"
-    //   ],
-    //   technologies: ["Docker", "GitLab CI", "Ansible", "ELK Stack", "Grafana"],
-    //   type: "experience",
-    //   icon: "CogIcon"
-    // },
-    {
-      year: '2023',
-      title: 'Monitoring & Observability Engineer',
-      company: 'BlinkHealth',
-      description:
-        'Built scalable cloud infrastructure from ground up, focusing on cost optimization and security best practices.',
-      achievements: [
-        'Designed multi-region disaster recovery',
-        'Implemented Infrastructure as Code practices',
-        'Achieved SOC 2 compliance certification',
-      ],
-      technologies: ['AWS', 'Grafana', 'Icinga', 'EC2 Instancea'],
-      type: 'experience',
-      icon: 'CloudIcon',
-    },
-    {
-      year: '2020',
-      title: 'B.Tech Civil',
-      company: 'Rajiv Gandhi Proudyogiki Vishwavidyalaya',
-      description:
-        'Graduated with honors, specializing in distributed systems and other cloud computing architectures.',
-      achievements: [
-        'CGPA: 7.1/10',
-        'Published research on container orchestration',
-        'Led university DevOps club for 2 years',
-      ],
-      technologies: [
-        'Python',
-        'Linux',
-        'Networking',
-        'Database Systems',
-        'Cloud Computing',
-        'DevOps',
-      ],
-      type: 'education',
-      icon: 'AcademicCapIcon',
-    },
-  ];
-
-  const getTypeColor = (type: string) => {
-    const colorMap = {
-      experience: 'accent',
-      education: 'primary',
-      certification: 'success',
-    };
-    return colorMap[type as keyof typeof colorMap] || 'accent';
-  };
-
-  const _getTypeIcon = (type: string) => {
-    const iconMap = {
-      experience: 'BriefcaseIcon',
-      education: 'AcademicCapIcon',
-      certification: 'ShieldCheckIcon',
-    };
-    return iconMap[type as keyof typeof iconMap] || 'BriefcaseIcon';
-  };
-
-  const toggleExpanded = (index: number) => {
-    setExpandedItem(expandedItem === index ? null : index);
-  };
+  const toggleExpanded = useCallback((index: number) => {
+    setExpandedItem((prev) => (prev === index ? null : index));
+  }, []);
 
   return (
-    <section className={`py-20 lg:py-32 relative ${className}`}>
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section
+      id="journey"
+      className={`py-20 lg:py-28 ${className}`}
+      style={{ background: '#0a0a0a' }}
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-warning/10 border border-warning/30 rounded-full px-4 py-2 text-sm font-medium text-warning mb-6">
-            <Icon name="ClockIcon" size={16} />
-            <span>Career Journey</span>
+        <ScrollReveal direction="up">
+          <div className="mb-12">
+            <p className="font-mono text-sm mb-3" style={{ color: '#666' }}>
+              $ git log --oneline career
+            </p>
+            <h2
+              className="text-3xl sm:text-4xl font-bold"
+              style={{
+                fontFamily: 'var(--font-display, "Space Grotesk", sans-serif)',
+                color: '#e0e0e0',
+              }}
+            >
+              Professional Path
+            </h2>
+            <p className="font-mono text-sm mt-3 max-w-2xl" style={{ color: '#999' }}>
+              A journey of continuous learning, innovation, and delivering measurable impact in
+              DevOps and cloud technologies.
+            </p>
           </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">My</span>{' '}
-            <span className="text-gradient">Professional Path</span>
-          </h2>
-
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            A journey of continuous learning, innovation, and delivering measurable impact in the
-            ever-evolving world of DevOps and cloud technologies.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Timeline */}
         <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-primary to-success"></div>
+          {/* Amber left border */}
+          <div className="absolute left-0 top-0 bottom-0 w-px" style={{ background: '#f59e0b' }} />
 
-          {/* Timeline Events */}
-          <div className="space-y-8">
-            {timelineEvents.map((event, index) => (
-              <div key={index} className="relative flex items-start space-x-6">
-                {/* Timeline Dot */}
-                <div
-                  className={`relative z-10 w-16 h-16 bg-card border-2 border-${getTypeColor(event.type)} rounded-2xl flex items-center justify-center glass-card`}
-                >
-                  <Icon
-                    name={event.icon as any}
-                    size={24}
-                    className={`text-${getTypeColor(event.type)}`}
-                  />
-                </div>
+          <div className="space-y-0">
+            {timelineEvents.map((event, index) => {
+              const isExpanded = expandedItem === index;
 
-                {/* Content Card */}
-                <div className="flex-1 pb-8">
-                  <div
-                    className="group p-6 glass-card rounded-2xl border border-border/50 hover:border-accent/30 transition-all duration-300 cursor-pointer"
-                    onClick={() => toggleExpanded(index)}
-                  >
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <span
-                            className={`px-3 py-1 bg-${getTypeColor(event.type)}/10 border border-${getTypeColor(event.type)}/30 rounded-full text-xs font-medium text-${getTypeColor(event.type)}`}
-                          >
-                            {event.year}
-                          </span>
-                          <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                            {event.type}
-                          </span>
-                        </div>
+              return (
+                <ScrollReveal key={index} direction="up" delay={index * 0.1}>
+                  <div className="relative pl-8">
+                    {/* Dot on the amber line */}
+                    <div
+                      className="absolute left-0 top-6 w-2 h-2 -translate-x-[3.5px]"
+                      style={{ background: '#f59e0b' }}
+                    />
 
-                        <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors duration-300">
-                          {event.title}
-                        </h3>
-
-                        <p className="text-primary font-medium">{event.company}</p>
-                      </div>
-
-                      <Icon
-                        name={expandedItem === index ? 'ChevronUpIcon' : 'ChevronDownIcon'}
-                        size={20}
-                        className="text-muted-foreground group-hover:text-accent transition-colors duration-300"
-                      />
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground leading-relaxed mb-4">
-                      {event.description}
-                    </p>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2">
-                      {event.technologies.slice(0, 5).map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-2 py-1 bg-muted/30 border border-border rounded text-xs text-muted-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {event.technologies.length > 5 && (
-                        <span className="px-2 py-1 text-xs text-accent">
-                          +{event.technologies.length - 5} more
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Expanded Content */}
-                    {expandedItem === index && (
-                      <div className="mt-6 pt-6 border-t border-border/50 space-y-4 animate-in slide-in-from-top duration-300">
-                        <div>
-                          <h4 className="text-sm font-semibold text-card-foreground mb-3">
-                            Key Achievements
-                          </h4>
-                          <ul className="space-y-2">
-                            {event.achievements.map((achievement, achIndex) => (
-                              <li key={achIndex} className="flex items-start space-x-2">
-                                <Icon
-                                  name="CheckCircleIcon"
-                                  size={16}
-                                  className="text-success mt-0.5 flex-shrink-0"
-                                />
-                                <span className="text-sm text-muted-foreground">{achievement}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {event.technologies.length > 5 && (
-                          <div>
-                            <h4 className="text-sm font-semibold text-card-foreground mb-3">
-                              All Technologies
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {event.technologies.map((tech, techIndex) => (
-                                <span
-                                  key={techIndex}
-                                  className="px-3 py-1 bg-muted/50 border border-border rounded-full text-xs text-muted-foreground hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all duration-300"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
+                    <div
+                      className="group cursor-pointer"
+                      style={{
+                        background: '#111',
+                        border: '1px solid #222',
+                        marginBottom: '2px',
+                      }}
+                      onClick={() => toggleExpanded(index)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          toggleExpanded(index);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isExpanded}
+                    >
+                      {/* Header */}
+                      <div className="p-5 sm:p-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-2">
+                              <span
+                                className="font-mono text-xs font-bold"
+                                style={{ color: '#f59e0b' }}
+                              >
+                                {event.year}
+                              </span>
+                              <span
+                                className="font-mono text-xs uppercase tracking-wider"
+                                style={{ color: '#666' }}
+                              >
+                                {event.type}
+                              </span>
                             </div>
+
+                            <h3
+                              className="font-mono text-base font-semibold mb-1"
+                              style={{ color: '#e0e0e0' }}
+                            >
+                              {event.title}
+                            </h3>
+
+                            <p className="font-mono text-sm" style={{ color: '#f59e0b' }}>
+                              {event.company}
+                            </p>
                           </div>
-                        )}
+
+                          <Icon
+                            name={isExpanded ? 'ChevronUpIcon' : 'ChevronDownIcon'}
+                            size={16}
+                            className="shrink-0 mt-1"
+                            style={{ color: '#666' }}
+                          />
+                        </div>
+
+                        <p
+                          className="font-mono text-sm leading-relaxed mt-3"
+                          style={{ color: '#999' }}
+                        >
+                          {event.description}
+                        </p>
+
+                        {/* Technologies - always visible */}
+                        <div className="flex flex-wrap gap-1 mt-4">
+                          {event.technologies.map((tech) => (
+                            <span
+                              key={tech}
+                              className="font-mono text-xs px-2 py-0.5"
+                              style={{
+                                background: '#0a0a0a',
+                                color: '#e0e0e0',
+                                border: '1px solid #222',
+                              }}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    )}
+
+                      {/* Expanded: Achievements */}
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div
+                              className="px-5 sm:px-6 pb-5 sm:pb-6 pt-4"
+                              style={{ borderTop: '1px solid #222' }}
+                            >
+                              <p
+                                className="font-mono text-xs uppercase tracking-wider mb-3"
+                                style={{ color: '#666' }}
+                              >
+                                Key Achievements
+                              </p>
+                              <ul className="space-y-2">
+                                {event.achievements.map((achievement, i) => (
+                                  <li key={i} className="flex items-start gap-2">
+                                    <span
+                                      className="font-mono text-xs mt-0.5 shrink-0"
+                                      style={{ color: '#22c55e' }}
+                                    >
+                                      +
+                                    </span>
+                                    <span
+                                      className="font-mono text-sm"
+                                      style={{ color: '#e0e0e0' }}
+                                    >
+                                      {achievement}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -4,13 +4,6 @@ import React from 'react';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
-interface Stat {
-  label: string;
-  value: string;
-  icon: string;
-  color: string;
-}
-
 interface ProjectStatsProps {
   totalProjects: number;
   completedProjects: number;
@@ -24,48 +17,49 @@ const ProjectStats = ({
   totalCostSavings,
   averagePerformanceGain,
 }: ProjectStatsProps) => {
-  const stats: Stat[] = [
+  const stats = [
     {
-      label: 'Total Projects',
+      label: 'TOTAL_PROJECTS',
       value: totalProjects.toString(),
       icon: 'FolderIcon',
-      color: 'text-accent',
+      prefix: '>>',
     },
     {
-      label: 'Completed',
+      label: 'COMPLETED',
       value: completedProjects.toString(),
       icon: 'CheckCircleIcon',
-      color: 'text-success',
+      prefix: '[OK]',
     },
     {
-      label: 'Cost Savings',
+      label: 'COST_SAVINGS',
       value: totalCostSavings,
       icon: 'CurrencyRupeeIcon',
-      color: 'text-warning',
+      prefix: '$$',
     },
     {
-      label: 'Avg Performance',
+      label: 'AVG_PERF_GAIN',
       value: averagePerformanceGain,
       icon: 'ChartBarIcon',
-      color: 'text-primary',
+      prefix: '++',
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#222]">
       {stats.map((stat, index) => (
-        <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-          <div className="p-4 bg-card border border-border rounded-xl hover:shadow-premium transition-all duration-300 group">
-            <div className="flex items-center space-x-3">
-              <div
-                className={`p-2 rounded-lg bg-muted/30 group-hover:bg-muted/50 transition-colors`}
-              >
-                <Icon name={stat.icon as any} size={20} className={stat.color} />
-              </div>
-              <div>
-                <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
-              </div>
+        <ScrollReveal key={index} direction="up" delay={index * 0.08}>
+          <div className="bg-[#111] p-5 font-mono group hover:bg-[#161616] transition-colors duration-150">
+            <div className="flex items-center gap-2 mb-3">
+              <Icon name={stat.icon as any} size={14} className="text-[#666]" />
+              <span className="text-[10px] uppercase tracking-widest text-[#666]">
+                {stat.label}
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[#f59e0b] text-xs font-mono">{stat.prefix}</span>
+              <span className="text-[#e0e0e0] text-2xl font-mono font-bold tracking-tight">
+                {stat.value}
+              </span>
             </div>
           </div>
         </ScrollReveal>

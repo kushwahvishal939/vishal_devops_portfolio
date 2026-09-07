@@ -4,9 +4,8 @@ import React, { useEffect, useState } from 'react';
 import ContactHero from './ContactHero';
 import ContactForm from './ContactForm';
 import ContactMethods from './ContactMethods';
-import TestimonialsSection from './TestimonialsSection';
 import FAQSection from './FAQSection';
-import PageTransition from '@/components/animations/PageTransition';
+import Icon from '@/components/ui/AppIcon';
 
 interface ContactInteractiveProps {
   className?: string;
@@ -21,16 +20,15 @@ const ContactInteractive = ({ className = '' }: ContactInteractiveProps) => {
 
   if (!isHydrated) {
     return (
-      <div className={`min-h-screen-safe bg-background ${className}`}>
+      <div className={`min-h-screen bg-[#0a0a0a] ${className}`}>
         <div className="pt-20">
-          {/* Loading skeleton */}
-          <div className="animate-pulse">
-            <div className="h-96 bg-muted/20 mb-8"></div>
-            <div className="max-w-4xl mx-auto px-4 space-y-8">
-              <div className="h-64 bg-muted/20 rounded-lg"></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="h-32 bg-muted/20 rounded-lg"></div>
-                <div className="h-32 bg-muted/20 rounded-lg"></div>
+          <div className="animate-pulse font-mono">
+            <div className="h-72 bg-[#111] border-b border-[#222]" />
+            <div className="max-w-4xl mx-auto px-4 space-y-4 mt-8">
+              <div className="h-64 bg-[#111] border border-[#222]" />
+              <div className="grid grid-cols-2 gap-px bg-[#222]">
+                <div className="h-32 bg-[#111]" />
+                <div className="h-32 bg-[#111]" />
               </div>
             </div>
           </div>
@@ -40,100 +38,102 @@ const ContactInteractive = ({ className = '' }: ContactInteractiveProps) => {
   }
 
   return (
-    <PageTransition>
-      <div className={`min-h-screen-safe bg-background ${className}`}>
-        <div className="pt-20">
-          {/* Hero Section */}
-          <ContactHero />
+    <div className={`min-h-screen bg-[#0a0a0a] ${className}`}>
+      <div className="pt-20">
+        {/* Hero */}
+        <ContactHero />
 
-          {/* Main Content Grid */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {/* Contact Form - Takes 2 columns */}
-              <div className="lg:col-span-2">
-                <ContactForm />
+        {/* Main content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Contact Form */}
+            <div className="lg:col-span-2">
+              <ContactForm />
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-4 font-mono">
+              {/* Quick contact */}
+              <div className="border border-[#222] bg-[#111]">
+                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#222] bg-[#0d0d0d]">
+                  <span className="w-2 h-2 bg-[#f59e0b]" />
+                  <span className="text-[10px] uppercase tracking-widest text-[#666]">
+                    quick_contact
+                  </span>
+                </div>
+                <div className="divide-y divide-[#1a1a1a]">
+                  <a
+                    href="mailto:kushwahvishal939@gmail.com"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#161616] transition-colors duration-100"
+                  >
+                    <span className="text-[#f59e0b] text-xs">@</span>
+                    <div>
+                      <div className="text-xs text-[#e0e0e0]">Email</div>
+                      <div className="text-[10px] text-[#444]">kushwahvishal939@gmail.com</div>
+                    </div>
+                  </a>
+                  <a
+                    href="tel:+918357862782"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#161616] transition-colors duration-100"
+                  >
+                    <Icon name="PhoneIcon" size={12} className="text-[#f59e0b]" />
+                    <div>
+                      <div className="text-xs text-[#e0e0e0]">Phone</div>
+                      <div className="text-[10px] text-[#444]">+918357862782</div>
+                    </div>
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/vishal-kushwah-devops"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#161616] transition-colors duration-100"
+                  >
+                    <span className="text-[#f59e0b] text-xs font-bold">in</span>
+                    <div>
+                      <div className="text-xs text-[#e0e0e0]">LinkedIn</div>
+                      <div className="text-[10px] text-[#444]">Professional Network</div>
+                    </div>
+                  </a>
+                </div>
               </div>
 
-              {/* Contact Methods - Takes 1 column */}
-              <div className="space-y-8">
-                <div className="glass-card p-6">
-                  <h3 className="text-xl font-bold mb-4">Quick Contact</h3>
-                  <div className="space-y-4">
-                    <a
-                      href="mailto:kushwahvishal939@gmail.com"
-                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/20 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                        <span className="text-accent text-sm">@</span>
-                      </div>
-                      <div>
-                        <div className="font-medium">Email</div>
-                        <div className="text-sm text-muted-foreground">
-                          kushwahvishal939@gmail.com
-                        </div>
-                      </div>
-                    </a>
-
-                    <a
-                      href="tel:+919876543210"
-                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/20 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <span className="text-primary text-sm">📞</span>
-                      </div>
-                      <div>
-                        <div className="font-medium">Phone</div>
-                        <div className="text-sm text-muted-foreground">+918357862782</div>
-                      </div>
-                    </a>
-
-                    <a
-                      href="https://linkedin.com/in/vishal-kushwah-devops"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/20 transition-colors"
-                    >
-                      <div className="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
-                        <span className="text-success text-sm">in</span>
-                      </div>
-                      <div>
-                        <div className="font-medium">LinkedIn</div>
-                        <div className="text-sm text-muted-foreground">Professional Network</div>
-                      </div>
-                    </a>
-                  </div>
+              {/* Availability */}
+              <div className="border border-[#222] bg-[#111]">
+                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#222] bg-[#0d0d0d]">
+                  <span className="w-2 h-2 bg-[#22c55e] animate-pulse" />
+                  <span className="text-[10px] uppercase tracking-widest text-[#666]">
+                    availability
+                  </span>
                 </div>
-
-                {/* Availability Status */}
-                <div className="glass-card p-6">
-                  <h3 className="text-xl font-bold mb-4">Current Availability</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-                      <span className="text-success font-medium">Available for New Projects</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      <p>• Next available start date: December 2024</p>
-                      <p>• Response time: &lt; 24 hours</p>
-                      <p>• Consultation calls: Mon-Fri 9AM-6PM IST</p>
-                    </div>
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[#22c55e] text-xs font-bold">[OPEN]</span>
+                    <span className="text-[#22c55e] text-xs">Available for New Projects</span>
+                  </div>
+                  <div className="space-y-1.5 text-[11px] text-[#666]">
+                    <p>
+                      <span className="text-[#444]">next_start:</span> December 2024
+                    </p>
+                    <p>
+                      <span className="text-[#444]">response:</span> &lt; 24 hours
+                    </p>
+                    <p>
+                      <span className="text-[#444]">hours:</span> Mon-Fri 9AM-6PM IST
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Contact Methods Section */}
-          <ContactMethods />
-
-          {/* Testimonials Section */}
-          <TestimonialsSection />
-
-          {/* FAQ Section */}
-          <FAQSection />
         </div>
+
+        {/* Contact Methods */}
+        <ContactMethods />
+
+        {/* FAQ */}
+        <FAQSection />
       </div>
-    </PageTransition>
+    </div>
   );
 };
 

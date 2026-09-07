@@ -1,51 +1,37 @@
 'use client';
 
-import React from 'react';
 import { useRouter } from 'next/navigation';
-import Icon from '@/components/ui/AppIcon';
 
 const NotFound = () => {
   const router = useRouter();
 
-  const handleGoHome = () => {
-    router?.push('/');
-  };
-
-  const handleGoBack = () => {
-    if (typeof window !== 'undefined') {
-      window.history?.back();
-    }
-  };
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a0a0a] p-4 font-mono">
       <div className="text-center max-w-md">
-        <div className="flex justify-center mb-6">
-          <div className="relative">
-            <h1 className="text-9xl font-bold text-primary opacity-20">404</h1>
-          </div>
+        <div className="mb-6">
+          <span className="text-8xl font-bold text-[#f59e0b] opacity-20">404</span>
         </div>
 
-        <h2 className="text-2xl font-medium text-onBackground mb-2">Page Not Found</h2>
-        <p className="text-onBackground/70 mb-8">
-          The page you're looking for doesn't exist. Let's get you back!
-        </p>
+        <div className="border border-[#222] bg-[#111] p-6 mb-8">
+          <p className="text-[#f59e0b] text-sm mb-2">$ cd /requested-page</p>
+          <p className="text-[#ef4444] text-xs mb-4">
+            bash: cd: /requested-page: No such file or directory
+          </p>
+          <p className="text-[#666] text-xs">The page you are looking for does not exist.</p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex gap-3 justify-center">
           <button
-            onClick={handleGoBack}
-            className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200"
+            onClick={() => window.history?.back()}
+            className="px-4 py-2 border border-[#222] text-[#e0e0e0] text-xs uppercase tracking-wider hover:border-[#f59e0b] hover:text-[#f59e0b] transition-colors"
           >
-            <Icon name="ArrowLeftIcon" size={16} />
-            Go Back
+            go_back
           </button>
-
           <button
-            onClick={handleGoHome}
-            className="inline-flex items-center justify-center gap-2 border border-border bg-background text-foreground px-6 py-3 rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
+            onClick={() => router?.push('/')}
+            className="px-4 py-2 bg-[#f59e0b] text-[#0a0a0a] text-xs uppercase tracking-wider font-bold hover:bg-[#d97706] transition-colors"
           >
-            <Icon name="HomeIcon" size={16} />
-            Back to Home
+            go_home
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
-import React from 'react';
-import Icon from '@/components/ui/AppIcon';
+'use client';
+
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface JourneyMilestone {
   year: string;
@@ -15,70 +16,60 @@ interface CareerJourneyProps {
 
 const CareerJourney = ({ milestones }: CareerJourneyProps) => {
   return (
-    <div className="glass-card p-6 lg:p-8">
-      <div className="flex items-center space-x-3 mb-8">
-        <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center">
-          <Icon name="MapIcon" size={20} className="text-white" />
-        </div>
-        <div>
-          <h3 className="text-2xl font-bold text-gradient">Career Journey</h3>
-          <p className="text-muted-foreground">From maintaining systems to revolutionizing them</p>
-        </div>
+    <div className="terminal-card p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="text-[#f59e0b] font-mono text-sm">$</span>
+        <h3 className="text-lg font-mono font-bold text-[#e0e0e0]">career --history</h3>
       </div>
 
       <div className="relative">
-        {/* Journey Path */}
-        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent/30 via-primary to-accent"></div>
+        {/* Vertical line */}
+        <div className="absolute left-[7px] top-2 bottom-2 w-px bg-[#f59e0b]/20" />
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {milestones.map((milestone, index) => (
-            <div key={index} className="relative flex items-start space-x-6">
-              {/* Milestone Node */}
-              <div
-                className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center border-4 border-background ${
-                  milestone.highlight
-                    ? 'bg-gradient-to-br from-accent to-primary shadow-neon'
-                    : 'bg-muted'
-                }`}
-              >
-                <Icon
-                  name={milestone.icon as any}
-                  size={20}
-                  className={milestone.highlight ? 'text-white' : 'text-muted-foreground'}
-                />
-                {milestone.highlight && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-full animate-ping opacity-30"></div>
-                )}
-              </div>
-
-              {/* Milestone Content */}
-              <div className="flex-1 pb-8">
-                <div className="flex items-center space-x-3 mb-2">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-bold ${
-                      milestone.highlight
-                        ? 'bg-accent/20 text-accent'
-                        : 'bg-muted/50 text-muted-foreground'
-                    }`}
-                  >
-                    {milestone.year}
-                  </span>
-                  {milestone.highlight && (
-                    <span className="px-2 py-1 bg-success/20 text-success rounded-full text-xs font-medium">
-                      Current
-                    </span>
-                  )}
-                </div>
-                <h4
-                  className={`text-lg font-semibold mb-2 ${
-                    milestone.highlight ? 'text-gradient' : 'text-foreground'
+            <ScrollReveal key={index} direction="left" delay={index * 0.1}>
+              <div className="relative pl-8">
+                {/* Node */}
+                <div
+                  className={`absolute left-0 top-1 w-[15px] h-[15px] border flex items-center justify-center ${
+                    milestone.highlight
+                      ? 'border-[#22c55e] bg-[#22c55e]/10'
+                      : 'border-[#f59e0b]/40 bg-[#0a0a0a]'
                   }`}
                 >
-                  {milestone.title}
-                </h4>
-                <p className="text-muted-foreground leading-relaxed">{milestone.description}</p>
+                  <div
+                    className={`w-1.5 h-1.5 ${
+                      milestone.highlight ? 'bg-[#22c55e]' : 'bg-[#f59e0b]/60'
+                    }`}
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="pb-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className={`text-xs font-mono font-bold ${
+                        milestone.highlight ? 'text-[#22c55e]' : 'text-[#f59e0b]'
+                      }`}
+                    >
+                      {milestone.year}
+                    </span>
+                    {milestone.highlight && (
+                      <span className="text-[10px] font-mono text-[#22c55e] border border-[#22c55e]/30 px-1.5 py-0.5">
+                        NOW
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="text-sm font-mono font-bold text-[#e0e0e0] mb-1">
+                    {milestone.title}
+                  </h4>
+                  <p className="text-xs font-mono text-[#666] leading-relaxed">
+                    {milestone.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -20,20 +20,18 @@ const AboutInteractive = ({ className = '' }: AboutInteractiveProps) => {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen-safe bg-background">
-        <div className="animate-pulse">
-          <div className="h-screen bg-muted/20"></div>
-          <div className="h-96 bg-muted/10"></div>
-          <div className="h-96 bg-muted/20"></div>
-          <div className="h-96 bg-muted/10"></div>
-        </div>
+      <div className="min-h-screen" style={{ background: '#0a0a0a' }}>
+        <div className="h-screen" />
+        <div className="h-96" />
+        <div className="h-96" />
+        <div className="h-96" />
       </div>
     );
   }
 
   return (
     <PageTransition>
-      <div className={`min-h-screen-safe bg-background ${className}`}>
+      <div className={`min-h-screen ${className}`} style={{ background: '#0a0a0a' }}>
         <HeroSection />
         <PhilosophySection />
         <ExpertiseSection />

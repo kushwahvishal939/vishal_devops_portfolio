@@ -5,73 +5,51 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '@/components/ui/AppIcon';
-import MagneticButton from '@/components/animations/MagneticButton';
 
-interface HeaderProps {
-  className?: string;
-}
-
-const Header = ({ className = '' }: HeaderProps) => {
+const Header = ({ className = '' }: { className?: string }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const navigationItems = [
-    { name: 'Home', href: '/homepage', icon: 'HomeIcon' },
-    { name: 'About', href: '/about', icon: 'UserIcon' },
-    { name: 'Skills', href: '/skills', icon: 'CogIcon' },
-    { name: 'Experience', href: '/experience', icon: 'BriefcaseIcon' },
-    { name: 'Portfolio', href: '/portfolio', icon: 'FolderIcon' },
+    { name: 'Home', href: '/homepage' },
+    { name: 'About', href: '/about' },
+    { name: 'Skills', href: '/skills' },
+    { name: 'Experience', href: '/experience' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Contact', href: '/contact' },
   ];
 
-  const moreItems = [{ name: 'Contact', href: '/contact', icon: 'EnvelopeIcon' }];
-
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isActiveRoute = (href: string) => {
-    return pathname === href;
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const isActiveRoute = (href: string) => pathname === href;
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-nav shadow-premium' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+        isScrolled ? 'glass-nav' : 'bg-transparent'
       } ${className}`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
-          <MagneticButton>
-            <Link
-              href="/homepage"
-              className="flex items-center space-x-3 group transition-smooth focus-ring rounded-lg cursor-pointer"
-            >
-              <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center transform-3d group-hover:scale-110 transition-smooth">
-                  <span className="text-background font-bold text-lg font-mono">V</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-accent to-primary rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-smooth"></div>
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-gradient">Vishal</h1>
-                <p className="text-xs text-muted-foreground font-mono">DevOps Portfolio</p>
-              </div>
-            </Link>
-          </MagneticButton>
+          <Link href="/homepage" className="flex items-center space-x-3 group">
+            <div className="w-8 h-8 border border-primary flex items-center justify-center">
+              <span className="text-primary font-bold text-sm">VK</span>
+            </div>
+            <div className="hidden sm:block">
+              <span className="text-sm font-display font-bold text-foreground">
+                vishal<span className="text-primary">_</span>kushwah
+              </span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
@@ -79,84 +57,43 @@ const Header = ({ className = '' }: HeaderProps) => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-smooth focus-ring group ${
+                className={`relative px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors ${
                   isActiveRoute(item.href)
-                    ? 'text-accent'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                <div className="flex items-center space-x-2">
-                  <Icon
-                    name={item.icon as any}
-                    size={16}
-                    className={`transition-smooth ${
-                      isActiveRoute(item.href) ? 'text-accent' : 'group-hover:text-foreground'
-                    }`}
-                  />
-                  <span>{item.name}</span>
-                </div>
+                {isActiveRoute(item.href) && <span className="text-primary mr-1">&gt;</span>}
+                {item.name}
                 {isActiveRoute(item.href) && (
                   <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-accent rounded-full"
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 right-0 h-px bg-primary"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
               </Link>
             ))}
-
-            {/* More Dropdown */}
-            <div className="relative group">
-              <button
-                className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth focus-ring flex items-center space-x-2"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <Icon name="EllipsisHorizontalIcon" size={16} />
-                <span>More</span>
-              </button>
-
-              <div className="absolute top-full right-0 mt-2 w-48 bg-popover border border-border rounded-lg shadow-premium-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
-                <div className="py-2">
-                  {moreItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center space-x-3 px-4 py-2 text-sm transition-smooth ${
-                        isActiveRoute(item.href)
-                          ? 'text-accent bg-accent/10'
-                          : 'text-popover-foreground hover:bg-muted/50'
-                      }`}
-                    >
-                      <Icon name={item.icon as any} size={16} />
-                      <span>{item.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <MagneticButton>
-              <Link
-                href="/contact"
-                className="px-6 py-2.5 bg-[#00F5FF] text-black rounded-lg font-bold text-sm transition-smooth hover:neon-glow-cyan focus-ring"
-              >
-                Hire Me
-              </Link>
-            </MagneticButton>
+          {/* CTA */}
+          <div className="hidden lg:block">
+            <Link
+              href="/contact"
+              className="px-4 py-1.5 border border-primary text-primary text-xs font-mono uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-colors"
+            >
+              Hire Me
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            onClick={toggleMobileMenu}
-            className="lg:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth focus-ring"
-            aria-label="Toggle mobile menu"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
-            <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
+            <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={20} />
           </button>
         </div>
       </div>
@@ -165,52 +102,38 @@ const Header = ({ className = '' }: HeaderProps) => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden"
+            className="lg:hidden border-t border-border bg-background"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2 }}
           >
-            <div className="bg-background/95 backdrop-blur-md border-t border-border">
-              <nav className="px-4 py-4 space-y-2">
-                {[...navigationItems, ...moreItems].map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-smooth ${
-                        isActiveRoute(item.href)
-                          ? 'text-accent bg-accent/10'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                      }`}
-                    >
-                      <Icon name={item.icon as any} size={20} />
-                      <span>{item.name}</span>
-                    </Link>
-                  </motion.div>
-                ))}
-
-                <motion.div
-                  className="pt-4 border-t border-border"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+            <nav className="px-4 py-3 space-y-1">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
+                    isActiveRoute(item.href)
+                      ? 'text-primary'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
-                  <Link
-                    href="/contact"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-sm transition-smooth hover:shadow-neon"
-                  >
-                    Hire Me
-                  </Link>
-                </motion.div>
-              </nav>
-            </div>
+                  {isActiveRoute(item.href) && <span className="text-primary mr-1">&gt;</span>}
+                  {item.name}
+                </Link>
+              ))}
+              <div className="pt-3 border-t border-border">
+                <Link
+                  href="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-center px-4 py-2 border border-primary text-primary text-xs font-mono uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  Hire Me
+                </Link>
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

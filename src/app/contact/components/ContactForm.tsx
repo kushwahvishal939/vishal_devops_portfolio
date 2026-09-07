@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import MagneticHover from '@/components/animations/MagneticHover';
 
 interface FormData {
   name: string;
@@ -93,14 +92,16 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
+  const [submitError, setSubmitError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
 
     if (!validateForm()) {
       return;
@@ -108,9 +109,20 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSubmitError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
       setIsSubmitted(true);
       setFormData({
         name: '',
@@ -121,244 +133,254 @@ const ContactForm = ({ className = '' }: ContactFormProps) => {
         timeline: '',
         message: '',
       });
-    } catch (error) {
-      console.error('Form submission error:', error);
+    } catch {
+      setSubmitError('Network error. Please try again or email directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const inputClasses = (fieldName: string) =>
+    `w-full px-4 py-3 bg-[#0d0d0d] border text-[#e0e0e0] text-xs font-mono placeholder-[#333] focus:outline-none focus:border-[#f59e0b] transition-colors duration-100 ${
+      errors[fieldName] ? 'border-red-500/60' : 'border-[#222]'
+    }`;
+
+  const labelClasses = 'block text-[10px] uppercase tracking-widest text-[#666] mb-2 font-mono';
+
   if (isSubmitted) {
     return (
-      <div className={`glass-card p-8 text-center ${className}`}>
-        <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Icon name="CheckCircleIcon" size={32} className="text-success" />
+      <div className={`border border-[#222] bg-[#111] p-8 text-center font-mono ${className}`}>
+        <div className="w-12 h-12 border border-[#22c55e] flex items-center justify-center mx-auto mb-6">
+          <Icon name="CheckCircleIcon" size={24} className="text-[#22c55e]" />
         </div>
-        <h3 className="text-2xl font-bold mb-4">Message Sent Successfully!</h3>
-        <p className="text-muted-foreground mb-6">
-          Thank you for reaching out! I'll review your project details and get back to you within 24
-          hours.
+        <h3 className="text-xl font-bold text-[#e0e0e0] mb-3">message sent successfully</h3>
+        <p className="text-[#666] text-xs mb-6">
+          I will review your project details and respond within 24 hours.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
-          className="px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold transition-smooth hover:shadow-neon focus-ring"
+          className="px-6 py-2.5 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold hover:bg-[#d97706] transition-colors duration-100"
         >
-          Send Another Message
+          send --new
         </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`glass-card p-8 space-y-6 ${className}`}>
-      <ScrollReveal direction="up">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-2">Start Your Project</h2>
-          <p className="text-muted-foreground">
-            Tell me about your DevOps challenges and let's discuss how I can help
-          </p>
-        </div>
-      </ScrollReveal>
+    <form
+      onSubmit={handleSubmit}
+      className={`border border-[#222] bg-[#111] font-mono ${className}`}
+    >
+      {/* Form header */}
+      <div className="flex items-center gap-2 px-6 py-3 border-b border-[#222] bg-[#0d0d0d]">
+        <span className="w-2 h-2 bg-[#f59e0b]" />
+        <span className="text-[10px] uppercase tracking-widest text-[#666]">
+          new_project_inquiry
+        </span>
+      </div>
 
-      {/* Name and Email Row */}
-      <ScrollReveal direction="up" delay={0.1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="p-6 space-y-5">
+        <ScrollReveal direction="up">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-[#e0e0e0] mb-1">Start Your Project</h2>
+            <p className="text-[#444] text-xs">describe your DevOps challenges</p>
+          </div>
+        </ScrollReveal>
+
+        {/* Name and Email */}
+        <ScrollReveal direction="up" delay={0.1}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="name" className={labelClasses}>
+                full_name *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={inputClasses('name')}
+                placeholder="John Doe"
+              />
+              {errors.name && (
+                <p className="text-red-500/80 text-[10px] mt-1.5 flex items-center gap-1">
+                  <span>!!</span> {errors.name}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="email" className={labelClasses}>
+                email *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={inputClasses('email')}
+                placeholder="john@company.com"
+              />
+              {errors.email && (
+                <p className="text-red-500/80 text-[10px] mt-1.5 flex items-center gap-1">
+                  <span>!!</span> {errors.email}
+                </p>
+              )}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Company */}
+        <ScrollReveal direction="up" delay={0.15}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-2">
-              Full Name *
+            <label htmlFor="company" className={labelClasses}>
+              company
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="company"
+              name="company"
+              value={formData.company}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-                errors.name ? 'border-error' : 'border-border'
-              }`}
-              placeholder="John Doe"
+              className={inputClasses('company')}
+              placeholder="Your Company Name"
             />
-            {errors.name && (
-              <p className="text-error text-sm mt-1 flex items-center">
-                <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-                {errors.name}
-              </p>
-            )}
           </div>
+        </ScrollReveal>
 
+        {/* Project Type */}
+        <ScrollReveal direction="up" delay={0.2}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-                errors.email ? 'border-error' : 'border-border'
-              }`}
-              placeholder="john@company.com"
-            />
-            {errors.email && (
-              <p className="text-error text-sm mt-1 flex items-center">
-                <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-                {errors.email}
-              </p>
-            )}
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Company */}
-      <ScrollReveal direction="up" delay={0.2}>
-        <div>
-          <label htmlFor="company" className="block text-sm font-medium mb-2">
-            Company / Organization
-          </label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={formData.company}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
-            placeholder="Your Company Name"
-          />
-        </div>
-      </ScrollReveal>
-
-      {/* Project Type */}
-      <ScrollReveal direction="up" delay={0.3}>
-        <div>
-          <label htmlFor="projectType" className="block text-sm font-medium mb-2">
-            Project Type *
-          </label>
-          <select
-            id="projectType"
-            name="projectType"
-            value={formData.projectType}
-            onChange={handleInputChange}
-            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth ${
-              errors.projectType ? 'border-error' : 'border-border'
-            }`}
-          >
-            <option value="">Select a project type</option>
-            {projectTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          {errors.projectType && (
-            <p className="text-error text-sm mt-1 flex items-center">
-              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-              {errors.projectType}
-            </p>
-          )}
-        </div>
-      </ScrollReveal>
-
-      {/* Budget and Timeline Row */}
-      <ScrollReveal direction="up" delay={0.4}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="budget" className="block text-sm font-medium mb-2">
-              Project Budget
+            <label htmlFor="projectType" className={labelClasses}>
+              project_type *
             </label>
             <select
-              id="budget"
-              name="budget"
-              value={formData.budget}
+              id="projectType"
+              name="projectType"
+              value={formData.projectType}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
+              className={inputClasses('projectType')}
             >
-              <option value="">Select budget range</option>
-              {budgetRanges.map((range) => (
-                <option key={range} value={range}>
-                  {range}
+              <option value="">-- select type --</option>
+              {projectTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
                 </option>
               ))}
             </select>
+            {errors.projectType && (
+              <p className="text-red-500/80 text-[10px] mt-1.5 flex items-center gap-1">
+                <span>!!</span> {errors.projectType}
+              </p>
+            )}
           </div>
+        </ScrollReveal>
 
+        {/* Budget and Timeline */}
+        <ScrollReveal direction="up" delay={0.25}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="budget" className={labelClasses}>
+                budget_range
+              </label>
+              <select
+                id="budget"
+                name="budget"
+                value={formData.budget}
+                onChange={handleInputChange}
+                className={inputClasses('budget')}
+              >
+                <option value="">-- select budget --</option>
+                {budgetRanges.map((range) => (
+                  <option key={range} value={range}>
+                    {range}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="timeline" className={labelClasses}>
+                timeline
+              </label>
+              <select
+                id="timeline"
+                name="timeline"
+                value={formData.timeline}
+                onChange={handleInputChange}
+                className={inputClasses('timeline')}
+              >
+                <option value="">-- select timeline --</option>
+                {timelineOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Message */}
+        <ScrollReveal direction="up" delay={0.3}>
           <div>
-            <label htmlFor="timeline" className="block text-sm font-medium mb-2">
-              Project Timeline
+            <label htmlFor="message" className={labelClasses}>
+              project_description *
             </label>
-            <select
-              id="timeline"
-              name="timeline"
-              value={formData.timeline}
+            <textarea
+              id="message"
+              name="message"
+              rows={6}
+              value={formData.message}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
-            >
-              <option value="">Select timeline</option>
-              {timelineOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Message */}
-      <ScrollReveal direction="up" delay={0.5}>
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium mb-2">
-            Project Description *
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            rows={6}
-            value={formData.message}
-            onChange={handleInputChange}
-            className={`w-full px-4 py-3 bg-input border rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth resize-none ${
-              errors.message ? 'border-error' : 'border-border'
-            }`}
-            placeholder="Describe your project requirements, current challenges, and what you're looking to achieve..."
-          />
-          {errors.message && (
-            <p className="text-error text-sm mt-1 flex items-center">
-              <Icon name="ExclamationCircleIcon" size={16} className="mr-1" />
-              {errors.message}
+              className={`${inputClasses('message')} resize-none`}
+              placeholder="Describe your project requirements, current challenges, and what you're looking to achieve..."
+            />
+            {errors.message && (
+              <p className="text-red-500/80 text-[10px] mt-1.5 flex items-center gap-1">
+                <span>!!</span> {errors.message}
+              </p>
+            )}
+            <p className="text-[10px] text-[#333] mt-1.5 text-right">
+              {formData.message.length}/500
             </p>
-          )}
-          <p className="text-xs text-muted-foreground mt-1">
-            {formData.message.length}/500 characters
-          </p>
-        </div>
-      </ScrollReveal>
+          </div>
+        </ScrollReveal>
 
-      {/* Submit Button */}
-      <MagneticHover>
+        {/* Error message */}
+        {submitError && (
+          <div className="border border-red-500/30 bg-red-500/5 p-3 text-red-400 text-xs flex items-start gap-2">
+            <span className="shrink-0">!!</span>
+            <span>{submitError}</span>
+          </div>
+        )}
+
+        {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-semibold text-lg transition-smooth hover:shadow-neon focus-ring disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-3.5 bg-[#f59e0b] text-[#0a0a0a] text-xs font-bold uppercase tracking-wider hover:bg-[#d97706] transition-colors duration-100 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
-            <div className="flex items-center justify-center">
-              <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin mr-2"></div>
-              Sending Message...
-            </div>
+            <span className="flex items-center justify-center gap-2">
+              <span className="w-3 h-3 border-2 border-[#0a0a0a] border-t-transparent animate-spin" />
+              submitting...
+            </span>
           ) : (
-            <div className="flex items-center justify-center">
-              <Icon name="PaperAirplaneIcon" size={20} className="mr-2" />
-              Send Project Details
-            </div>
+            <span className="flex items-center justify-center gap-2">
+              <Icon name="PaperAirplaneIcon" size={14} />
+              submit --project-details
+            </span>
           )}
         </button>
-      </MagneticHover>
 
-      <p className="text-xs text-muted-foreground text-center">
-        By submitting this form, you agree to receive project-related communications. Your
-        information is secure and will never be shared.
-      </p>
+        <p className="text-[10px] text-[#333] text-center">
+          your information is secure and will never be shared
+        </p>
+      </div>
     </form>
   );
 };
